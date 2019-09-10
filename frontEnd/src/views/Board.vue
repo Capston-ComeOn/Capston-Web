@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container mt-3>
         <v-layout row wrap>
             <v-flex>
@@ -21,9 +21,9 @@
                     </template>
 
                 </v-data-table>
-                <v-flex class="text-xs-right mt-2">
-                    <v-btn large dark @click="" color="red lighten-2" to="/board/write">작성하기</v-btn>
-                </v-flex>
+                <div class="text-right mt-2">
+                    <v-btn large dark color="green lighten-2" to="/board/write">작성하기</v-btn>
+                </div>
             </v-flex>
         </v-layout>
     </v-container>

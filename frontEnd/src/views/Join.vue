@@ -23,9 +23,9 @@
                             placeholder="이름을 입력하세요."
                             required
                     ></v-text-field>
-                    <v-flex class="text-xs-right">
+                    <div class="text-right mt-2">
                         <v-btn large dark color="green lighten-2">회원가입</v-btn>
-                    </v-flex>
+                    </div>
                 </form>
             </v-flex>
         </v-layout>
