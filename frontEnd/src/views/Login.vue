@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid style="max-width: 500px">
+    <v-container class="mt-5 mb-5" fluid style="max-width: 500px">
         <v-layout row wrap>
             <v-flex xs12>
                 <v-card>
@@ -31,7 +31,7 @@
                             ></v-checkbox>
 
                             <v-layout justify-end>
-                                <v-btn round color="blue lighten-3" @click="submit">로그인</v-btn>
+                                <v-btn class="mr-2" round color="blue lighten-3" @click="submit">로그인</v-btn>
                                 <v-btn round color="blue lighten-3" @click="clear">회원가입</v-btn>
                             </v-layout>
                         </v-flex>
