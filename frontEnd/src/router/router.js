@@ -6,8 +6,14 @@ import Join from '../views/Join'
 import Board from '../views/Board'
 import Read from '../components/boards/Read'
 import Write from '../components/boards/Write'
-
+import store from '../store'
 Vue.use(Router)
+
+const requireAuth = () => (from, to, next) => {
+    store.state.access_token ?
+        next() :
+        next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+}
 
 export default new Router({
     mode: 'history',
@@ -28,15 +34,18 @@ export default new Router({
         },
         {
             path: '/board',
-            component: Board
+            component: Board,
+            beforeEnter: requireAuth()
         },
         {
             path: '/board/write',
-            component: Write
+            component: Write,
+            beforeEnter: requireAuth()
         },
         {
             path: '/board/:id',
-            component: Read
+            component: Read,
+            beforeEnter: requireAuth()
         }
     ]
 })

@@ -10,8 +10,8 @@
             </v-flex>
         </v-layout>
         <div class="text-right mt-3">
-            <v-btn class="mr-2" large dark @click="" color="red lighten-2">작성</v-btn>
-            <v-btn large dark @click="" color="red lighten-2" to="/board">목록</v-btn>
+            <v-btn class="mr-2" large dark color="red lighten-2">작성</v-btn>
+            <v-btn large dark color="red lighten-2" to="/board">목록</v-btn>
         </div>
     </v-container>
 </template>

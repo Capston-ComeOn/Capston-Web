@@ -6,7 +6,7 @@
                     <v-list>
                         <v-flex pt-3 pl-3 pb-3 pr-3>
                             <v-text-field
-                                    v-model="email"
+                                    v-model="username"
                                     v-validate="'required|email'"
                                     label="E-mail"
                                     data-vv-name="email"
@@ -31,8 +31,7 @@
                             ></v-checkbox>
 
                             <v-layout justify-end>
-                                <v-btn class="mr-2" round color="blue lighten-3" @click="submit">로그인</v-btn>
-                                <v-btn round color="blue lighten-3" @click="clear">회원가입</v-btn>
+                                <v-btn class="mr-2" color="blue lighten-3" @click="onSubmit">로그인</v-btn>
                             </v-layout>
                         </v-flex>
                     </v-list>
@@ -43,8 +42,41 @@
 </template>
 
 <script>
+
     export default {
-        name: "login"
+        data() {
+            return {
+                username: '',
+                password: '',
+                returnPath: '',
+                grant_type: 'password',
+                error: ''
+            }
+        },
+        computed: {
+            invalidForm() {
+                return !this.username || !this.password
+            }
+        },
+        created() {
+            this.returnPath = this.$route.query.returnPath || '/'
+        },
+        mounted() {
+        },
+        methods: {
+            onSubmit() {
+                const {username, password, grant_type} = this
+                console.log(username,password,grant_type)
+                this.$store.dispatch('LOGIN', {username, password, grant_type})
+                    .then(() => {
+                        this.$router.push(this.returnPath)
+                    })
+                    .catch(err => {
+                        console.log('에러 발생')
+                        this.error = err.response.data.error
+                    })
+            }
+        }
     }
 </script>
 
