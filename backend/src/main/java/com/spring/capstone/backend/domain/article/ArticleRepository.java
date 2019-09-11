@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.domain;
+package com.spring.capstone.backend.domain.article;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

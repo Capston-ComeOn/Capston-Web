@@ -1,8 +1,6 @@
-package com.spring.capstone.backend;
+package com.spring.capstone.backend.domain.accounts;
 
-import com.spring.capstone.backend.accounts.Account;
-import com.spring.capstone.backend.accounts.AccountRoles;
-import com.spring.capstone.backend.accounts.AccountService;
+import com.spring.capstone.backend.service.AccountService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

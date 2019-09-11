@@ -1,16 +1,16 @@
 package com.spring.capstone.backend.service.dto;
 
+import com.spring.capstone.backend.domain.article.ArticleContents;
+
 public class ArticleDto {
     private long articleId;
-    private String title;
-    private String contents;
+    private ArticleContents articleContents;
     private long authorId;
     private String authorName;
 
-    public ArticleDto(long articleId, String title, String contents, long authorId, String authorName) {
+    public ArticleDto(long articleId, ArticleContents articleContents, long authorId, String authorName) {
         this.articleId = articleId;
-        this.title = title;
-        this.contents = contents;
+        this.articleContents = articleContents;
         this.authorId = authorId;
         this.authorName = authorName;
     }
@@ -19,12 +19,8 @@ public class ArticleDto {
         return articleId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContents() {
-        return contents;
+    public ArticleContents getArticleContents() {
+        return articleContents;
     }
 
     public long getAuthorId() {
@@ -35,3 +31,4 @@ public class ArticleDto {
         return authorName;
     }
 }
+

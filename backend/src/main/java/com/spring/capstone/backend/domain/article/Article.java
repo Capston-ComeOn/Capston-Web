@@ -1,9 +1,8 @@
-package com.spring.capstone.backend.domain;
+package com.spring.capstone.backend.domain.article;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,13 +13,8 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    @Length(max = 30)
-    private String title;
-
-    @Lob
-    @Column(nullable = false)
-    private String contents;
+    @Embedded
+    private ArticleContents articleContents;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -31,9 +25,8 @@ public class Article {
 
     }
 
-    public Article(String title, String contents, Account author) {
-        this.title = title;
-        this.contents = contents;
+    public Article(ArticleContents articleContents, Account author) {
+        this.articleContents = articleContents;
         this.author = author;
     }
 
@@ -41,12 +34,8 @@ public class Article {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContents() {
-        return contents;
+    public ArticleContents getArticleContents() {
+        return articleContents;
     }
 
     public Account getAuthor() {
