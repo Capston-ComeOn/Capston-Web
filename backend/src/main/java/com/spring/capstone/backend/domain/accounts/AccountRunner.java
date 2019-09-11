@@ -32,7 +32,9 @@ public class AccountRunner implements ApplicationRunner {
 
         Account savedAccount = accountService.accountSave(account);
         Article article = new Article(new ArticleContents("title", "contents"), savedAccount);
+        Article article2 = new Article(new ArticleContents("title2", "contents2"), savedAccount);
 
         articleRepository.save(article);
+        articleRepository.save(article2);
     }
 }

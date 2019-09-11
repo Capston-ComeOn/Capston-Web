@@ -22,15 +22,40 @@ public class ArticleService {
         this.accountRepository = accountRepository;
     }
 
-    public ArticleDto findArticle(long articleId) {
-        Article article = articleRepository.findById(articleId).orElseThrow(NotFoundDataException::new);
+    @Transactional(readOnly = true)
+    public ArticleDto findArticleDto(long articleId) {
+        Article article = findArticle(articleId);
         return ArticleAssembler.toDto(article);
     }
 
     @Transactional
-    public void save(ArticleContents articleContents, LoggedInAccount loggedInAccount) {
-        Account account = accountRepository.findById(loggedInAccount.getId()).orElseThrow(NotFoundDataException::new);
+    public long save(ArticleContents articleContents, LoggedInAccount loggedInAccount) {
+        Account account = findAccount(loggedInAccount);
         Article article = new Article(articleContents, account);
-        articleRepository.save(article);
+        return articleRepository.save(article).getId();
+    }
+
+    @Transactional
+    public long update(long articleId, ArticleContents articleContents, LoggedInAccount loggedInAccount) {
+        Article article = findArticle(articleId);
+        Account account = findAccount(loggedInAccount);
+        article.update(articleContents, account);
+        return articleId;
+    }
+
+    @Transactional
+    public void delete(long articleId, LoggedInAccount loggedInAccount) {
+        Article article = findArticle(articleId);
+        Account account = findAccount(loggedInAccount);
+        article.checkAuthor(account);
+        articleRepository.deleteById(articleId);
+    }
+
+    private Article findArticle(long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(NotFoundDataException::new);
+    }
+
+    private Account findAccount(LoggedInAccount loggedInAccount) {
+        return accountRepository.findById(loggedInAccount.getId()).orElseThrow(NotFoundDataException::new);
     }
 }

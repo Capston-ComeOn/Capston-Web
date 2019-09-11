@@ -1,6 +1,7 @@
 package com.spring.capstone.backend.domain.article;
 
 import com.spring.capstone.backend.domain.accounts.Account;
+import com.spring.capstone.backend.service.exception.InvalidAccountException;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -53,5 +54,16 @@ public class Article {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void checkAuthor(Account account) {
+        if(!author.equals(account)) {
+            throw new InvalidAccountException("글쓴이만 수정/삭제가 가능합니다.");
+        }
+    }
+
+    public void update(ArticleContents articleContents, Account account) {
+        checkAuthor(account);
+        this.articleContents = articleContents;
     }
 }

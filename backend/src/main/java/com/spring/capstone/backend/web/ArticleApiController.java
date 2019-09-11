@@ -18,7 +18,7 @@ public class ArticleApiController {
 
     @GetMapping("/{articleId}")
     public ResponseEntity showArticle(@PathVariable long articleId) {
-        return ResponseEntity.ok(articleService.findArticle(articleId));
+        return ResponseEntity.ok(articleService.findArticleDto(articleId));
     }
 
     @GetMapping("/new")
@@ -28,7 +28,17 @@ public class ArticleApiController {
 
     @PostMapping("/new")
     public ResponseEntity createArticle(@RequestBody ArticleContents articleContents, @AccountSession LoggedInAccount loggedInAccount) {
-        articleService.save(articleContents, loggedInAccount);
+        return ResponseEntity.ok(articleService.save(articleContents, loggedInAccount));
+    }
+
+    @PutMapping("/{articleId}")
+    public ResponseEntity updateArticle(@PathVariable long articleId, @RequestBody ArticleContents articleContents, @AccountSession LoggedInAccount loggedInAccount) {
+        return ResponseEntity.ok(articleService.update(articleId, articleContents, loggedInAccount));
+    }
+
+    @DeleteMapping("/{articleId}")
+    public ResponseEntity deleteArticle(@PathVariable long articleId, @AccountSession LoggedInAccount loggedInAccount) {
+        articleService.delete(articleId, loggedInAccount);
         return ResponseEntity.ok().build();
     }
 }
