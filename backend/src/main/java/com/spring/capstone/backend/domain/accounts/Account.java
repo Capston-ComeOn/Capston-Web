@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.accounts;
+package com.spring.capstone.backend.domain.accounts;
 
 import javax.persistence.*;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.web;
+package com.spring.capstone.backend.web.configs;
 
 import com.spring.capstone.backend.web.argumentresolver.AccountSessionArgumentResolver;
 import org.springframework.context.annotation.Configuration;

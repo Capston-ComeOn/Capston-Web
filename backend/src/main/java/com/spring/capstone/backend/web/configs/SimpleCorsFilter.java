@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.configs;
+package com.spring.capstone.backend.web.configs;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

@@ -1,6 +1,6 @@
-package com.spring.capstone.backend.configs;
+package com.spring.capstone.backend.web.configs;
 
-import com.spring.capstone.backend.accounts.AccountService;
+import com.spring.capstone.backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

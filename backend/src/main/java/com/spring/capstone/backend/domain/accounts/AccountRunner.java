@@ -1,7 +1,8 @@
-package com.spring.capstone.backend.accounts;
+package com.spring.capstone.backend.domain.accounts;
 
 import com.spring.capstone.backend.domain.Article;
 import com.spring.capstone.backend.domain.ArticleRepository;
+import com.spring.capstone.backend.service.AccountService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

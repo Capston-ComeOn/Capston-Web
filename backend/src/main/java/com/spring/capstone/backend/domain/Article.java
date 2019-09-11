@@ -1,6 +1,6 @@
 package com.spring.capstone.backend.domain;
 
-import com.spring.capstone.backend.accounts.Account;
+import com.spring.capstone.backend.domain.accounts.Account;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;

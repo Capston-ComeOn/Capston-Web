@@ -1,5 +1,8 @@
-package com.spring.capstone.backend.accounts;
+package com.spring.capstone.backend.service;
 
+import com.spring.capstone.backend.domain.accounts.Account;
+import com.spring.capstone.backend.domain.accounts.AccountAdapter;
+import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
