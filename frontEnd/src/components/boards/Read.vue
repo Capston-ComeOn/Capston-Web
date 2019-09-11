@@ -20,9 +20,9 @@
                 ></v-textarea>
             </v-flex>
             <v-flex class="text-xs-right">
-                <v-btn large dark @click="" color="red lighten-2" to="/board">목록</v-btn>
-                <v-btn large dark @click="" color="red lighten-2">수정</v-btn>
-                <v-btn large dark @click="" color="red lighten-2">삭제</v-btn>
+                <v-btn large dark color="red lighten-2" to="/board">목록</v-btn>
+                <v-btn large dark color="red lighten-2">수정</v-btn>
+                <v-btn large dark color="red lighten-2">삭제</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
