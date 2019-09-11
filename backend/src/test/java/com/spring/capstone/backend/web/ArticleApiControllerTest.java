@@ -1,28 +1,24 @@
 package com.spring.capstone.backend.web;
 
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-
-public class ArticleApiControllerTest extends AbstractControllerTest{
-
+class ArticleApiControllerTest extends AbstractControllerTest{
     private String cookie;
 
-
-
     @BeforeEach
-    public void setUp() {
+    void setUp(){
         cookie = extractJSessionId();
     }
 
     @Test
     public void 게시글_조회() {
-        webTestClient.get().uri("/api/articles/{articleId}",1)
-                .cookie("set-Cookie", cookie)
+        webTestClient.get().uri("/api/articles/{articles}",1)
+                .header("Cookie", cookie)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.title").isEqualTo("타이틀")
-                .jsonPath("$.contents").isEqualTo("컨텐츠");
+                .jsonPath("$.title").isEqualTo("title")
+                .jsonPath("$.contents").isEqualTo("contetns");
     }
 }

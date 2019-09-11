@@ -3,6 +3,7 @@ package com.spring.capstone.backend.web;
 import com.spring.capstone.backend.service.dto.AuthenticationAccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 import static org.springframework.web.reactive.function.BodyInserters.fromFormData;
 
 @AutoConfigureWebTestClient
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AbstractControllerTest {
 
     @Autowired
@@ -29,7 +31,7 @@ public class AbstractControllerTest {
 
     String extractJSessionId() {
         EntityExchangeResult<byte[]> loginResult =
-                login(new AuthenticationAccountDto("account1@gmail.com", "Aa12345!"));
+                login(new AuthenticationAccountDto("user@gmail.com", "123"));
 
         String[] cookies = loginResult.getResponseHeaders().get("set-Cookie").stream()
                 .filter(it -> it.contains("JSESSIONID"))

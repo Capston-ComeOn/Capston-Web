@@ -1,6 +1,7 @@
 package com.spring.capstone.backend.accounts;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.capstone.backend.domain.Article;
+import com.spring.capstone.backend.domain.ArticleRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -10,9 +11,13 @@ import java.util.HashSet;
 
 @Component
 public class AccountRunner implements ApplicationRunner {
-
-    @Autowired
     private AccountService accountService;
+    private ArticleRepository articleRepository;
+
+    public AccountRunner(AccountService accountService, ArticleRepository articleRepository) {
+        this.accountService = accountService;
+        this.articleRepository = articleRepository;
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -23,6 +28,9 @@ public class AccountRunner implements ApplicationRunner {
         account.setName("donggyu");
         account.setRoles(new HashSet<>(Arrays.asList(AccountRoles.ADMIN,AccountRoles.USER)));
 
-        accountService.accountSave(account);
+        Account savedAccount=accountService.accountSave(account);
+        Article article=new Article("title","contents",savedAccount);
+
+        articleRepository.save(article);
     }
 }

@@ -17,12 +17,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     // https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure
-    compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.1.7.RELEASE'
+    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.7.RELEASE'
 
     runtimeOnly 'com.h2database:h2'
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
-    testCompile group: 'org.springframework.security', name: 'spring-security-test'
+    testCompile 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
 }

@@ -1,6 +1,6 @@
 package com.spring.capstone.backend.domain;
 
-import com.spring.capstone.backend.domain.account.Account;
+import com.spring.capstone.backend.accounts.Account;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
@@ -25,7 +25,6 @@ public class Article {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "author", foreignKey = @ForeignKey(name = "fk_article_to_author"))
-    @Column(nullable = false)
     private Account author;
 
     private Article() {
