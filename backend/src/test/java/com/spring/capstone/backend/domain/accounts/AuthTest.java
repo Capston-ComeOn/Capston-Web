@@ -1,8 +1,6 @@
-package com.spring.capstone.backend;
+package com.spring.capstone.backend.domain.accounts;
 
-import com.spring.capstone.backend.accounts.Account;
-import com.spring.capstone.backend.accounts.AccountRoles;
-import com.spring.capstone.backend.accounts.AccountService;
+import com.spring.capstone.backend.service.AccountService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

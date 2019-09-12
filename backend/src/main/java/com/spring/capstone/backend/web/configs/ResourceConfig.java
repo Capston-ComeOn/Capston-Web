@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.configs;
+package com.spring.capstone.backend.web.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

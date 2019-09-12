@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.accounts;
+package com.spring.capstone.backend.domain.accounts;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
