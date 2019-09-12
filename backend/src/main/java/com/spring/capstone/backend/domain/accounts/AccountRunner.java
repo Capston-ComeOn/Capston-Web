@@ -3,6 +3,7 @@ package com.spring.capstone.backend.domain.accounts;
 import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleContents;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
+import com.spring.capstone.backend.domain.article.ArticleVO;
 import com.spring.capstone.backend.service.AccountService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -31,10 +32,10 @@ public class AccountRunner implements ApplicationRunner {
         account.setRoles(new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
 
         Account savedAccount = accountService.accountSave(account);
-        Article article = new Article(new ArticleContents("title", "contents"), savedAccount);
-        Article article2 = new Article(new ArticleContents("title2", "contents2"), savedAccount);
-
-        articleRepository.save(article);
-        articleRepository.save(article2);
+//        Article article = new Article(savedAccount,new ArticleVO("title","cone"));
+//        Article article2 = new Article(new ArticleContents("title2", "contents2"), savedAccount);
+//
+//        articleRepository.save(article);
+//        articleRepository.save(article2);
     }
 }

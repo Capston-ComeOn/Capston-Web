@@ -17,7 +17,7 @@
         },
         components: {
             ToolBar,
-            Footer,
+            Footer
         },
         methods: {}
     };
