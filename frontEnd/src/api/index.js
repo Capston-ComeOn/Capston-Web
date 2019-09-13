@@ -45,3 +45,16 @@ export const auth = {
             .then(({data}) => data)
     },
 }
+
+export const article = {
+    fetch(data) {
+        if (data.id) {
+            return request.get(`/api/article/${data.id}`).then(({data}) => data)
+        }
+        return request.get(`/api/article?page=${data.page}&size=${data.size}&sort=id,DESC`).then(({data}) => data)
+    },
+    post(data) {
+        return request.post('/api/article', data)
+            .then((data) => data)
+    }
+}

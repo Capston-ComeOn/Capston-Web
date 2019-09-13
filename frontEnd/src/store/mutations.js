@@ -12,7 +12,15 @@ const mutations = {
         delete localStorage.access_token;
         delete localStorage.loginAccountId;
         setAuthInHeader(null)
-    }
+    },
+    SET_ARTICLE(state, data) {
+        state.article = data
+    },
+    SET_ARTICLE_LIST(state, {content}) {
+        for (let i = 0; i < content.length; i++) {
+            state.articleList.push(content[i])
+        }
+    },
 }
 
 export default mutations

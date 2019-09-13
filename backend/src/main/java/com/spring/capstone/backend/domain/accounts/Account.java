@@ -1,5 +1,8 @@
 package com.spring.capstone.backend.domain.accounts;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,14 +11,17 @@ public class Account {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
     private String name;
     @Column(unique = true)
     private String email;
+    @JsonIgnore
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Set<AccountRoles> roles;
 
     public Account() {

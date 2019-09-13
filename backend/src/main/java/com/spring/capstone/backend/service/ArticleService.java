@@ -6,8 +6,12 @@ import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
 import com.spring.capstone.backend.domain.article.ArticleVO;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ArticleService {
@@ -19,18 +23,26 @@ public class ArticleService {
         this.accountRepository = accountRepository;
     }
 
-//    @Transactional(readOnly = true)
-//    public ArticleDto findArticleDto(long articleId) {
-//        Article article = findArticle(articleId);
-//        return ArticleAssembler.toDto(article);
-//    }
-
     @Transactional
     public long save(String email, ArticleVO articleVO) {
         Account account = findByEmail(email);
         Article article = Article.of(account, articleVO);
         return articleRepository.save(article).getId();
     }
+
+    public Article getArticle(Long id) {
+        return articleRepository.findById(id).orElseThrow(NotFoundDataException::new);
+    }
+
+    public Page<Article> getArticles(Pageable pageable) {
+        return articleRepository.findAll(pageable);
+    }
+
+//    @Transactional(readOnly = true)
+//    public ArticleDto findArticleDto(long articleId) {
+//        Article article = findArticle(articleId);
+//        return ArticleAssembler.toDto(article);
+//    }
 
 //    @Transactional
 //    public long update(long articleId, ArticleContents articleContents, LoggedInAccount loggedInAccount) {
