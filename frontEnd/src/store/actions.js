@@ -1,4 +1,4 @@
-import {auth} from '../api'
+import {auth, article} from '../api'
 
 const actions = {
     LOGIN({commit}, {username, password, grant_type}) {
@@ -6,7 +6,24 @@ const actions = {
             .then((data) => {
                 commit('LOGIN', data)
             })
-    }
+    },
+
+    ADD_ARTICLE(_, {title, contents}) {
+        return article.post({title, contents})
+            .then((response) => (response))
+    },
+    FETCH_ARTICLE({commit}, {id}) {
+        return article.fetch({id})
+            .then(data => {
+                commit('SET_ARTICLE', data)
+            })
+    },
+    FETCH_ARTICLE_LIST({commit}, {size, page}) {
+        return article.fetch({size, page})
+            .then(data => {
+                commit('SET_ARTICLE_LIST', data)
+            })
+    },
 }
 
 export default actions

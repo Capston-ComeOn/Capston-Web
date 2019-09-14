@@ -50,7 +50,6 @@
                 password: '',
                 returnPath: '',
                 grant_type: 'password',
-                error: ''
             }
         },
         computed: {
@@ -66,14 +65,16 @@
         methods: {
             onSubmit() {
                 const {username, password, grant_type} = this
-                console.log(username,password,grant_type)
+                console.log(username, password, grant_type)
                 this.$store.dispatch('LOGIN', {username, password, grant_type})
                     .then(() => {
                         this.$router.push(this.returnPath)
                     })
                     .catch(err => {
-                        console.log('에러 발생')
-                        this.error = err.response.data.error
+                        const error = err.response.data.error
+                        if (error === 'invalid_grant') {
+                            alert("잘못된 아이디/비밀번호 입니다.");
+                        }
                     })
             }
         }

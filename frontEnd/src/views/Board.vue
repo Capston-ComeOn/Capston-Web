@@ -1,9 +1,12 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container mt-3>
+        <h3 class="title"> 게시판 </h3>
+        <v-divider light class="mt-3 mb-3"></v-divider>
         <v-layout row wrap>
-            <v-flex>
-                <h3 class="title"> 게시판 </h3>
-                <v-divider light class="mt-3 mb-3"></v-divider>
+            <v-flex col-sm-2>
+                <Drawer></Drawer>
+            </v-flex>
+            <v-flex col-sm-10>
                 <v-data-table
                         :headers="headers"
                         :items="desserts"
@@ -30,7 +33,11 @@
 </template>
 
 <script>
+    import Drawer from '../components/Drawer'
     export default {
+        components:{
+            Drawer
+        },
         data() {
             return {
                 headers: [

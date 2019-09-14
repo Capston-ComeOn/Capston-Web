@@ -10,12 +10,13 @@ import java.util.Objects;
 
 @Entity
 public class Article {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    private String title;
     @Embedded
-    private ArticleContents articleContents;
+    private String contents;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -26,18 +27,20 @@ public class Article {
 
     }
 
-    public Article(ArticleContents articleContents, Account author) {
-        this.articleContents = articleContents;
+    private Article(Account author,ArticleVO articleVO) {
+        this.title = articleVO.getTitle();
+        this.contents = articleVO.getContents();
         this.author = author;
+    }
+
+    public static Article of(Account author, ArticleVO articleVO) {
+        return new Article(author,articleVO);
     }
 
     public long getId() {
         return id;
     }
 
-    public ArticleContents getArticleContents() {
-        return articleContents;
-    }
 
     public Account getAuthor() {
         return author;
@@ -51,19 +54,39 @@ public class Article {
         return id == article.id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public void setAuthor(Account author) {
+        this.author = author;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
     public void checkAuthor(Account account) {
-        if(!author.equals(account)) {
+        if (!author.equals(account)) {
             throw new InvalidAccountException("글쓴이만 수정/삭제가 가능합니다.");
         }
     }
 
-    public void update(ArticleContents articleContents, Account account) {
-        checkAuthor(account);
-        this.articleContents = articleContents;
-    }
 }
