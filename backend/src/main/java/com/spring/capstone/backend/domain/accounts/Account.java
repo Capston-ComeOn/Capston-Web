@@ -19,7 +19,6 @@ public class Account {
     @Column(unique = true)
     private String email;
     @JsonIgnore
-    @Length(min = 8, max = 12)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
