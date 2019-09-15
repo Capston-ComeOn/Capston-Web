@@ -27,14 +27,14 @@ public class Article {
 
     }
 
-    private Article(Account author,ArticleVO articleVO) {
+    private Article(Account author, ArticleVO articleVO) {
         this.title = articleVO.getTitle();
         this.contents = articleVO.getContents();
         this.author = author;
     }
 
     public static Article of(Account author, ArticleVO articleVO) {
-        return new Article(author,articleVO);
+        return new Article(author, articleVO);
     }
 
     public long getId() {
@@ -46,41 +46,8 @@ public class Article {
         return author;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
-        return id == article.id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getContents() {
         return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public void setAuthor(Account author) {
-        this.author = author;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     public void checkAuthor(Account account) {
@@ -89,4 +56,17 @@ public class Article {
         }
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return id == article.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

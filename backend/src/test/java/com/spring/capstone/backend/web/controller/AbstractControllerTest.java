@@ -1,17 +1,11 @@
-package com.spring.capstone.backend.web;
+package com.spring.capstone.backend.web.controller;
 
-import com.spring.capstone.backend.service.dto.AuthenticationAccountDto;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.util.stream.Stream;
-
-import static org.springframework.web.reactive.function.BodyInserters.fromFormData;
 
 @AutoConfigureWebTestClient
 @RunWith(SpringRunner.class)

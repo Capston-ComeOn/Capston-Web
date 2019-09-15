@@ -2,6 +2,7 @@ package com.spring.capstone.backend.domain.accounts;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,10 +14,12 @@ public class Account {
     @GeneratedValue
     @JsonIgnore
     private Long id;
+    @Length(min = 2)
     private String name;
     @Column(unique = true)
     private String email;
     @JsonIgnore
+    @Length(min = 8, max = 12)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -24,22 +27,14 @@ public class Account {
     @JsonIgnore
     private Set<AccountRoles> roles;
 
-    public Account() {
+    private Account() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Account account = (Account) o;
-
-        return id.equals(account.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public Account(String name, String email, String password, Set<AccountRoles> roles) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -64,6 +59,21 @@ public class Account {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        return id.equals(account.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     public String getPassword() {

@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.controller;
+package com.spring.capstone.backend.web.controller;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/article")
-public class ArticleController {
+public class ArticleApiController {
 
     @Autowired
     private ArticleService articleService;
