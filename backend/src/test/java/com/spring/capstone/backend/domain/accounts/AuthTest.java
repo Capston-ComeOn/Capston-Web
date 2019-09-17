@@ -34,15 +34,11 @@ public class AuthTest {
     @Test
     public void create_token() throws Exception {
 
-        Account account=new Account();
-        account.setName("kimdonggyu");
         String email = "donggyu@email.com";
-        account.setEmail(email);
         String password = "1234";
-        account.setPassword(password);
-        account.setRoles(new HashSet<>(Arrays.asList(AccountRoles.ADMIN,AccountRoles.USER)));
+        Account account=new Account("kimdonggyu", email, password, new HashSet<>(Arrays.asList(AccountRoles.ADMIN,AccountRoles.USER)));
 
-        Account savedAccount = accountService.accountSave(account);
+        accountService.accountSave(account);
 
         String clientId = "id";
         String clientSecret= "secret";

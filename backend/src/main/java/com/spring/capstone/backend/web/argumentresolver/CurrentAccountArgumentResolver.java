@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Component
-public class AccountSessionArgumentResolver implements HandlerMethodArgumentResolver {
+public class CurrentAccountArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(AccountSession.class);

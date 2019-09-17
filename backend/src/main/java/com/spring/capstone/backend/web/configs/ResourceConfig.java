@@ -27,11 +27,13 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .mvcMatchers(HttpMethod.GET,"/api/**").permitAll()
+                .mvcMatchers(HttpMethod.POST,"/api/accounts/join") .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+
 
         // h2-console
         http

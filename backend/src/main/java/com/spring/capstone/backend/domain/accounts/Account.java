@@ -2,6 +2,7 @@ package com.spring.capstone.backend.domain.accounts;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +14,7 @@ public class Account {
     @GeneratedValue
     @JsonIgnore
     private Long id;
+    @Length(min = 2)
     private String name;
     @Column(unique = true)
     private String email;
@@ -24,7 +26,26 @@ public class Account {
     @JsonIgnore
     private Set<AccountRoles> roles;
 
-    public Account() {
+    private Account() {
+    }
+
+    public Account(String name, String email, String password, Set<AccountRoles> roles) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
@@ -40,30 +61,6 @@ public class Account {
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {

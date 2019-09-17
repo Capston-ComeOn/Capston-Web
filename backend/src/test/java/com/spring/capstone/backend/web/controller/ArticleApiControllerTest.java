@@ -1,6 +1,5 @@
-package com.spring.capstone.backend.web;
+package com.spring.capstone.backend.web.controller;
 
-import com.spring.capstone.backend.domain.article.ArticleContents;
 import com.spring.capstone.backend.domain.article.ArticleVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import reactor.core.publisher.Mono;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.web.reactive.function.server.RequestPredicates.contentType;
 
 @AutoConfigureMockMvc
 class ArticleApiControllerTest extends AbstractControllerTest {

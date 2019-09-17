@@ -1,8 +1,7 @@
-package com.spring.capstone.backend.controller;
+package com.spring.capstone.backend.web.controller;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
-import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleVO;
 import com.spring.capstone.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,47 +15,47 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/article")
-public class ArticleController {
+public class ArticleApiController {
 
     @Autowired
     private ArticleService articleService;
 
     @GetMapping("/{id}")
-    public ResponseEntity getArticle(@CurrentAccount Account account, @PathVariable Long id) {
+    public ResponseEntity<Object> getArticle(@CurrentAccount Account account, @PathVariable Long id) {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         try {
-            return new ResponseEntity(articleService.getArticle(id), HttpStatus.CREATED);
+            return new ResponseEntity<>(articleService.getArticle(id), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping
-    public ResponseEntity getArticles(@CurrentAccount Account account, Pageable pageable) {
+    public ResponseEntity<Object> getArticles(@CurrentAccount Account account, Pageable pageable) {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         try {
-            return new ResponseEntity(articleService.getArticles(pageable), HttpStatus.CREATED);
+            return new ResponseEntity<>(articleService.getArticles(pageable), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Article> createArticle(@CurrentAccount Account account, @RequestBody @Valid ArticleVO articleVO, Errors errors) {
+    public ResponseEntity<Object> createArticle(@CurrentAccount Account account, @RequestBody @Valid ArticleVO articleVO, Errors errors) {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if (errors.hasErrors()) {
-            return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         try {
             long save = articleService.save(account.getEmail(), articleVO);
-            return new ResponseEntity(save, HttpStatus.CREATED);
+            return new ResponseEntity<>(save, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
