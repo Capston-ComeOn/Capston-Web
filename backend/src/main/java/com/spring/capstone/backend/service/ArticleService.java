@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 public class ArticleService {
+
     private ArticleRepository articleRepository;
     private AccountRepository accountRepository;
 

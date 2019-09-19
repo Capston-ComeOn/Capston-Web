@@ -9,7 +9,7 @@
             <v-flex col-sm-10>
                 <v-data-table
                         :headers="headers"
-                        :items="articleList"
+                        :items="this.articleList"
                         class="elevation-1"
                 >
                     <template v-slot:body="{ items }">

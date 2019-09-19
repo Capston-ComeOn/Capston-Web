@@ -38,7 +38,7 @@ public class AuthTest {
         String password = "1234";
         Account account=new Account("kimdonggyu", email, password, new HashSet<>(Arrays.asList(AccountRoles.ADMIN,AccountRoles.USER)));
 
-        accountService.accountSave(account);
+        accountService.saveAccount(account);
 
         String clientId = "id";
         String clientSecret= "secret";

@@ -6,6 +6,7 @@ import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.service.assembler.AccountAssembler;
 import com.spring.capstone.backend.service.dto.AccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,7 @@ public class AccountService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Account accountSave(Account account) {
+    public Account saveAccount(Account account) {
 
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
