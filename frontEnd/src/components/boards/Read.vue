@@ -39,7 +39,7 @@
             <v-flex class="text-right text-xs-right">
                 <v-btn large dark color="red lighten-1 mr-1" to="/board">목록</v-btn>
                 <v-btn large dark color="red lighten-1 mr-1">수정</v-btn>
-                <v-btn large dark color="red lighten-1">삭제</v-btn>
+                <v-btn @click="onDelete" large dark color="red lighten-1">삭제</v-btn>
             </v-flex>
         </v-layout>
         <ProfileCard v-if="dialog" v-on:@change="onFalseDialog"/>
@@ -66,10 +66,18 @@
         },
         methods: {
             ...mapActions([
-                'FETCH_ARTICLE'
+                'FETCH_ARTICLE', 'DESTROY_ARTICLE'
             ]),
             onFalseDialog() {
                 this.dialog = false
+            },
+            onDelete() {
+                this.DESTROY_ARTICLE({id: this.$route.params.id}).then(data => {
+                    if (data.status === 200) {
+                        alert("삭제 되었습니다.")
+                        this.$router.push("/board")
+                    }
+                })
             }
         },
         created() {

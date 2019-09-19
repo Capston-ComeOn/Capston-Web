@@ -24,6 +24,10 @@ const actions = {
                 commit('SET_ARTICLE_LIST', data)
             })
     },
+    DESTROY_ARTICLE(_, {id}) {
+        return article.destroy({id})
+            .then(data => data)
+    }
 }
 
 export default actions
