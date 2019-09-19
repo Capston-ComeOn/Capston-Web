@@ -7,7 +7,6 @@
                         <v-flex pt-3 pl-3 pb-3 pr-3>
                             <v-text-field
                                     v-model="username"
-                                    v-validate="'required|email'"
                                     label="E-mail"
                                     data-vv-name="email"
                                     required
@@ -21,16 +20,14 @@
                                     data-vv-name="name"
                                     required
                             ></v-text-field>
-                            <v-checkbox
-                                    v-model="checkbox"
-                                    v-validate="'required'"
-                                    value="1"
-                                    label="저장하기"
-                                    data-vv-name="checkbox"
-                                    type="checkbox"
-                                    required
-                            ></v-checkbox>
-
+<!--                            <v-checkbox-->
+<!--                                    v-validate="'required'"-->
+<!--                                    value="1"-->
+<!--                                    label="저장하기"-->
+<!--                                    data-vv-name="checkbox"-->
+<!--                                    type="checkbox"-->
+<!--                                    required-->
+<!--                            ></v-checkbox>-->
                             <v-layout justify-end>
                                 <v-btn class="mr-2" color="blue lighten-3" @click="onSubmit">로그인</v-btn>
                             </v-layout>

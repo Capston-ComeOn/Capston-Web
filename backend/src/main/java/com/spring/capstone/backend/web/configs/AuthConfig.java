@@ -1,12 +1,14 @@
 package com.spring.capstone.backend.web.configs;
 
 import com.spring.capstone.backend.service.AccountService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
@@ -40,8 +42,9 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password", "refresh_token")
                 .secret(this.passwordEncoder.encode("secret"))
                 .scopes("read", "write")
-                .accessTokenValiditySeconds(30 * 60)
+                .accessTokenValiditySeconds(30*60)
                 .refreshTokenValiditySeconds(6 * 10 * 60);
+
     }
 
     @Override

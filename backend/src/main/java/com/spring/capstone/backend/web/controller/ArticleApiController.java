@@ -20,8 +20,10 @@ public class ArticleApiController {
     @Autowired
     private ArticleService articleService;
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> getArticle(@CurrentAccount Account account, @PathVariable Long id) {
+
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

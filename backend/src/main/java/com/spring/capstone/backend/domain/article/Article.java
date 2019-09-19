@@ -27,6 +27,10 @@ public class Article {
 
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     private Article(Account author, ArticleVO articleVO) {
         this.title = articleVO.getTitle();
         this.contents = articleVO.getContents();
