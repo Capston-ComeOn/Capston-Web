@@ -18,11 +18,12 @@
                         rows="10"
                         value="테스트 글 작성"
                 ></v-textarea>
+                {{item}}
             </v-flex>
-            <v-flex class="text-xs-right">
-                <v-btn large dark color="red lighten-2" to="/board">목록</v-btn>
-                <v-btn large dark color="red lighten-2">수정</v-btn>
-                <v-btn large dark color="red lighten-2">삭제</v-btn>
+            <v-flex class="text-right text-xs-right">
+                <v-btn large dark color="red lighten-1 mr-1" to="/board">목록</v-btn>
+                <v-btn large dark color="red lighten-1 mr-1">수정</v-btn>
+                <v-btn large dark color="red lighten-1">삭제</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -30,6 +31,7 @@
 
 <script>
     export default {
+        props: ['item']
     }
 </script>
 

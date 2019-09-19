@@ -15,6 +15,7 @@
                             <v-text-field
                                     v-model="password"
                                     :counter="10"
+                                    type="password"
                                     label="Password"
                                     password
                                     data-vv-name="name"
@@ -65,7 +66,6 @@
         methods: {
             onSubmit() {
                 const {username, password, grant_type} = this
-                console.log(username, password, grant_type)
                 this.$store.dispatch('LOGIN', {username, password, grant_type})
                     .then(() => {
                         this.$router.push(this.returnPath)
