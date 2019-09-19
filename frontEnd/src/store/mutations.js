@@ -17,6 +17,7 @@ const mutations = {
         state.article = data
     },
     SET_ARTICLE_LIST(state, {content}) {
+        state.articleList = []
         for (let i = 0; i < content.length; i++) {
             state.articleList.push(content[i])
         }
