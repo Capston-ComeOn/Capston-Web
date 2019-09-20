@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 public class ArticleService {
-
     private ArticleRepository articleRepository;
     private AccountRepository accountRepository;
 
@@ -45,21 +44,18 @@ public class ArticleService {
 //        return ArticleAssembler.toDto(article);
 //    }
 
-//    @Transactional
-//    public long update(long articleId, ArticleContents articleContents, LoggedInAccount loggedInAccount) {
-//        Article article = findArticle(articleId);
-//        Account account = findAccount(loggedInAccount);
-//        article.update(articleContents, account);
-//        return articleId;
-//    }
+    @Transactional
+    public long update(Long articleId, ArticleVO articleVO) {
+        Article article = articleRepository.findById(articleId).orElseThrow(NotFoundDataException::new);
+        article.update(articleVO);
+        articleRepository.save(article);
+        return articleId;
+    }
 
-//    @Transactional
-//    public void delete(long articleId, LoggedInAccount loggedInAccount) {
-//        Article article = findArticle(articleId);
-//        Account account = findAccount(loggedInAccount);
-//        article.checkAuthor(account);
-//        articleRepository.deleteById(articleId);
-//    }
+    @Transactional
+    public void delete(long articleId) {
+        articleRepository.deleteById(articleId);
+    }
 
     private Account findByEmail(String email) {
         return accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);

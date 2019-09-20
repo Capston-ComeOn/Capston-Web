@@ -38,7 +38,7 @@
             </v-flex>
             <v-flex class="text-right text-xs-right">
                 <v-btn large dark color="red lighten-1 mr-1" to="/board">목록</v-btn>
-                <v-btn large dark color="red lighten-1 mr-1">수정</v-btn>
+                <v-btn large dark color="red lighten-1 mr-1" :to="`/board/write/${this.$route.params.id}`">수정</v-btn>
                 <v-btn @click="onDelete" large dark color="red lighten-1">삭제</v-btn>
             </v-flex>
         </v-layout>

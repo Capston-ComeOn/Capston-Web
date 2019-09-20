@@ -6,6 +6,7 @@ import Join from '../views/Join'
 import Board from '../views/Board'
 import Read from '../components/boards/Read'
 import Write from '../components/boards/Write'
+import Update from '../components/boards/Update'
 import store from '../store'
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
         {
             path: '/board/write',
             component: Write,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/board/write/:id',
+            component: Update,
             beforeEnter: requireAuth()
         },
         {

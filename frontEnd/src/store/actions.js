@@ -12,10 +12,15 @@ const actions = {
         return article.post({title, contents})
             .then((response) => (response))
     },
+    UPDATE_ARTICLE(_, {id, title, contents}) {
+        return article.update({id, title, contents})
+            .then((response) => (response))
+    },
     FETCH_ARTICLE({commit}, {id}) {
         return article.fetch({id})
             .then(data => {
                 commit('SET_ARTICLE', data)
+                return data;
             })
     },
     FETCH_ARTICLE_LIST({commit}, {size, page}) {

@@ -20,10 +20,8 @@ public class ArticleApiController {
     @Autowired
     private ArticleService articleService;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Object> getArticle(@CurrentAccount Account account, @PathVariable Long id) {
-
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -58,6 +56,37 @@ public class ArticleApiController {
         try {
             long save = articleService.save(account.getEmail(), articleVO);
             return new ResponseEntity<>(save, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateArticle(@CurrentAccount Account account, @PathVariable Long id, @RequestBody @Valid ArticleVO articleVO, Errors errors) {
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        if (errors.hasErrors()) {
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            long save = articleService.update(id, articleVO);
+            return new ResponseEntity<>(save, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteArticle(@CurrentAccount Account account, @PathVariable Long id) {
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            articleService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

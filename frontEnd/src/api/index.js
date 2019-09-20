@@ -22,7 +22,7 @@ const request = {
     put(path, data) {
         return axios.put(`${domain + path}`, data)
     },
-    destroy(path) {
+    delete(path) {
         return axios.delete(`${domain + path}`)
     },
     login(path, data) {
@@ -57,7 +57,10 @@ export const article = {
         return request.post('/api/article', data)
             .then((data) => data)
     },
+    update(data) {
+        return request.put(`/api/article/${data.id}`, {title: data.title, contents: data.contents}).then((data) => data)
+    },
     destroy(data) {
-        return request.destroy(`/api/article/${data.id}`).then((data) => data)
+        return request.delete(`/api/article/${data.id}`).then((data) => data)
     }
 }

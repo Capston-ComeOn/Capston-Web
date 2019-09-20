@@ -41,6 +41,11 @@ public class Article {
         return new Article(author, articleVO);
     }
 
+    public void update(ArticleVO articleVO){
+        this.title=articleVO.getTitle();
+        this.contents=articleVO.getContents();
+    }
+
     public long getId() {
         return id;
     }
