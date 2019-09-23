@@ -12,6 +12,7 @@ const request = {
     get(path) {
         return axios.get(`${domain + path}`).catch(({response}) => {
             const {status} = response
+            console.log(status)
             if (status === Unauthorized) return onUnauthorized()
             throw Error(response)
         })
@@ -48,19 +49,26 @@ export const auth = {
 
 export const article = {
     fetch(data) {
+        if (!data) {
+            return request.get(`/api/article/size`).then(({data}) => data)
+        }
         if (data.id) {
             return request.get(`/api/article/${data.id}`).then(({data}) => data)
         }
-        return request.get(`/api/article?page=${data.page}&size=${data.size}&sort=id,DESC`).then(({data}) => data)
+        if (data.size) {
+            return request.get(`/api/article?page=${data.page}&size=${data.size}&sort=id,DESC`).then(({data}) => data)
+        }
     },
     post(data) {
-        return request.post('/api/article', data)
-            .then((data) => data)
+        return request.post('/api/article', data).then((data) => data)
     },
     update(data) {
-        return request.put(`/api/article/${data.id}`, {title: data.title, contents: data.contents}).then((data) => data)
+        return request.put(`/api/article/${data.id}`, {
+            title: data.title,
+            contents: data.contents
+        }).then(({data}) => data)
     },
     destroy(data) {
-        return request.delete(`/api/article/${data.id}`).then((data) => data)
+        return request.delete(`/api/article/${data.id}`).then(({data}) => data)
     }
 }

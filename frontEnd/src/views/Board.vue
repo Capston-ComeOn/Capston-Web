@@ -10,6 +10,8 @@
                 <v-data-table
                         :headers="headers"
                         :items="this.articleList"
+                        :server-items-length.sync="pagination.totalSize"
+                        @pagination="onPagination"
                         class="elevation-1"
                 >
                     <template v-slot:body="{ items }">
@@ -56,22 +58,35 @@
                     {text: '날짜', value: 'time'},
                     {text: '추천수', value: 'recommend'},
                 ],
-                limit: 10,
-                pageNumber: 0
+                pagination: {
+                    totalSize: 0
+                }
             }
         },
         computed: {
             ...mapState([
-                'articleList'
+                'articleList',
+                'articleSize'
             ])
         },
         methods: {
             ...mapActions([
-                'FETCH_ARTICLE_LIST'
-            ])
+                'FETCH_ARTICLE_LIST',
+                'FETCH_ARTICLE_SIZE'
+            ]),
+            onPagination(pagination) {
+                if (pagination) {
+                    const {page, itemsPerPage} = pagination
+                    this.FETCH_ARTICLE_LIST({size: itemsPerPage, page: (page - 1)})
+                }
+            }
         },
-        created() {
-            this.FETCH_ARTICLE_LIST({size: this.limit, page: this.pageNumber})
+        mounted() {
+            this.FETCH_ARTICLE_SIZE().then(data => {
+                this.pagination.totalSize = data
+                this.onPagination()
+            })
+
         }
     }
 </script>

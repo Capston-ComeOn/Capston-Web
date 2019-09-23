@@ -23,11 +23,11 @@ const actions = {
                 return data;
             })
     },
+    FETCH_ARTICLE_SIZE(_) {
+        return article.fetch().then(data => data)
+    },
     FETCH_ARTICLE_LIST({commit}, {size, page}) {
-        return article.fetch({size, page})
-            .then(data => {
-                commit('SET_ARTICLE_LIST', data)
-            })
+        return article.fetch({size, page}).then(data => {commit('SET_ARTICLE_LIST', data)})
     },
     DESTROY_ARTICLE(_, {id}) {
         return article.destroy({id})

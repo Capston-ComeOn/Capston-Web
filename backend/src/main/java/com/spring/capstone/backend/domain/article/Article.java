@@ -15,7 +15,7 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
-    @Embedded
+    @Lob
     private String contents;
 
     @ManyToOne

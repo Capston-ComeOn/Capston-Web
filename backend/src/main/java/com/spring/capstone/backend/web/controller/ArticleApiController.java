@@ -27,7 +27,7 @@ public class ArticleApiController {
         }
 
         try {
-            return new ResponseEntity<>(articleService.getArticle(id), HttpStatus.CREATED);
+            return new ResponseEntity<>(articleService.getArticle(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -39,7 +39,19 @@ public class ArticleApiController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         try {
-            return new ResponseEntity<>(articleService.getArticles(pageable), HttpStatus.CREATED);
+            return new ResponseEntity<>(articleService.getArticles(pageable), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/size")
+    public ResponseEntity<Object> getArticles(@CurrentAccount Account account) {
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+            return new ResponseEntity<>(articleService.getArticleSize(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -54,8 +66,8 @@ public class ArticleApiController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         try {
-            long save = articleService.save(account.getEmail(), articleVO);
-            return new ResponseEntity<>(save, HttpStatus.CREATED);
+            articleService.save(account.getEmail(), articleVO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

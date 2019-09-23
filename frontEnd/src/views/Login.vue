@@ -2,7 +2,14 @@
     <v-container class="mt-5 mb-5" fluid style="max-width: 500px">
         <v-layout row wrap>
             <v-flex xs12>
-                <v-card>
+                <v-card class="elevation-12">
+                    <v-toolbar
+                            color="primary"
+                            dark
+                            flat
+                    >
+                    <v-toolbar-title>Login</v-toolbar-title>
+                    </v-toolbar>
                     <v-list>
                         <v-flex pt-3 pl-3 pb-3 pr-3>
                             <v-text-field

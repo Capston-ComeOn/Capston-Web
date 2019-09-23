@@ -26,15 +26,11 @@
                         :value="`${article.title}`"
                 />
             </v-flex>
-            <v-flex xs12 class="mt-3">
+            <v-flex xs12>
                 <v-label>내용</v-label>
-                <v-textarea
-                        solo
-                        label="내용"
-                        readonly
-                        rows="10"
-                        :value="`${article.contents}`"
-                />
+                <v-card min-height="300px" class="mb-2">
+                    <viewer v-model="contents"/>
+                </v-card>
             </v-flex>
             <v-flex class="text-right text-xs-right">
                 <v-btn large dark color="red lighten-1 mr-1" to="/board">목록</v-btn>
@@ -48,12 +44,14 @@
 
 <script>
     import ProfileCard from "../ProfileCard";
+    import {Viewer} from '@toast-ui/vue-editor'
     import {mapState, mapActions} from "vuex"
 
     export default {
         data() {
             return {
-                dialog: false
+                dialog: false,
+                contents: ''
             }
         },
         computed: {
@@ -62,7 +60,8 @@
             ])
         },
         components: {
-            ProfileCard
+            ProfileCard,
+            'viewer': Viewer
         },
         methods: {
             ...mapActions([
@@ -81,7 +80,9 @@
             }
         },
         created() {
-            this.FETCH_ARTICLE({id: this.$route.params.id})
+            this.FETCH_ARTICLE({id: this.$route.params.id}).then(data => {
+                this.contents = data.contents
+            })
         }
     }
 </script>

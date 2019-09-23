@@ -38,6 +38,10 @@ public class ArticleService {
         return articleRepository.findAll(pageable);
     }
 
+    public long getArticleSize(){
+        return articleRepository.count();
+    }
+
 //    @Transactional(readOnly = true)
 //    public ArticleDto findArticleDto(long articleId) {
 //        Article article = findArticle(articleId);
