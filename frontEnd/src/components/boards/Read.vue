@@ -80,7 +80,8 @@
             }
         },
         created() {
-            this.FETCH_ARTICLE({id: this.$route.params.id}).then(data => {
+            const {id, categoryId} = this.$route.params
+            this.FETCH_ARTICLE({id, categoryId}).then(data => {
                 this.contents = data.contents
             })
         }

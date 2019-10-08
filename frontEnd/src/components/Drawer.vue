@@ -9,39 +9,75 @@
                 permanent
         >
             <v-list>
-                <v-list-item
-                        v-for="item in items"
-                        :key="item.title"
-                        link
+                <v-list-group v-for="(category,index) in categoryList"
+                              no-action
+                              sub-group
+                              :key="index"
+                              @click="onCategory(category)"
                 >
-                    <v-list-item-icon>
-                        <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-item-icon>
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title>{{category.name}}</v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+                    <!--                    <v-list-item-->
+                    <!--                            v-for="(subcategory, i) in mainCategory.subCategoryList"-->
+                    <!--                            :key="i"-->
+                    <!--                            link-->
+                    <!--                            @click="onLink(mainCategory.id,subcategory.id)"-->
+                    <!--                    >-->
+                    <!--                        <v-list-item-title v-text="subcategory.name"></v-list-item-title>-->
+                    <!--                        &lt;!&ndash;                        <v-list-item-icon>&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                            <v-icon v-text="admin[1]"></v-icon>&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;                        </v-list-item-icon>&ndash;&gt;-->
+                    <!--                    </v-list-item>-->
+                </v-list-group>
 
-                    <v-list-item-content>
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
             </v-list>
 
-            <template v-slot:append>
-                <div class="pa-2">
-                    <v-btn block>Logout</v-btn>
-                </div>
-            </template>
+
         </v-navigation-drawer>
     </v-card>
 </template>
 <script>
+    import {mapState, mapMutations, mapActions} from 'vuex'
+
     export default {
-        data () {
-            return {
-                items: [
-                    { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-                    { title: 'Account', icon: 'mdi-image' },
-                    { title: 'Admin', icon: 'mdi-help-box' },
-                ],
+
+        methods: {
+            ...mapActions([
+                'FETCH_CATEGORY_LIST',
+                'FETCH_ARTICLE_LIST'
+            ]),
+            ...mapMutations([
+                'SET_CATEGORY_ID'
+            ]),
+            onCategory(category) {
+                this.SET_CATEGORY_ID(category.id)
+                this.FETCH_ARTICLE_LIST({categoryId: category.id, size: 10, page: this.page})
             }
         },
+        computed: {
+            ...mapState([
+                'categoryList',
+                'page'
+            ])
+        },
+        data() {
+            return {
+                items: [
+                    {title: 'Dashboard', icon: 'mdi-view-dashboard'},
+                    {title: 'Account', icon: 'mdi-image'},
+                    {title: 'Admin', icon: 'mdi-help-box'},
+                ],
+                admins: [
+                    ['Management', 'people_outline'],
+                    ['Settings', 'settings'],
+                ]
+            }
+        },
+        mounted() {
+            this.FETCH_CATEGORY_LIST();
+        }
     }
 </script>

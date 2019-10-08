@@ -4,6 +4,7 @@ import qs from 'qs'
 
 const domain = 'http://localhost:8090'
 const Unauthorized = 401
+
 const onUnauthorized = () => {
     router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
 }
@@ -49,15 +50,13 @@ export const auth = {
 
 export const article = {
     fetch(data) {
-        if (!data) {
-            return request.get(`/api/article/size`).then(({data}) => data)
-        }
         if (data.id) {
-            return request.get(`/api/article/${data.id}`).then(({data}) => data)
+            return request.get(`/api/article/${data.categoryId}/${data.id}`).then(({data}) => data)
         }
         if (data.size) {
-            return request.get(`/api/article?page=${data.page}&size=${data.size}&sort=id,DESC`).then(({data}) => data)
+            return request.get(`/api/article/${data.categoryId}?page=${data.page}&size=${data.size}&sort=id,DESC`).then(({data}) => data)
         }
+        return request.get(`/api/article/${data.categoryId}/size`).then(({data}) => data)
     },
     post(data) {
         return request.post('/api/article', data).then((data) => data)
@@ -71,4 +70,11 @@ export const article = {
     destroy(data) {
         return request.delete(`/api/article/${data.id}`).then(({data}) => data)
     }
+}
+
+
+export const category = {
+    fetch() {
+        return request.get(`/api/article/category`).then(({data}) => data)
+    },
 }

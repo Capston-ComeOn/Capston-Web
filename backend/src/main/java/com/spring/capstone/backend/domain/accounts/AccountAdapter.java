@@ -22,6 +22,7 @@ public class AccountAdapter extends User {
         while (it.hasNext()) {
             list.add(new SimpleGrantedAuthority("ROLE_" + it.next()));
         }
+
         return list;
     }
 

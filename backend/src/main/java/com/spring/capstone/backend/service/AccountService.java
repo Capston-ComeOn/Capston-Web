@@ -4,9 +4,8 @@ import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountAdapter;
 import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.service.assembler.AccountAssembler;
-import com.spring.capstone.backend.service.dto.AccountDto;
+import com.spring.capstone.backend.domain.accounts.AccountVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,7 +34,7 @@ public class AccountService implements UserDetailsService {
         return new AccountAdapter(account);
     }
 
-    public long save(AccountDto accountDto) {
+    public long save(AccountVO accountDto) {
         Account account = AccountAssembler.toEntity(accountDto);
         return accountRepository.save(account).getId();
     }

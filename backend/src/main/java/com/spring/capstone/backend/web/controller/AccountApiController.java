@@ -1,7 +1,7 @@
 package com.spring.capstone.backend.web.controller;
 
 import com.spring.capstone.backend.service.AccountService;
-import com.spring.capstone.backend.service.dto.AccountDto;
+import com.spring.capstone.backend.domain.accounts.AccountVO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public class AccountApiController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity createAccount(@RequestBody AccountDto accountDto) {
+    public ResponseEntity createAccount(@RequestBody AccountVO accountDto) {
         accountService.save(accountDto);
 
         return new ResponseEntity(HttpStatus.CREATED);

@@ -28,6 +28,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .mvcMatchers(HttpMethod.GET,"/api/**").permitAll()
                 .mvcMatchers(HttpMethod.POST,"/api/accounts/join") .permitAll()
+                .antMatchers("/swagger-resources/**","/swagger-ui.html", "/v2/api-docs", "/webjars/**","/api/public-key").permitAll() // Swagger Support
                 .anyRequest()
                 .authenticated()
                 .and()

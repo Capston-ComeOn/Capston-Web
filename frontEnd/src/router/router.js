@@ -49,7 +49,7 @@ export default new Router({
             beforeEnter: requireAuth()
         },
         {
-            path: '/board/:id',
+            path: '/board/:categoryId/:id',
             component: Read,
             beforeEnter: requireAuth()
         }

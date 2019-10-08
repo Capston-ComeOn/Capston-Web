@@ -1,7 +1,7 @@
 package com.spring.capstone.backend.domain.article;
 
 import com.spring.capstone.backend.domain.accounts.Account;
-import com.spring.capstone.backend.service.exception.InvalidAccountException;
+import com.spring.capstone.backend.domain.category.Category;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -13,43 +13,51 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ARTICLE_ID")
     private long id;
+
     private String title;
+
     @Lob
     private String contents;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "author", foreignKey = @ForeignKey(name = "fk_article_to_author"))
+    @JoinColumn(name = "ACCOUNT_ID")
     private Account author;
+
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category category;
+
+
+    private Article(Account author, ArticleVO articleVO, Category category) {
+        this.title = articleVO.getTitle();
+        this.contents = articleVO.getContents();
+        this.author = author;
+        this.category = category;
+    }
 
     private Article() {
 
     }
 
-    public String getTitle() {
-        return title;
+    public static Article of(Account author, ArticleVO articleVO, Category category) {
+        return new Article(author, articleVO, category);
     }
 
-    private Article(Account author, ArticleVO articleVO) {
+    public void update(ArticleVO articleVO) {
         this.title = articleVO.getTitle();
         this.contents = articleVO.getContents();
-        this.author = author;
-    }
-
-    public static Article of(Account author, ArticleVO articleVO) {
-        return new Article(author, articleVO);
-    }
-
-    public void update(ArticleVO articleVO){
-        this.title=articleVO.getTitle();
-        this.contents=articleVO.getContents();
     }
 
     public long getId() {
         return id;
     }
 
+    public String getTitle() {
+        return title;
+    }
 
     public Account getAuthor() {
         return author;
@@ -59,12 +67,9 @@ public class Article {
         return contents;
     }
 
-    public void checkAuthor(Account account) {
-        if (!author.equals(account)) {
-            throw new InvalidAccountException("글쓴이만 수정/삭제가 가능합니다.");
-        }
+    public Category getCategory() {
+        return category;
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,10 +1,10 @@
-package com.spring.capstone.backend.service.dto;
+package com.spring.capstone.backend.domain.accounts;
 
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 
-public class AccountDto {
+public class AccountVO {
 
     @Length(min = 2)
     private String name;
@@ -13,7 +13,7 @@ public class AccountDto {
     @Length(min = 8, max = 12)
     private String password;
 
-    public AccountDto(String name, String email, String password) {
+    public AccountVO(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

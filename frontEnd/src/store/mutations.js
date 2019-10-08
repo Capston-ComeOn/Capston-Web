@@ -22,6 +22,15 @@ const mutations = {
             state.articleList.push(content[i])
         }
     },
+    SET_CATEGORY_LIST(state, data) {
+        state.categoryList = data
+    },
+    SET_CATEGORY_ID(state, data) {
+        state.categoryId = data
+    },
+    SET_PAGE(state, data) {
+        state.page = data
+    }
 }
 
 export default mutations

@@ -1,12 +1,13 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container mt-3>
-        <h3 class="title"> 게시판 </h3>
+        <h1 v-if="this.categoryList[this.categoryId-1]" class="text-center mb-3">
+            {{categoryList[categoryId-1].name}} </h1>
         <v-divider light class="mt-3 mb-3"></v-divider>
         <v-layout row wrap>
-            <v-flex col-sm-2>
+            <v-flex col-sm-3>
                 <Drawer></Drawer>
             </v-flex>
-            <v-flex col-sm-10>
+            <v-flex col-sm-9>
                 <v-data-table
                         :headers="headers"
                         :items="this.articleList"
@@ -14,12 +15,13 @@
                         @pagination="onPagination"
                         class="elevation-1"
                 >
+
                     <template v-slot:body="{ items }">
                         <tbody>
                         <tr v-for="item in items" :key="item.id">
                             <td>{{item.id}}</td>
                             <td>
-                                <router-link style="text-decoration: none;" :to="`/board/${item.id}`">
+                                <router-link style="text-decoration: none;" :to="`/board/${item.category.id}/${item.id}`">
                                     {{ item.title }}
                                 </router-link>
                             </td>
@@ -42,7 +44,7 @@
 
 <script>
     import Drawer from '../components/Drawer'
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapMutations, mapActions} from 'vuex'
 
     export default {
         components: {
@@ -66,26 +68,35 @@
         computed: {
             ...mapState([
                 'articleList',
-                'articleSize'
-            ])
+                'articleSize',
+                'categoryId',
+                'categoryList'
+            ]),
         },
         methods: {
+            ...mapMutations([
+                'SET_PAGE'
+            ]),
             ...mapActions([
                 'FETCH_ARTICLE_LIST',
-                'FETCH_ARTICLE_SIZE'
+                'FETCH_ARTICLE_SIZE',
+                'FETCH_CATEGORY_LIST'
             ]),
             onPagination(pagination) {
                 if (pagination) {
                     const {page, itemsPerPage} = pagination
-                    this.FETCH_ARTICLE_LIST({size: itemsPerPage, page: (page - 1)})
+                    this.SET_PAGE(page - 1)
+                    this.FETCH_ARTICLE_LIST({categoryId: this.categoryId, size: itemsPerPage, page: (page - 1)})
                 }
             }
         },
         mounted() {
-            this.FETCH_ARTICLE_SIZE().then(data => {
-                this.pagination.totalSize = data
-                this.onPagination()
-            })
+            // 자유게시판
+            this.FETCH_ARTICLE_SIZE({categoryId: 2})
+                .then(data => {
+                    this.pagination.totalSize = data
+                    this.onPagination()
+                })
 
         }
     }

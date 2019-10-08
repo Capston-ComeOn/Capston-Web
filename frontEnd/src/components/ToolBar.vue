@@ -31,7 +31,7 @@
                 'LOGOUT'
             ]),
             onLogout() {
-                this.LOGOUT();
+                this.LOGOUT().then(()=>this.router.push("/"));
             }
         }
     }
