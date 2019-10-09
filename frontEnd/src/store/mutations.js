@@ -12,6 +12,7 @@ const mutations = {
         delete localStorage.access_token;
         delete localStorage.loginAccountId;
         setAuthInHeader(null)
+        window.location.replace("/")
     },
     SET_ARTICLE(state, data) {
         state.article = data
@@ -30,6 +31,9 @@ const mutations = {
     },
     SET_PAGE(state, data) {
         state.page = data
+    },
+    SET_MINI(state, data) {
+        state.mini = data
     }
 }
 

@@ -4,7 +4,7 @@
             width="256"
     >
         <v-navigation-drawer
-                class="blue lighten-3"
+                class="grey darken-4"
                 dark
                 permanent
         >

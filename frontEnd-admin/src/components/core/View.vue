@@ -1,8 +1,8 @@
 <template>
-  <v-content class="grey lighten-3">
+  <v-content class="lighten-3">
     <div id="core-view">
       <v-fade-transition mode="out-in">
-        <router-view />
+        <router-view/>
       </v-fade-transition>
     </div>
   </v-content>

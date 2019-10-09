@@ -19,7 +19,7 @@
       {{ title }}
     </v-toolbar-title>
 
-    <v-spacer />
+    <v-spacer/>
 
     <v-toolbar-items>
       <v-row
@@ -77,11 +77,12 @@
                 :key="notification"
                 @click="onClick"
               >
-                <v-list-item-title v-text="notification" />
+                <v-list-item-title v-text="notification"/>
               </v-list-item>
             </v-list>
           </v-card>
         </v-menu>
+
 
         <v-btn
           to="/user-profile"
@@ -91,58 +92,73 @@
             mdi-account
           </v-icon>
         </v-btn>
+
+        <v-btn v-if="isAuthenticated"
+          @click="this.LOGOUT"
+          icon
+        >
+          <v-icon color="tertiary">
+            mdi-lock
+          </v-icon>
+        </v-btn>
       </v-row>
     </v-toolbar-items>
   </v-app-bar>
 </template>
 
 <script>
-  // Utilities
-  import {
-    mapMutations
-  } from 'vuex'
+    // Utilities
+    import {mapMutations,mapGetters} from 'vuex'
 
-  export default {
-    data: () => ({
-      notifications: [
-        'Mike, John responded to your email',
-        'You have 5 new tasks',
-        'You\'re now a friend with Andrew',
-        'Another Notification',
-        'Another One'
-      ],
-      title: null,
-      responsive: false
-    }),
+    export default {
+        data: () => ({
+            notifications: [
+                'Mike, John responded to your email',
+                'You have 5 new tasks',
+                'You\'re now a friend with Andrew',
+                'Another Notification',
+                'Another One'
+            ],
+            title: null,
+            responsive: false
+        }),
+        computed:{
+          ...mapGetters([
+              'isAuthenticated'
+          ])
+        },
 
-    watch: {
-      '$route' (val) {
-        this.title = val.name
-      }
-    },
+        watch: {
+            '$route'(val) {
+                this.title = val.name
+            }
+        },
 
-    mounted () {
-      this.onResponsiveInverted()
-      window.addEventListener('resize', this.onResponsiveInverted)
-    },
-    beforeDestroy () {
-      window.removeEventListener('resize', this.onResponsiveInverted)
-    },
+        mounted() {
+            this.onResponsiveInverted()
+            window.addEventListener('resize', this.onResponsiveInverted)
+        },
+        beforeDestroy() {
+            window.removeEventListener('resize', this.onResponsiveInverted)
+        },
 
-    methods: {
-      ...mapMutations('app', ['setDrawer', 'toggleDrawer']),
-      onClick () {
-        this.setDrawer(!this.$store.state.app.drawer)
-      },
-      onResponsiveInverted () {
-        if (window.innerWidth < 991) {
-          this.responsive = true
-        } else {
-          this.responsive = false
+        methods: {
+            ...mapMutations('app', ['setDrawer', 'toggleDrawer']),
+            ...mapMutations([
+                'LOGOUT'
+            ]),
+            onClick() {
+                this.setDrawer(!this.$store.state.app.drawer)
+            },
+            onResponsiveInverted() {
+                if (window.innerWidth < 991) {
+                    this.responsive = true
+                } else {
+                    this.responsive = false
+                }
+            }
         }
-      }
     }
-  }
 </script>
 
 <style>

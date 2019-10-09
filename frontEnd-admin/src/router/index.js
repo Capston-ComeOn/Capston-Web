@@ -12,16 +12,25 @@ import VueAnalytics from 'vue-analytics'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
+import store from '../store'
 // Routes
 import paths from './paths'
 
-function route (path, view, name) {
+
+const requireAuth = () => (from, to, next) => {
+  store.state.access_token ?
+    next() :
+    next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+}
+
+function route(path, view, name) {
   return {
     name: name || view,
     path,
     component: (resovle) => import(
       `@/views/${view}.vue`
-    ).then(resovle)
+      ).then(resovle),
+    beforeEnter: requireAuth()
   }
 }
 
@@ -31,16 +40,22 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: paths.map(path => route(path.path, path.view, path.name)).concat([
-    { path: '*', redirect: '/' }
+    {
+      path: '/login',
+      component: (resovle) => import(
+        `@/views/Login.vue`
+        ).then(resovle)
+    },
+    {path: '*', redirect: '/'}
   ]),
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     }
     if (to.hash) {
-      return { selector: to.hash }
+      return {selector: to.hash}
     }
-    return { x: 0, y: 0 }
+    return {x: 0, y: 0}
   }
 })
 

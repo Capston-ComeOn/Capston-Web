@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class AccountService implements UserDetailsService {
 
@@ -22,20 +24,20 @@ public class AccountService implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     public Account saveAccount(Account account) {
-
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         Account account = accountRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
         return new AccountAdapter(account);
     }
 
+    @Transactional
     public long save(AccountVO accountDto) {
         Account account = AccountAssembler.toEntity(accountDto);
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account).getId();
     }
 }
