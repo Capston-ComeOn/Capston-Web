@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
-    "eslint-loader": "^2.1.2",
+    "qs": "^6.9.0",
     "vue": "^2.6.10",
     "vue-analytics": "^5.17.0",
     "vue-chartist": "^2.2.1",

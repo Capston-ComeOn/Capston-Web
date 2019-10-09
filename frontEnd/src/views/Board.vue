@@ -1,39 +1,41 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container mt-3>
-        <h1 v-if="this.categoryList[this.categoryId-1]" class="text-center mb-3">
-            {{categoryList[categoryId-1].name}} </h1>
-        <v-divider light class="mt-3 mb-3"></v-divider>
-        <v-layout row wrap>
-            <v-flex col-sm-3>
-                <Drawer></Drawer>
-            </v-flex>
-            <v-flex col-sm-9>
-                <v-data-table
-                        :headers="headers"
-                        :items="this.articleList"
-                        :server-items-length.sync="pagination.totalSize"
-                        @pagination="onPagination"
-                        class="elevation-1"
-                >
+        <tab class="mb-3"></tab>
+        <v-layout>
+            <v-flex>
+                <v-card>
+                    <v-toolbar color="green" elevation="10">
+                        <v-toolbar-title v-if="this.categoryList[this.categoryId-1]" class="text-center pt-2">
+                            {{categoryList[categoryId-1].name}}
+                        </v-toolbar-title>
+                    </v-toolbar>
+                    <v-data-table
+                            :headers="headers"
+                            :items="this.articleList"
+                            :server-items-length.sync="pagination.totalSize"
+                            @pagination="onPagination"
+                            class="elevation-1 pt-4"
+                    >
+                        <template v-slot:body="{ items }">
+                            <tbody>
+                            <tr v-for="item in items" :key="item.id">
+                                <td>{{item.id}}</td>
+                                <td>
+                                    <router-link style="text-decoration: none;"
+                                                 :to="`/board/${item.category.id}/${item.id}`">
+                                        {{ item.title }}
+                                    </router-link>
+                                </td>
+                                <td>{{item.author.name}}</td>
+                                <td>{{item.viewer}}</td>
+                                <td>{{item.time}}</td>
+                                <td>{{item.recommend}}</td>
+                            </tr>
+                            </tbody>
+                        </template>
+                    </v-data-table>
+                </v-card>
 
-                    <template v-slot:body="{ items }">
-                        <tbody>
-                        <tr v-for="item in items" :key="item.id">
-                            <td>{{item.id}}</td>
-                            <td>
-                                <router-link style="text-decoration: none;" :to="`/board/${item.category.id}/${item.id}`">
-                                    {{ item.title }}
-                                </router-link>
-                            </td>
-                            <td>{{item.author.name}}</td>
-                            <td>{{item.viewer}}</td>
-                            <td>{{item.time}}</td>
-                            <td>{{item.recommend}}</td>
-                        </tr>
-                        </tbody>
-                    </template>
-
-                </v-data-table>
                 <div class="text-right mt-2">
                     <v-btn large dark color="green lighten-2" to="/board/write">작성하기</v-btn>
                 </div>
@@ -44,11 +46,13 @@
 
 <script>
     import Drawer from '../components/Drawer'
+    import tab from '../components/tab'
     import {mapState, mapMutations, mapActions} from 'vuex'
 
     export default {
         components: {
-            Drawer
+            Drawer,
+            tab
         },
         data() {
             return {

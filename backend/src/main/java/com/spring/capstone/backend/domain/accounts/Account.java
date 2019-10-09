@@ -12,7 +12,6 @@ public class Account {
 
     @Id
     @GeneratedValue
-    @JsonIgnore
     @Column(name = "ACCOUNT_ID")
     private Long id;
     @Length(min = 2)

@@ -29,8 +29,19 @@ public class Runner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
+        String names[] = {"김동규", "김희주", "이상훈", "곽병선", "안태회"};
+
         Account account = new Account("donggyu", "user@email.com", "123", new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
         accountService.saveAccount(account);
+
+        int index = 0;
+        for (int i = 0; i < 10; i++) {
+            for (String name : names) {
+                Account account1 = new Account(name, "user" + index + "@email.com", "123", new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
+                accountService.saveAccount(account1);
+                index++;
+            }
+        }
 
         Category category = Category.withName("학과 게시판");
         Category category1 = Category.withName("자유 게시판");

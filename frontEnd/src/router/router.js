@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home'
 import Login from '../views/Login'
+import Logout from '../views/Logout'
 import Join from '../views/Join'
 import Board from '../views/Board'
 import Read from '../components/boards/Read'
 import Write from '../components/boards/Write'
 import Update from '../components/boards/Update'
 import store from '../store'
+
 Vue.use(Router)
 
 const requireAuth = () => (from, to, next) => {
@@ -32,6 +34,10 @@ export default new Router({
         {
             path: '/join',
             component: Join
+        },
+        {
+            path: '/logout',
+            component: Logout
         },
         {
             path: '/board',
