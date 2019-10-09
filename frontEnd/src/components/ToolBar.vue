@@ -11,6 +11,7 @@
             <v-avatar class="mt-3" color="orange" size="35">
                 <span class="white--text headline">D</span>
             </v-avatar>
+
         </v-toolbar-items>
     </v-app-bar>
 </template>
