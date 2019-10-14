@@ -5,9 +5,12 @@ import Login from '../views/Login'
 import Logout from '../views/Logout'
 import Join from '../views/Join'
 import Board from '../views/Board'
+import MentoringDetail from '../views/MentoringDetail'
 import Read from '../components/boards/Read'
 import Write from '../components/boards/Write'
 import Update from '../components/boards/Update'
+import Mentoring from '../views/Mentoring'
+import Timeline from '../views/Timeline'
 import store from '../store'
 
 Vue.use(Router)
@@ -25,6 +28,19 @@ export default new Router({
             path: "/",
             name: 'Home',
             component: Home
+        },
+        {
+            path: "/timeline",
+            component: Timeline
+        },
+        {
+            path: '/mentoring',
+            name: 'Mentoring',
+            component: Mentoring
+        },
+        {
+            path:'/mentoring/detail',
+            component:MentoringDetail
         },
         {
             path: '/login',

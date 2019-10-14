@@ -10,7 +10,7 @@ const mutations = {
     LOGOUT(state) {
         state.access_token = null;
         delete localStorage.access_token;
-        delete localStorage.loginAccountId;
+        delete localStorage.email;
         setAuthInHeader(null)
         window.location.replace("/")
     },
@@ -34,7 +34,24 @@ const mutations = {
     },
     SET_MINI(state, data) {
         state.mini = data
+    },
+    SET_ACCOUNT_LIST(state, {data}) {
+        state.accountList = []
+        if (data.length > 0) {
+            state.accountList = data
+        }
+    },
+    SET_MESSAGE_LIST(state, data) {
+        state.messageList = []
+        if (data.length > 0) {
+            state.messageList = data
+        }
+    },
+    CLEAR_MESSAGE_LIST(state) {
+        state.messageList = []
+    },
+    SET_LOGIN_ACCOUNT(state, {data}) {
+        state.loginAccountId = data
     }
 }
-
 export default mutations

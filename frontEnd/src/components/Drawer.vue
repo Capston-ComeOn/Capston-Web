@@ -1,83 +1,96 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <v-card
-            height="590"
-            width="256"
+<template>
+    <v-navigation-drawer
+            v-model="drawer"
+            fixed
+            clipped
+            permanent
+            app
+            :mini-variant="this.mini"
     >
-        <v-navigation-drawer
-                class="grey darken-4"
-                dark
-                permanent
-        >
-            <v-list>
-                <v-list-group v-for="(category,index) in categoryList"
-                              no-action
-                              sub-group
-                              :key="index"
-                              @click="onCategory(category)"
-                >
-                    <template v-slot:activator>
-                        <v-list-item-content>
-                            <v-list-item-title>{{category.name}}</v-list-item-title>
-                        </v-list-item-content>
-                    </template>
-                    <!--                    <v-list-item-->
-                    <!--                            v-for="(subcategory, i) in mainCategory.subCategoryList"-->
-                    <!--                            :key="i"-->
-                    <!--                            link-->
-                    <!--                            @click="onLink(mainCategory.id,subcategory.id)"-->
-                    <!--                    >-->
-                    <!--                        <v-list-item-title v-text="subcategory.name"></v-list-item-title>-->
-                    <!--                        &lt;!&ndash;                        <v-list-item-icon>&ndash;&gt;-->
-                    <!--                        &lt;!&ndash;                            <v-icon v-text="admin[1]"></v-icon>&ndash;&gt;-->
-                    <!--                        &lt;!&ndash;                        </v-list-item-icon>&ndash;&gt;-->
-                    <!--                    </v-list-item>-->
-                </v-list-group>
 
-            </v-list>
+        <v-list v-if="isAuthenticated" dense>
+            <v-list-item
+                    @click="onCancelMini(false)"
+                    v-for="item in loginItems"
+                    :key="item.title"
+                    :to="item.link"
+            >
+                <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
 
+                <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+        <v-list v-else dense>
+            <v-list-item
+                    @click="onCancelMini(false)"
+                    v-for="item in logoutItems"
+                    :key="item.title"
+                    :to="item.link"
+            >
+                <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
 
-        </v-navigation-drawer>
-    </v-card>
+                <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+    </v-navigation-drawer>
 </template>
+
 <script>
-    import {mapState, mapMutations, mapActions} from 'vuex'
+    import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
 
     export default {
-
+        data() {
+            return {
+                drawer: true,
+                loginItems: [
+                    {title: '홈', icon: 'mdi-home-city', link: "/"},
+                    {title: '학과 연혁', icon: 'mdi-timeline-text-outline', link: "/timeline"},
+                    {title: '내 정보', icon: 'mdi-account-card-details', link: "/profile"},
+                    {title: '게시판', icon: 'mdi-book-open-variant', link: "/Board"},
+                    {title: '멘토링 ', icon: 'mdi-account-group', link: "/mentoring"},
+                    {title: '로그아웃', icon: 'mdi-lock-open-variant-outline', link: "/logout"}
+                ],
+                logoutItems: [
+                    {title: '회원가입', icon: 'mdi-account-multiple-plus', link: "/join"},
+                    {title: '로그인', icon: 'mdi-lock-outline', link: "/login"},
+                ],
+                // mini: true
+            }
+        },
         methods: {
+            onCancelMini(data) {
+                this.SET_MINI(data)
+                // this.mini = !this.mini
+            },
             ...mapActions([
-                'FETCH_CATEGORY_LIST',
                 'FETCH_ARTICLE_LIST'
             ]),
             ...mapMutations([
+                'SET_MINI',
                 'SET_CATEGORY_ID'
-            ]),
-            onCategory(category) {
-                this.SET_CATEGORY_ID(category.id)
-                this.FETCH_ARTICLE_LIST({categoryId: category.id, size: 10, page: this.page})
-            }
+            ])
         },
         computed: {
+            ...mapGetters([
+                'isAuthenticated'
+            ]),
             ...mapState([
+                'mini',
                 'categoryList',
                 'page'
             ])
-        },
-        data() {
-            return {
-                items: [
-                    {title: 'Dashboard', icon: 'mdi-view-dashboard'},
-                    {title: 'Account', icon: 'mdi-image'},
-                    {title: 'Admin', icon: 'mdi-help-box'},
-                ],
-                admins: [
-                    ['Management', 'people_outline'],
-                    ['Settings', 'settings'],
-                ]
-            }
-        },
-        mounted() {
-            this.FETCH_CATEGORY_LIST();
         }
     }
 </script>
+
+<style scoped>
+
+</style>

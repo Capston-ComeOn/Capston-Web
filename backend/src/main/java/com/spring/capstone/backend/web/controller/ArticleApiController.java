@@ -3,7 +3,7 @@ package com.spring.capstone.backend.web.controller;
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
 import com.spring.capstone.backend.domain.article.ArticleVO;
-import com.spring.capstone.backend.domain.category.CategoryService;
+import com.spring.capstone.backend.service.CategoryService;
 import com.spring.capstone.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

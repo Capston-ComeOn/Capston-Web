@@ -1,15 +1,17 @@
-package com.spring.capstone.backend.domain.category;
+package com.spring.capstone.backend.admin.service;
 
+import com.spring.capstone.backend.domain.category.Category;
+import com.spring.capstone.backend.domain.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CategoryService {
+public class AdminCategoryService {
 
     private CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public AdminCategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
@@ -23,3 +25,4 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 }
+

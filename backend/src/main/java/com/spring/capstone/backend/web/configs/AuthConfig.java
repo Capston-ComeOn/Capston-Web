@@ -42,7 +42,7 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password", "refresh_token")
                 .secret(this.passwordEncoder.encode("secret"))
                 .scopes("read", "write")
-                .accessTokenValiditySeconds(30*60)
+                .accessTokenValiditySeconds(Integer.MAX_VALUE)
                 .refreshTokenValiditySeconds(6 * 10 * 60);
 
     }

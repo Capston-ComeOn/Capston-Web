@@ -8,6 +8,7 @@
                     v-for="(category,i) in this.categoryList"
                     :key="i"
                     :href="'#tab-' + category.id"
+                    @click="onSetCategoryId(category)"
             >
                 <p>{{ category.name }}</p>
             </v-tab>
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapActions, mapMutations} from 'vuex'
 
     export default {
         computed: {
@@ -25,9 +26,17 @@
             ])
         },
         methods: {
+            ...mapMutations([
+                'SET_CATEGORY_ID'
+            ]),
             ...mapActions([
-                'FETCH_CATEGORY_LIST'
-            ])
+                'FETCH_CATEGORY_LIST',
+                'FETCH_ARTICLE_LIST'
+            ]),
+            onSetCategoryId({id}) {
+                this.SET_CATEGORY_ID(id)
+                this.FETCH_ARTICLE_LIST({categoryId: id, size: 10, page: 0})
+            }
         },
         mounted() {
             this.FETCH_CATEGORY_LIST()

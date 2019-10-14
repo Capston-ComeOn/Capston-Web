@@ -3,7 +3,7 @@
         <tab class="mb-3"></tab>
         <v-layout>
             <v-flex>
-                <v-card>
+                <v-card class="pa-3 mt-5 mb-5">
                     <v-toolbar color="green" elevation="10">
                         <v-toolbar-title v-if="this.categoryList[this.categoryId-1]" class="text-center pt-2">
                             {{categoryList[categoryId-1].name}}
@@ -45,13 +45,11 @@
 </template>
 
 <script>
-    import Drawer from '../components/Drawer'
-    import tab from '../components/tab'
+    import tab from '../components/Tab'
     import {mapState, mapMutations, mapActions} from 'vuex'
 
     export default {
         components: {
-            Drawer,
             tab
         },
         data() {
@@ -72,7 +70,6 @@
         computed: {
             ...mapState([
                 'articleList',
-                'articleSize',
                 'categoryId',
                 'categoryList'
             ]),
@@ -84,7 +81,6 @@
             ...mapActions([
                 'FETCH_ARTICLE_LIST',
                 'FETCH_ARTICLE_SIZE',
-                'FETCH_CATEGORY_LIST'
             ]),
             onPagination(pagination) {
                 if (pagination) {
@@ -101,7 +97,6 @@
                     this.pagination.totalSize = data
                     this.onPagination()
                 })
-
         }
     }
 </script>

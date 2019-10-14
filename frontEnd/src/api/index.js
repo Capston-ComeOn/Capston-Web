@@ -48,6 +48,15 @@ export const auth = {
     },
 }
 
+export const account = {
+    fetch(data) {
+        if (data && data.name.length >= 1) {
+            return request.post(`/api/accounts/search/name`, data).then((data) => data)
+        }
+        return request.get(`/api/accounts/loginId`).then((data) => data)
+    }
+}
+
 export const article = {
     fetch(data) {
         if (data.id) {
@@ -77,4 +86,13 @@ export const category = {
     fetch() {
         return request.get(`/api/article/category`).then(({data}) => data)
     },
+}
+
+export const message = {
+    fetch(data) {
+        return request.get(`/api/message/${data.from}`).then(({data}) => data)
+    },
+    post(data) {
+        return request.post(`/api/message`, data).then((data) => data)
+    }
 }

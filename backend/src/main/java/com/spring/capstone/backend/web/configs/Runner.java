@@ -33,15 +33,17 @@ public class Runner implements ApplicationRunner {
 
         Account account = new Account("donggyu", "user@email.com", "123", new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
         accountService.saveAccount(account);
+        Account account2 = new Account("sanghun", "user1@email.com", "123", new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
+        accountService.saveAccount(account2);
 
-        int index = 0;
-        for (int i = 0; i < 10; i++) {
-            for (String name : names) {
-                Account account1 = new Account(name, "user" + index + "@email.com", "123", new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
-                accountService.saveAccount(account1);
-                index++;
-            }
-        }
+//        int index = 0;
+//        for (int i = 0; i < 10; i++) {
+//            for (String name : names) {
+//                Account account1 = new Account(name, "user" + index + "@email.com", "123", new HashSet<>(Arrays.asList(AccountRoles.ADMIN, AccountRoles.USER)));
+//                accountService.saveAccount(account1);
+//                index++;
+//            }
+//        }
 
         Category category = Category.withName("학과 게시판");
         Category category1 = Category.withName("자유 게시판");

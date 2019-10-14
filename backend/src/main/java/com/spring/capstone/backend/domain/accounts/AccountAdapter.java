@@ -1,5 +1,6 @@
 package com.spring.capstone.backend.domain.accounts;
 
+import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,6 +14,7 @@ public class AccountAdapter extends User {
     public AccountAdapter(Account account) {
         super(account.getEmail(), account.getPassword(), authorities(account.getRoles()));
         this.account=account;
+
     }
 
     private static Collection<? extends GrantedAuthority> authorities(Set<AccountRoles> roles) {

@@ -24,8 +24,24 @@ const mutations = {
       state.accountList.push(content[i])
     }
   },
+  SET_ARTICLE(state, data) {
+    state.article = data
+  },
+  SET_ARTICLE_LIST(state, {content}) {
+    state.articleList = []
+    for (let i = 0; i < content.length; i++) {
+      state.articleList.push(content[i])
+    }
+  },
   SET_PAGE(state, data) {
     state.page = data
-  }
+  },
+  SET_CATEGORY_LIST(state, data) {
+    state.categoryList = data
+  },
+  SET_CATEGORY_ID(state, data) {
+    state.categoryId = data
+  },
+
 }
 export default mutations

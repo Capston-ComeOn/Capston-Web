@@ -1,103 +1,115 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
-    <v-row justify="center">
-      <v-col cols="12">
+    <v-flex class="pl-5 pr-5">
+        <tab></tab>
         <material-card
-          color="green"
-          title="Simple Table"
-          text="Here is a subtitle for this table"
+                color="green lighten-1"
+                title="게시판"
         >
-          <v-data-table
-            :headers="headers"
-            :items="items"
-            hide-default-footer
-          />
-        </material-card>
-      </v-col>
+          <v-card-title>
+            Nutrition
+            <div class="flex-grow-1"></div>
+            <v-text-field
+                    v-model="search"
+                    append-icon="search"
+                    label="Search"
+                    single-line
+                    hide-details
+            ></v-text-field>
+          </v-card-title>
+            <v-data-table
+                    :headers="headers"
+                    :items="this.articleList"
+                    :server-items-length.sync="pagination.totalSize"
+                    @pagination="onPagination"
+            >
+                <template v-slot:body="{ items }">
+                    <tbody>
+                    <tr v-for="(item,index) in items" :key="index">
+                        <td>{{item.id}}</td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.author.name}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <v-btn @click="onDelete(item)" icon>
+                                <v-icon>mdi-trash-can-outline</v-icon>
+                            </v-btn>
+                        </td>
+                    </tr>
+                    </tbody>
 
-      <v-col cols="12">
-        <material-card
-          color="green"
-          flat
-          full-width
-          title="Table on Plain Background"
-          text="Here is a subtitle for this table"
-        >
-          <v-data-table
-            :headers="headers"
-            :items="items.slice(0, 7)"
-            hide-default-footer
-          />
+                </template>
+            </v-data-table>
         </material-card>
-      </v-col>
-    </v-row>
-  </v-container>
+    </v-flex>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      headers: [
-        {
-          sortable: false,
-          text: 'Name',
-          value: 'name'
+    import {mapState, mapMutations, mapActions} from 'vuex'
+
+    export default {
+
+        data() {
+            return {
+                headers: [
+                    {text: '번호', value: 'id'},
+                    {text: '제목', value: 'title'},
+                    {text: '작성자', value: 'author.name'},
+                    {text: '조회수', value: 'viewer'},
+                    {text: '날짜', value: 'time'},
+                    {text: '추천수', value: 'recommend'},
+                    {text: '수정', value: 'action'}
+                ],
+                pagination: {
+                    totalSize: 0
+                }
+            }
         },
-        {
-          sortable: false,
-          text: 'Country',
-          value: 'country'
+        components: {
+            tab: () => import('@/components/material/Tab')
         },
-        {
-          sortable: false,
-          text: 'City',
-          value: 'city'
+        computed: {
+            ...mapState([
+                'articleList',
+                'categoryId',
+                'categoryList'
+            ]),
         },
-        {
-          sortable: false,
-          text: 'Salary',
-          value: 'salary',
-          align: 'right'
+        methods: {
+            ...mapMutations([
+                'SET_PAGE'
+            ]),
+            ...mapActions([
+                'FETCH_ARTICLE_LIST',
+                'FETCH_ARTICLE_SIZE',
+                'DESTROY_ARTICLE'
+            ]),
+            onDelete(item) {
+                const {id} = item
+                this.DESTROY_ARTICLE({id}).then(({status}) => {
+                    if(status>=100 || status<300){
+                      alert('삭제 되었습니다.')
+                      window.location.replace("table-list")
+                    }
+                })
+            },
+            onPagination(pagination) {
+                if (pagination) {
+                    const {page, itemsPerPage} = pagination
+                    this.SET_PAGE(page - 1)
+                    this.FETCH_ARTICLE_LIST({categoryId: this.categoryId, size: itemsPerPage, page: (page - 1)})
+                }
+            }
+        },
+        mounted() {
+            // 자유게시판
+            this.FETCH_ARTICLE_SIZE({categoryId: this.categoryId})
+                .then(data => {
+                    this.pagination.totalSize = data
+                    this.onPagination()
+                })
+
         }
-      ],
-      items: [
-        {
-          name: 'Dakota Rice',
-          country: 'Niger',
-          city: 'Oud-Tunrhout',
-          salary: '$35,738'
-        },
-        {
-          name: 'Minerva Hooper',
-          country: 'Curaçao',
-          city: 'Sinaai-Waas',
-          salary: '$23,738'
-        }, {
-          name: 'Sage Rodriguez',
-          country: 'Netherlands',
-          city: 'Overland Park',
-          salary: '$56,142'
-        }, {
-          name: 'Philip Chanley',
-          country: 'Korea, South',
-          city: 'Gloucester',
-          salary: '$38,735'
-        }, {
-          name: 'Doris Greene',
-          country: 'Malawi',
-          city: 'Feldkirchen in Kārnten',
-          salary: '$63,542'
-        }, {
-          name: 'Mason Porter',
-          country: 'Chile',
-          city: 'Gloucester',
-          salary: '$78,615'
-        }
-      ]
-    })
-  }
+    }
 </script>

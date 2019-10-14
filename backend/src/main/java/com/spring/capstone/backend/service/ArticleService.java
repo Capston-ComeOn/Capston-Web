@@ -6,7 +6,6 @@ import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
 import com.spring.capstone.backend.domain.article.ArticleVO;
 import com.spring.capstone.backend.domain.category.Category;
-import com.spring.capstone.backend.domain.category.CategoryService;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

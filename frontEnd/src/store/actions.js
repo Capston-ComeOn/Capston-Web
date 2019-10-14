@@ -1,10 +1,12 @@
-import {auth, article, category} from '../api'
+import {auth, article, category, message, account} from '../api'
 
 const actions = {
-    LOGIN({commit}, {username, password, grant_type}) {
+    LOGIN({commit,dispatch}, {username, password, grant_type}) {
         return auth.login({username, password, grant_type})
             .then((data) => {
-                commit('LOGIN', data)
+                const {access_token} = data
+                commit('LOGIN', {access_token})
+                dispatch('FETCH_LOGIN_ACCOUNT')
             })
     },
     ADD_ARTICLE(_, {title, contents, categoryId}) {
@@ -38,6 +40,28 @@ const actions = {
     DESTROY_ARTICLE(_, {id}) {
         return article.destroy({id})
             .then(data => data)
+    },
+    FETCH_ACCOUNT_LIST({commit}, {name}) {
+        return account.fetch({name})
+            .then(data => {
+                commit('SET_ACCOUNT_LIST', data)
+            })
+    },
+    ADD_MESSAGE(_, {from, content}) {
+        return message.post({from, content})
+            .then(data => data)
+    },
+    FETCH_MESSAGE_LIST({commit}, {from}) {
+        return message.fetch({from})
+            .then(data => {
+                commit('SET_MESSAGE_LIST', data)
+            })
+    },
+    FETCH_LOGIN_ACCOUNT({commit}) {
+        return account.fetch()
+            .then(data => {
+                commit('SET_LOGIN_ACCOUNT', data)
+            })
     }
 }
 
