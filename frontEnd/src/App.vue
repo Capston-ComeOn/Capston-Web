@@ -1,13 +1,13 @@
 <template>
     <v-app>
         <drawer></drawer>
-        <toolbar></toolbar>
-        <v-content>
+<!--        <toolbar></toolbar>-->
+        <v-content class="ma-3">
             <v-flex @click="onMini">
                 <router-view></router-view>
             </v-flex>
         </v-content>
-        <message-box v-if="showMessage" style="position:fixed; bottom:60px; right:30px;"></message-box>
+        <message-recent-contact v-show="showMessage" style="position:fixed; bottom:60px; right:30px;"></message-recent-contact>
         <v-btn @click="showMessage=!showMessage" style="position:fixed; bottom:5px; right:30px;" absolute right dark fab
                color="orange">
             <v-badge>
@@ -37,9 +37,9 @@
             }
         },
         components: {
-            toolbar: () => import('@/components/ToolBar'),
+            // toolbar: () => import('@/components/ToolBar'),
             drawer: () => import('@/components/Drawer'),
-            messageBox: () => import('@/components/message/MessageBox'),
+            messageRecentContact: () => import('@/components/message/MessageRecentContact'),
 
         }
     }

@@ -11,4 +11,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     List<Message> findByToAndFrom(Account to, Account from);
+    @Query("select m from Message m where m.to =:account Or m.from =:account ORDER BY m.created DESC")
+    List<Message> findByToOrFrom(Account account);
 }

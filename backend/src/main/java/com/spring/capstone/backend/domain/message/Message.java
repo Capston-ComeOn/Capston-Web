@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
+
 @Entity
 public class Message {
 
@@ -27,7 +28,7 @@ public class Message {
 
     private LocalDateTime created;
 
-    private Message() {
+    public Message() {
 
     }
 
@@ -35,11 +36,11 @@ public class Message {
         return new Message(to, from, content);
     }
 
-    private Message(Account to, Account from, @NotEmpty String content) {
+    public Message(Account to, Account from, @NotEmpty String content) {
         this.to = to;
         this.from = from;
         this.content = content;
-        this.created=LocalDateTime.now();
+        this.created = LocalDateTime.now();
     }
 
     public Long getId() {

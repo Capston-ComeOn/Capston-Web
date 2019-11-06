@@ -10,8 +10,9 @@
                 tile
         >
             <v-img
+                    v-if="author.imgSrc"
                     height="100%"
-                    src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
+                    :src="`http://localhost:8090/api/accounts/download?fileName=${author.imgSrc}`"
             >
                 <v-row
                         align="end"
@@ -22,23 +23,15 @@
                             class="pa-0"
                             cols="12"
                     >
-                        <v-avatar
-                                class="profile"
-                                color="grey"
-                                size="164"
-                                tile
-                        >
-                            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
-                        </v-avatar>
                     </v-col>
-                    <v-col class="py-0">
+                    <v-col class="py-0 text-right">
                         <v-list-item
                                 color="rgba(0, 0, 0, .4)"
                                 dark
                         >
                             <v-list-item-content>
-                                <v-list-item-title class="title">Marcus Obrien</v-list-item-title>
-                                <v-list-item-subtitle>Network Engineer</v-list-item-subtitle>
+                                <v-list-item-title class="title">{{author.name}}</v-list-item-title>
+                                <v-list-item-subtitle>{{author.studentId}}</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
                     </v-col>
@@ -51,14 +44,15 @@
 
 <script>
     export default {
+        props: ['author'],
         data() {
             return {
                 dialog: true
             }
         },
         watch: {
-            dialog (val) {
-                if(val===false){
+            dialog(val) {
+                if (val === false) {
                     this.$emit('@change')
                 }
             }

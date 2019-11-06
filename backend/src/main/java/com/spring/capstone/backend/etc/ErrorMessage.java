@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.web.configs;
+package com.spring.capstone.backend.etc;
 
 public class ErrorMessage {
     private String message;

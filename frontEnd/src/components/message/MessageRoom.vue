@@ -7,12 +7,11 @@
                 <v-icon>mdi-close</v-icon>
             </v-btn>
         </v-toolbar>
-        <v-card style="overflow:scroll;" max-height="550px">
+        <v-card style="overflow:scroll;" min-height="500px" max-height="500px">
             <message v-for="(message,index) in this.messageList" :key="index" :message="message"/>
             <form class="row ma-3">
                 <v-text-field xs8
                               v-model="content"
-                              :counter="100"
                               required
                 ></v-text-field>
                 <v-btn color="blue lighten-3" xs4 class="ml-2 mt-5" @click="onSubmit()">submit</v-btn>

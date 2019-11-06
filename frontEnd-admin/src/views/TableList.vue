@@ -61,6 +61,9 @@
                     {text: '추천수', value: 'recommend'},
                     {text: '수정', value: 'action'}
                 ],
+                data:[
+                    {text:'오늘 백반메뉴 아는사람!'}
+                ],
                 pagination: {
                     totalSize: 0
                 }

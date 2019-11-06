@@ -1,12 +1,15 @@
-package com.spring.capstone.backend.domain.message;
+package com.spring.capstone.backend.service.dto;
 
 
-public class MessageVO {
+public class MessageDto {
 
     private long from;
     private String content;
 
-    public MessageVO(long from, String content) {
+    public MessageDto() {
+    }
+
+    public MessageDto(long from, String content) {
         this.from = from;
         this.content = content;
     }

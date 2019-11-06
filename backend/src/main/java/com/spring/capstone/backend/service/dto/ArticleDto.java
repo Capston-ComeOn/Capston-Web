@@ -1,34 +1,49 @@
 package com.spring.capstone.backend.service.dto;
 
-import com.spring.capstone.backend.domain.article.ArticleContents;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ArticleDto {
-    private long articleId;
-    private ArticleContents articleContents;
-    private long authorId;
-    private String authorName;
 
-    public ArticleDto(long articleId, ArticleContents articleContents, long authorId, String authorName) {
-        this.articleId = articleId;
-        this.articleContents = articleContents;
-        this.authorId = authorId;
-        this.authorName = authorName;
+    @NotEmpty
+    private String title;
+
+    @NotEmpty
+    private String contents;
+
+    @NotNull
+    private Long categoryId;
+
+    public ArticleDto() {
     }
 
-    public long getArticleId() {
-        return articleId;
+    public ArticleDto(@NotEmpty String title, @NotEmpty String contents, @NotNull Long categoryId) {
+        this.title = title;
+        this.contents = contents;
+        this.categoryId = categoryId;
     }
 
-    public ArticleContents getArticleContents() {
-        return articleContents;
+    public String getTitle() {
+        return title;
     }
 
-    public long getAuthorId() {
-        return authorId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }
-

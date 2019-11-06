@@ -1,15 +1,16 @@
 <template>
-    <v-container v-if="article" mt-3>
-        <v-layout row wrap>
+    <v-container v-if="article" mt-3 class="mx-auto" style="max-width: 1000px">
+        <v-layout row wrap class="mb-5">
             <v-flex xs12>
                 <v-label>작성자</v-label>
                 <v-row/>
                 <v-list>
                     <v-list-item>
-                        <v-list-item-avatar color="indigo" size="64">
+                        <v-list-item-avatar v-if="article.author.imgSrc" color="grey" size="64">
                             <v-img @click="dialog=true" style="cursor:pointer"
-                                   src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"/>
+                                   :src="`http://localhost:8090/api/accounts/download?fileName=${article.author.imgSrc}`"/>
                         </v-list-item-avatar>
+                        <v-icon v-else size="64" class="mr-2">mdi-account-circle</v-icon>
                         <v-list-item-content>
                             <v-list-item-title v-text="article.author.name"/>
                         </v-list-item-content>
@@ -29,7 +30,7 @@
             <v-flex xs12>
                 <v-label>내용</v-label>
                 <v-card min-height="300px" class="mb-2">
-                    <viewer v-model="contents"/>
+                    <viewer v-model="contents" class="pa-5"/>
                 </v-card>
             </v-flex>
             <v-flex class="text-right text-xs-right">
@@ -38,16 +39,20 @@
                 <v-btn @click="onDelete" large dark color="red lighten-1">삭제</v-btn>
             </v-flex>
         </v-layout>
-        <ProfileCard v-if="dialog" v-on:@change="onFalseDialog"/>
+        <div class="comments pt-5">
+            <vue-disqus shortname="comeon-comunity"></vue-disqus>
+        </div>
+        <ProfileCard v-if="dialog" :author="article.author" v-on:@change="onFalseDialog"/>
     </v-container>
 </template>
 
 <script>
-    import ProfileCard from "../ProfileCard";
+    import ProfileCard from "../../components/ProfileCard";
     import {Viewer} from '@toast-ui/vue-editor'
     import {mapState, mapActions} from "vuex"
 
     export default {
+
         data() {
             return {
                 dialog: false,

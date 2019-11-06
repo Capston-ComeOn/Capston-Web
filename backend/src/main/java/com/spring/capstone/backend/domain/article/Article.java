@@ -2,6 +2,7 @@ package com.spring.capstone.backend.domain.article;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.category.Category;
+import com.spring.capstone.backend.service.dto.ArticleDto;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -31,24 +32,24 @@ public class Article {
     private Category category;
 
 
-    private Article(Account author, ArticleVO articleVO, Category category) {
-        this.title = articleVO.getTitle();
-        this.contents = articleVO.getContents();
+    private Article(Account author, ArticleDto articleDto, Category category) {
+        this.title = articleDto.getTitle();
+        this.contents = articleDto.getContents();
         this.author = author;
         this.category = category;
     }
 
-    private Article() {
+    public Article() {
 
     }
 
-    public static Article of(Account author, ArticleVO articleVO, Category category) {
-        return new Article(author, articleVO, category);
+    public static Article of(Account author, ArticleDto articleDto, Category category) {
+        return new Article(author, articleDto, category);
     }
 
-    public void update(ArticleVO articleVO) {
-        this.title = articleVO.getTitle();
-        this.contents = articleVO.getContents();
+    public void update(ArticleDto articleDto) {
+        this.title = articleDto.getTitle();
+        this.contents = articleDto.getContents();
     }
 
     public long getId() {

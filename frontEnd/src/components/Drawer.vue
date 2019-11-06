@@ -1,46 +1,76 @@
 <template>
-    <v-navigation-drawer
-            v-model="drawer"
-            fixed
-            clipped
-            permanent
-            app
-            :mini-variant="this.mini"
-    >
+    <v-flex>
+        <v-app-bar clipped-left app color="white" class="elevation-2">
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-toolbar-title>컴정 온라인 게시판, 컴온!</v-toolbar-title>
+            <div class="flex-grow-1"></div>
+            <v-toolbar-items class="hidden-xs-and-down">
 
-        <v-list v-if="isAuthenticated" dense>
-            <v-list-item
-                    @click="onCancelMini(false)"
-                    v-for="item in loginItems"
-                    :key="item.title"
-                    :to="item.link"
-            >
-                <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
+                <v-menu class="ml-2" offset-y>
+                    <template v-if="this.account.imgSrc" v-slot:activator="{ on }">
+                        <v-avatar v-on="on" class="mt-3" size="45" style=" border: 2px solid;">
+                            <img :src="`http://localhost:8090/api/accounts/download?fileName=${account.imgSrc}`"/>
+                        </v-avatar>
+                    </template>
+                    <template v-else v-slot:activator="{ on }">
+                        <v-avatar v-on="on" class="mt-2 pl-5">
+                            <v-icon size="45">mdi-account-circle</v-icon>
+                        </v-avatar>
+                    </template>
 
-                <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-        </v-list>
-        <v-list v-else dense>
-            <v-list-item
-                    @click="onCancelMini(false)"
-                    v-for="item in logoutItems"
-                    :key="item.title"
-                    :to="item.link"
-            >
-                <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
+                    <v-list>
+                        <v-list-item
+                                v-for="(item, index) in items"
+                                :key="index"
+                        >
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
 
-                <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-        </v-list>
-    </v-navigation-drawer>
+
+            </v-toolbar-items>
+
+        </v-app-bar>
+        <v-navigation-drawer
+                v-model="drawer"
+                absolute
+                temporary
+                expand-on-hover
+        >
+
+            <v-list v-if="isAuthenticated" nav dense>
+                <v-list-item
+                        v-for="item in loginItems"
+                        :key="item.title"
+                        :to="item.link"
+                >
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+            <v-list v-else dense>
+                <v-list-item
+                        v-for="item in logoutItems"
+                        :key="item.title"
+                        :to="item.link"
+                >
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+    </v-flex>
 </template>
 
 <script>
@@ -49,7 +79,7 @@
     export default {
         data() {
             return {
-                drawer: true,
+                drawer: false,
                 loginItems: [
                     {title: '홈', icon: 'mdi-home-city', link: "/"},
                     {title: '학과 연혁', icon: 'mdi-timeline-text-outline', link: "/timeline"},
@@ -62,31 +92,36 @@
                     {title: '회원가입', icon: 'mdi-account-multiple-plus', link: "/join"},
                     {title: '로그인', icon: 'mdi-lock-outline', link: "/login"},
                 ],
-                // mini: true
+                items: [
+                    {title: '내 정보'},
+                    {title: '쪽지함'},
+                    {title: 'Click Me'},
+                    {title: 'Click Me 2'},
+                ]
             }
         },
         methods: {
-            onCancelMini(data) {
-                this.SET_MINI(data)
-                // this.mini = !this.mini
-            },
             ...mapActions([
-                'FETCH_ARTICLE_LIST'
+                'FETCH_ARTICLE_LIST',
+                'FETCH_LOGIN_ACCOUNT'
             ]),
             ...mapMutations([
-                'SET_MINI',
                 'SET_CATEGORY_ID'
             ])
         },
+
         computed: {
             ...mapGetters([
                 'isAuthenticated'
             ]),
             ...mapState([
-                'mini',
-                'categoryList',
-                'page'
+                'account'
             ])
+        },
+        mounted() {
+            if (this.isAuthenticated) {
+                this.FETCH_LOGIN_ACCOUNT()
+            }
         }
     }
 </script>

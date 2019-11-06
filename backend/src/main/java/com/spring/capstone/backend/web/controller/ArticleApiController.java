@@ -2,7 +2,7 @@ package com.spring.capstone.backend.web.controller;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
-import com.spring.capstone.backend.domain.article.ArticleVO;
+import com.spring.capstone.backend.service.dto.ArticleDto;
 import com.spring.capstone.backend.service.CategoryService;
 import com.spring.capstone.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class ArticleApiController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createArticle(@CurrentAccount Account account, @RequestBody @Valid ArticleVO articleVO, Errors errors) {
+    public ResponseEntity<Object> createArticle(@CurrentAccount Account account, @RequestBody @Valid ArticleDto articleDto, Errors errors) {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -72,7 +72,7 @@ public class ArticleApiController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         try {
-            articleService.save(account.getEmail(), articleVO);
+            articleService.save(account.getEmail(), articleDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -80,7 +80,7 @@ public class ArticleApiController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateArticle(@CurrentAccount Account account, @PathVariable Long id, @RequestBody @Valid ArticleVO articleVO, Errors errors) {
+    public ResponseEntity<Object> updateArticle(@CurrentAccount Account account, @PathVariable Long id, @RequestBody @Valid ArticleDto articleDto, Errors errors) {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -88,7 +88,7 @@ public class ArticleApiController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         try {
-            long save = articleService.update(id, articleVO);
+            long save = articleService.update(id, articleDto);
             return new ResponseEntity<>(save, HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

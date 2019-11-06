@@ -1,18 +1,22 @@
 <template>
-    <v-alert v-if="this.loginAccountId===message.to.id "
+    <v-alert v-if="this.account.id===message.to.id "
              text
              color="orange lighten-1"
              xs12
+             style="max-width: 400px; min-width: 400px;"
     >
         <v-list subheader>
             <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar v-if="!message.to.imgSrc">
                     <v-icon size="60">mdi-account-circle</v-icon>
                 </v-list-item-avatar>
+                <v-avatar v-else size="60" class="mr-2">
+                    <img :src="`http://localhost:8090/api/accounts/download?fileName=${message.to.imgSrc}`"/>
+                </v-avatar>
+
                 <v-list-item-content>
-                    <v-list-item-subtitle v-html="message.to.name"></v-list-item-subtitle>
-                    <v-list-item-subtitle v-html="formatDate(message.created)"></v-list-item-subtitle>
-                    <v-list-item-title style="max-width: 350px" v-html="message.content"></v-list-item-title>
+                    <v-list-item-subtitle v-html="`${message.to.name} (나)`"></v-list-item-subtitle>
+                    {{message.content}}
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -22,16 +26,19 @@
             text
             color="green lighten-1"
             xs12
+            style="max-width: 400px; min-width: 400px;"
     >
         <v-list subheader>
             <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar v-if="!message.to.imgSrc">
                     <v-icon size="60">mdi-account-circle</v-icon>
                 </v-list-item-avatar>
+                <v-avatar v-else size="60" class="mr-2">
+                    <img :src="`http://localhost:8090/api/accounts/download?fileName=${message.to.imgSrc}`"/>
+                </v-avatar>
                 <v-list-item-content>
                     <v-list-item-subtitle v-html="message.to.name"></v-list-item-subtitle>
-                    <v-list-item-subtitle v-html="formatDate(message.created)"></v-list-item-subtitle>
-                    <v-list-item-title style="max-width: 350px" v-html="message.content"></v-list-item-title>
+                    {{message.content}}
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -46,7 +53,7 @@
         name: "Message",
         computed: {
             ...mapState([
-                'loginAccountId'
+                'account'
             ])
         },
         methods: {

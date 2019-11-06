@@ -18,17 +18,10 @@
       />
     </template>
 
-    <v-list-item two-line>
-      <v-list-item-avatar color="white">
-        <v-img
-          src="https://cdn.vuetifyjs.com/images/logos/v.png"
-          height="34"
-          contain
-        />
-      </v-list-item-avatar>
+    <v-list-item class="text-center"two-line>
 
       <v-list-item-title class="title">
-        VUETIFY MD
+        관리자 메뉴
       </v-list-item-title>
     </v-list-item>
 
@@ -51,22 +44,6 @@
         <v-list-item-title v-text="link.text" />
       </v-list-item>
     </v-list>
-
-    <template v-slot:append>
-      <v-list nav>
-        <v-list-item
-          to="/upgrade"
-        >
-          <v-list-item-action>
-            <v-icon>mdi-package-up</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-title class="font-weight-light">
-            Upgrade To PRO
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </template>
   </v-navigation-drawer>
 </template>
 
@@ -94,32 +71,27 @@
         {
           to: '/user-profile',
           icon: 'mdi-account',
-          text: 'User Profile'
+          text: 'User'
         },
         {
           to: '/table-list',
           icon: 'mdi-clipboard-outline',
-          text: 'Table List'
+          text: 'Board'
         },
         {
           to: '/typography',
-          icon: 'mdi-format-font',
-          text: 'Typography'
-        },
-        {
-          to: '/icons',
-          icon: 'mdi-chart-bubble',
-          text: 'Icons'
-        },
-        {
-          to: '/maps',
-          icon: 'mdi-map-marker',
-          text: 'Maps'
+          icon: 'mdi-chart-line',
+          text: 'Traffic'
         },
         {
           to: '/notifications',
           icon: 'mdi-bell',
           text: 'Notifications'
+        },
+        {
+          to: '/maps',
+          icon: 'mdi-map-marker',
+          text: 'Maps'
         }
       ]
     }),

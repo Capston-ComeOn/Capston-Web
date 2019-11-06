@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.service.dto;
+package com.spring.capstone.backend.etc;
 
 public class AuthenticationAccountDto {
     private String email;

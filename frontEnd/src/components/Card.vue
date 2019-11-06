@@ -19,19 +19,9 @@
                        height="194"
                 ></v-img>
             </router-link>
-            <v-card-text>
+            <v-card-text class="ma-5">
                 {{item.content}}
             </v-card-text>
-
-            <v-card-actions>
-                <div class="flex-grow-1"></div>
-                <v-btn icon>
-                    <v-icon>mdi-heart</v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon>mdi-share-variant</v-icon>
-                </v-btn>
-            </v-card-actions>
         </v-card>
     </v-hover>
 </template>

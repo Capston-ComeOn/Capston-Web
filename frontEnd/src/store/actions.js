@@ -1,7 +1,7 @@
 import {auth, article, category, message, account} from '../api'
 
 const actions = {
-    LOGIN({commit,dispatch}, {username, password, grant_type}) {
+    LOGIN({commit, dispatch}, {username, password, grant_type}) {
         return auth.login({username, password, grant_type})
             .then((data) => {
                 const {access_token} = data
@@ -57,10 +57,22 @@ const actions = {
                 commit('SET_MESSAGE_LIST', data)
             })
     },
+    FETCH_RECENT_CONTACT_LIST({commit},) {
+        return message.fetch()
+            .then(data => {
+                commit('SET_RECENT_MESSAGE_LIST', data)
+            })
+    },
     FETCH_LOGIN_ACCOUNT({commit}) {
         return account.fetch()
             .then(data => {
                 commit('SET_LOGIN_ACCOUNT', data)
+            })
+    },
+    ADD_ACCOUNT_FILE({commit}, data) {
+        return account.imageUpload(data)
+            .then(() => {
+                commit('CLEAR_ACCOUNT_FILE')
             })
     }
 }

@@ -4,14 +4,18 @@ import Home from '../views/Home'
 import Login from '../views/Login'
 import Logout from '../views/Logout'
 import Join from '../views/Join'
-import Board from '../views/Board'
-import MentoringDetail from '../views/MentoringDetail'
-import Read from '../components/boards/Read'
-import Write from '../components/boards/Write'
-import Update from '../components/boards/Update'
-import Mentoring from '../views/Mentoring'
+import Board from '../views/boards/Board'
+import MentoringDetail from '../views/mentoring/MentoringDetail'
+import MentoringWrite from '../views/mentoring/MentoringWrite'
+import Read from '../views/boards/ReadBoard'
+import Write from '../views/boards/BoardWrite'
+import Update from '../views/boards/BoardUpdate'
+import Mentoring from '../views/mentoring/Mentoring'
+// import MentoringView from '../views/MentoringView'
 import Timeline from '../views/Timeline'
+import Profile from '../views/Profile'
 import store from '../store'
+
 
 Vue.use(Router)
 
@@ -30,19 +34,6 @@ export default new Router({
             component: Home
         },
         {
-            path: "/timeline",
-            component: Timeline
-        },
-        {
-            path: '/mentoring',
-            name: 'Mentoring',
-            component: Mentoring
-        },
-        {
-            path:'/mentoring/detail',
-            component:MentoringDetail
-        },
-        {
             path: '/login',
             name: 'Login',
             component: Login
@@ -52,8 +43,34 @@ export default new Router({
             component: Join
         },
         {
+            path: "/timeline",
+            component: Timeline,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/mentoring',
+            component: Mentoring,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/mentoring/detail',
+            component: MentoringDetail,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/mentoring/write',
+            component: MentoringWrite,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/profile',
+            component: Profile,
+            beforeEnter: requireAuth()
+        },
+        {
             path: '/logout',
-            component: Logout
+            component: Logout,
+            beforeEnter: requireAuth()
         },
         {
             path: '/board',

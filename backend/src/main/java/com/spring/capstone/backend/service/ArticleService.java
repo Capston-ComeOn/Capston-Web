@@ -4,7 +4,7 @@ import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
-import com.spring.capstone.backend.domain.article.ArticleVO;
+import com.spring.capstone.backend.service.dto.ArticleDto;
 import com.spring.capstone.backend.domain.category.Category;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.data.domain.Page;
@@ -25,13 +25,13 @@ public class ArticleService {
     }
 
     @Transactional
-    public long save(String email, ArticleVO articleVO) {
+    public long save(String email, ArticleDto articleDto) {
         Account account = findByEmail(email);
 
-        long categoryId = articleVO.getCategoryId();
+        long categoryId = articleDto.getCategoryId();
         Category category = categoryService.getCategory(categoryId);
 
-        Article article = Article.of(account, articleVO, category);
+        Article article = Article.of(account, articleDto, category);
         return articleRepository.save(article).getId();
     }
 
@@ -48,9 +48,9 @@ public class ArticleService {
     }
 
     @Transactional
-    public long update(Long articleId, ArticleVO articleVO) {
+    public long update(Long articleId, ArticleDto articleDto) {
         Article article = articleRepository.findById(articleId).orElseThrow(NotFoundDataException::new);
-        article.update(articleVO);
+        article.update(articleDto);
         articleRepository.save(article);
         return articleId;
     }

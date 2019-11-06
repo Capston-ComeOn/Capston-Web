@@ -24,7 +24,7 @@
                             required
                     ></v-text-field>
                     <div class="text-right mt-2">
-                        <v-btn large dark color="green lighten-2">회원가입</v-btn>
+                        <v-btn large dark color="green lighten-2" @click="onTest()">회원가입</v-btn>
                     </div>
                 </form>
             </v-flex>
@@ -34,7 +34,12 @@
 
 <script>
     export default {
-        name: "join"
+        name: "join",
+        methods:{
+            onTest(){
+                alert('회원가입')
+            }
+        }
     }
 </script>
 

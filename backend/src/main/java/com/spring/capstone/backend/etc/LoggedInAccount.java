@@ -1,4 +1,4 @@
-package com.spring.capstone.backend.service.dto;
+package com.spring.capstone.backend.etc;
 
 public class LoggedInAccount {
     public static final String SESSION_USER = "sessionAccount";

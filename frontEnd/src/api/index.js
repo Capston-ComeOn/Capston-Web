@@ -6,6 +6,9 @@ const domain = 'http://localhost:8090'
 const Unauthorized = 401
 
 const onUnauthorized = () => {
+    if(localStorage.access_token) {
+        delete localStorage.access_token;
+    }
     router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
 }
 
@@ -34,8 +37,14 @@ const request = {
                 password: 'secret'
             }
         })
+    },
+    fileUpload(path, data) {
+        return axios.post(`${domain + path}`, data, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
     }
 }
+
 
 export const setAuthInHeader = token => {
     axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
@@ -53,7 +62,10 @@ export const account = {
         if (data && data.name.length >= 1) {
             return request.post(`/api/accounts/search/name`, data).then((data) => data)
         }
-        return request.get(`/api/accounts/loginId`).then((data) => data)
+        return request.get(`/api/accounts/login`).then((data) => data)
+    },
+    imageUpload(data) {
+        return request.fileUpload(`/api/accounts/files`, data.formData)
     }
 }
 
@@ -90,7 +102,11 @@ export const category = {
 
 export const message = {
     fetch(data) {
+        if (!data) {
+            return request.get(`/api/message`).then(({data}) =>data)
+        }
         return request.get(`/api/message/${data.from}`).then(({data}) => data)
+
     },
     post(data) {
         return request.post(`/api/message`, data).then((data) => data)

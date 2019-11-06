@@ -3,7 +3,7 @@ package com.spring.capstone.backend.service;
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountAdapter;
 import com.spring.capstone.backend.domain.accounts.AccountRepository;
-import com.spring.capstone.backend.domain.accounts.AccountVO;
+import com.spring.capstone.backend.service.dto.AccountResponseDto;
 import com.spring.capstone.backend.service.assembler.AccountAssembler;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,6 @@ public class AccountService implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     public Account saveAccount(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
     }
 
@@ -37,8 +36,8 @@ public class AccountService implements UserDetailsService {
     }
 
     @Transactional
-    public long save(AccountVO accountDto) {
-        Account account = AccountAssembler.toEntity(accountDto);
+    public long save(AccountResponseDto accountResponseDto) {
+        Account account = AccountAssembler.toEntity(accountResponseDto);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account).getId();
     }

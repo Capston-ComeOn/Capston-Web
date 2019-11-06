@@ -34,8 +34,6 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
-
-
         // h2-console
         http
                 .csrf()

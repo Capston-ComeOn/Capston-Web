@@ -18,7 +18,8 @@ public class Account {
     private String name;
     @Column(unique = true)
     private String email;
-    @JsonIgnore
+    @Column(unique = true)
+    private String studentId;
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -26,14 +27,19 @@ public class Account {
     @JsonIgnore
     private Set<AccountRoles> roles;
 
-    private Account() {
+    private String imgSrc;
+
+    public Account() {
+
     }
 
-    public Account(String name, String email, String password, Set<AccountRoles> roles) {
+    public Account(String name, String email, String studentId, String password, String imgSrc, Set<AccountRoles> roles) {
         this.name = name;
         this.email = email;
+        this.studentId = studentId;
         this.password = password;
         this.roles = roles;
+        this.imgSrc = imgSrc;
     }
 
     public Long getId() {
@@ -46,6 +52,10 @@ public class Account {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getStudentId() {
+        return studentId;
     }
 
     @Override
@@ -75,7 +85,11 @@ public class Account {
         return roles;
     }
 
-    public void setRoles(Set<AccountRoles> roles) {
-        this.roles = roles;
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 }

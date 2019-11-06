@@ -1,8 +1,9 @@
 const state = {
-    loginAccountId:[],
+    account: [],
     access_token: null,
     article: null,
     accountList: [],
+    recentMessageList:[],
     messageList: [],
     articleList: [],
     categoryId: 2,   // 자유 게시판 defalut

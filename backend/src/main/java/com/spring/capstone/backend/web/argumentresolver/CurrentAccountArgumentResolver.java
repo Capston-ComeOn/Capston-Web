@@ -1,7 +1,7 @@
 //package com.spring.capstone.backend.web.argumentresolver;
 //
 //import com.spring.capstone.backend.domain.accounts.CurrentAccount;
-//import com.spring.capstone.backend.service.dto.LoggedInAccount;
+//import com.spring.capstone.backend.etc.LoggedInAccount;
 //import com.spring.capstone.backend.service.exception.InvalidAccountException;
 //import org.springframework.core.MethodParameter;
 //import org.springframework.stereotype.Component;

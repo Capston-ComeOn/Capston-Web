@@ -47,11 +47,20 @@ const mutations = {
             state.messageList = data
         }
     },
+    SET_RECENT_MESSAGE_LIST(state, data) {
+        state.recentMessageList = []
+        if (data.length > 0) {
+            state.recentMessageList = data
+        }
+    },
     CLEAR_MESSAGE_LIST(state) {
         state.messageList = []
     },
     SET_LOGIN_ACCOUNT(state, {data}) {
-        state.loginAccountId = data
-    }
+        state.account = data
+    },
+    CLEAR_ACCOUNT_FILE(state) {
+        state.account.accountFile = []
+    },
 }
 export default mutations
