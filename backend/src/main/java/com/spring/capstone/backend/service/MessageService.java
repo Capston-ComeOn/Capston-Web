@@ -10,6 +10,8 @@ import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -39,31 +41,25 @@ public class MessageService {
     }
 
     public List<MessageResponseDto> getRecentContactList(Account account) {
-        return messageRepository.findByRecentContacts(account.getId());
+        List<Message> messages = messageRepository.findByRecentContacts(account.getId());
+        List<MessageResponseDto> list = new ArrayList<>();
+
+        //TODO 쿼리로 끝낼 것
+        HashMap<Long, Long> map = new HashMap<>();
+        for (Message m : messages) {
+
+            Account to = m.getTo();
+            Account from = m.getFrom();
+
+            Account key = account.getId() == to.getId() ? from : to;
+            if (!map.containsKey(key.getId())) {
+                map.put(key.getId(), key.getId());
+                list.add(MessageResponseDto.of(m));
+            }
+        }
+
+        return list;
     }
 }
 
 
-//    List<MessageResponse> list = new ArrayList<>();
-//    HashMap<Long, Long> map = new HashMap<>();
-//
-//        for (Message message : messages) {
-//
-//                Account to = message.getTo();
-//                Account from = message.getFrom();
-//
-//                Account key = account.getId() == to.getId() ? from : to;
-//
-//                if (!map.containsKey(key.getId())) {
-//                map.put(key.getId(), key.getId());
-//                MessageResponse messageResponse = new MessageResponse(
-//                message.getId(),
-//                key,
-//                message.getContent(),
-//                message.getCreated()
-//                );
-//                list.add(messageResponse);
-//                }
-//                }
-//
-//                return list;

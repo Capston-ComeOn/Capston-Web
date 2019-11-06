@@ -14,19 +14,20 @@ public class MessageRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<MessageResponseDto> findByToAndFrom(Long toId, Long fromId) {
-        String jpql = "select m from Message m join fetch m.to t join fetch m.from f where (t.id=:toId AND f.id=:fromId) OR (t.id=:fromId AND f.id=:toId) order by m.created";
+    public List<MessageResponseDto> findByToAndFrom(Long to, Long from) {
+        String jpql = "select m from Message m join fetch m.to t join fetch m.from f where (t.id=:to AND f.id=:from) OR (t.id=:from AND f.id=:to) order by m.created";
         return em.createQuery(jpql, Message.class)
-                .setParameter("toId", toId)
-                .setParameter("fromId", fromId)
+                .setParameter("to", to)
+                .setParameter("from", from)
                 .getResultList().stream().map(MessageResponseDto::of).collect(Collectors.toList());
     }
 
-    public List<MessageResponseDto> findByRecentContacts(Long id) {
+    public List<Message> findByRecentContacts(Long id) {
+        // TODO 최적화
         String jpql = "select m from Message m join fetch m.to t join fetch m.from f where (t.id=:id OR f.id=:id) order by m.created desc ";
         return em.createQuery(jpql, Message.class)
                 .setParameter("id", id)
-                .getResultList().stream().map(MessageResponseDto::of).collect(Collectors.toList());
+                .getResultList();
     }
 
     public Long save(Message message) {

@@ -20,7 +20,7 @@ public class AccountResponseDto {
     }
 
     public static AccountResponseDto withAccount(Account account) {
-        return new AccountResponseDto(account.getId(),account.getName(), account.getStudentId(), account.getEmail());
+        return new AccountResponseDto(account.getId(), account.getName(), account.getEmail(), account.getStudentId());
     }
 
     public AccountResponseDto(Long id, @NotEmpty String name, @NotBlank String email, @NotEmpty String studentId) {
