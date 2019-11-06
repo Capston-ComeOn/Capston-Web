@@ -15,8 +15,9 @@
                 </v-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-subtitle v-html="`${message.to.name} (나)`"></v-list-item-subtitle>
+                    <v-list-item-subtitle v-html="`${message.to.name} (나) ${message.created}`"></v-list-item-subtitle>
                     {{message.content}}
+
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -37,7 +38,7 @@
                     <img :src="`http://localhost:8090/api/accounts/download?fileName=${message.to.imgSrc}`"/>
                 </v-avatar>
                 <v-list-item-content>
-                    <v-list-item-subtitle v-html="message.to.name"></v-list-item-subtitle>
+                    <v-list-item-subtitle v-html="`${message.to.name} (상대방) ${message.created}`"></v-list-item-subtitle>
                     {{message.content}}
                 </v-list-item-content>
             </v-list-item>

@@ -3,6 +3,7 @@ package com.spring.capstone.backend.web.controller;
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
 import com.spring.capstone.backend.service.AccountService;
+import com.spring.capstone.backend.service.dto.AccountRequestDto;
 import com.spring.capstone.backend.service.dto.AccountResponseDto;
 import org.springframework.context.annotation.Description;
 import org.springframework.core.io.FileSystemResource;
@@ -27,17 +28,16 @@ public class AccountApiController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity createAccount(@RequestBody AccountResponseDto accountResponseDto) {
-        accountService.save(accountResponseDto);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity createAccount(@RequestBody AccountRequestDto accountRequestDto) {
+        return new ResponseEntity(accountService.save(accountRequestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/login")
     public ResponseEntity getLoginAccount(@CurrentAccount Account account) {
-        if (account == null) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-        Account loginAccount;
+
+        if (isLogin(account)) return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
+        AccountResponseDto loginAccount;
         try {
             loginAccount = accountService.getAccountWithEmail(account.getEmail());
         } catch (Exception e) {
@@ -47,14 +47,11 @@ public class AccountApiController {
         return new ResponseEntity(loginAccount, HttpStatus.OK);
     }
 
-
     @PostMapping("/search/name")
     public ResponseEntity searchWithName(@CurrentAccount Account account, @RequestBody AccountResponseDto accountResponseDto) {
-        if (account == null) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
+        if (isLogin(account)) return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
-        List<Account> accounts;
+        List<AccountResponseDto> accounts;
         try {
             accounts = accountService.searchWithName(accountResponseDto.getName());
         } catch (Exception e) {
@@ -69,7 +66,7 @@ public class AccountApiController {
 
         String path = "/Users/kimdonggyu/Desktop/Capston-Web/backend/src/main/resources/static/upload";
 
-        Account loginAccount = accountService.getAccountWithEmail(account.getEmail());
+        AccountResponseDto loginAccount = accountService.getAccountWithEmail(account.getEmail());
 
         for (MultipartFile multipartFile : uploadFile) {
             String originalFilename = multipartFile.getOriginalFilename();
@@ -77,8 +74,8 @@ public class AccountApiController {
 
             try {
                 multipartFile.transferTo(new File(path, uploadFileName));
-                loginAccount.setImgSrc(uploadFileName);
-                accountService.saveAccount(loginAccount);
+// TODO                loginAccount.setImgSrc(uploadFileName);
+//                accountService.saveAccount(loginAccount);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -101,5 +98,13 @@ public class AccountApiController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(resource, HttpStatus.OK);
+    }
+
+
+    private boolean isLogin(@CurrentAccount Account account) {
+        if (account == null) {
+            return true;
+        }
+        return false;
     }
 }

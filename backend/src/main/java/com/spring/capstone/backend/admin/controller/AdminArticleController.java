@@ -5,10 +5,14 @@ import com.spring.capstone.backend.admin.service.AdminCategoryService;
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountRoles;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
+import com.spring.capstone.backend.domain.article.Article;
+import com.spring.capstone.backend.service.dto.ArticleResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/article")
@@ -42,7 +46,8 @@ public class AdminArticleController {
         }
 
         try {
-            return new ResponseEntity<>(adminArticleService.getArticles(categoryId, pageable), HttpStatus.OK);
+            List<Article> articles = adminArticleService.getArticles(categoryId, pageable);
+            return new ResponseEntity<>(articles, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

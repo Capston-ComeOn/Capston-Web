@@ -1,7 +1,8 @@
 package com.spring.capstone.backend.web.configs;
 
+import com.spring.capstone.backend.service.dto.AccountRequestDto;
 import com.spring.capstone.backend.service.dto.AccountResponseDto;
-import com.spring.capstone.backend.service.dto.ArticleDto;
+import com.spring.capstone.backend.service.dto.ArticleRequestDto;
 import com.spring.capstone.backend.domain.category.Category;
 import com.spring.capstone.backend.domain.category.CategoryRepository;
 import com.spring.capstone.backend.service.AccountService;
@@ -25,13 +26,13 @@ public class RunnerConfig implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        AccountResponseDto account = new AccountResponseDto("김동규", "201412345", "user@email.com", "123");
+        AccountRequestDto account = new AccountRequestDto("김동규", "201412345", "user@email.com", "123");
         accountService.save(account);
-        AccountResponseDto account2 = new AccountResponseDto("이상훈", "201412346", "user1@email.com", "123");
+        AccountRequestDto account2 = new AccountRequestDto("이상훈", "201412346", "user1@email.com", "123");
         accountService.save(account2);
-        AccountResponseDto account3 = new AccountResponseDto("안태회", "2014123467", "user2@email.com", "123");
+        AccountRequestDto account3 = new AccountRequestDto("안태회", "2014123467", "user2@email.com", "123");
         accountService.save(account3);
-        AccountResponseDto account4 = new AccountResponseDto("곽병선", "2014123468", "user3@email.com", "123");
+        AccountRequestDto account4 = new AccountRequestDto("곽병선", "2014123468", "user3@email.com", "123");
         accountService.save(account4);
 
         Category category = Category.withName("학과 게시판");
@@ -47,28 +48,28 @@ public class RunnerConfig implements ApplicationRunner {
         Category save4 = categoryRepository.save(category4);
 
         for (int i = 0; i < 100; i++) {
-            ArticleDto articleDto = new ArticleDto("제목" + i, "내용" + i, save.getId());
-            articleService.save(account.getEmail(), articleDto);
+            ArticleRequestDto articleRequestDto = new ArticleRequestDto("제목" + i, "내용" + i);
+            articleService.save(account.getEmail(), save.getId(), articleRequestDto);
         }
 
         for (int i = 100; i < 200; i++) {
-            ArticleDto articleDto = new ArticleDto("제목" + i, "내용" + i, save1.getId());
-            articleService.save(account.getEmail(), articleDto);
+            ArticleRequestDto articleRequestDto = new ArticleRequestDto("제목" + i, "내용" + i);
+            articleService.save(account2.getEmail(), save1.getId(), articleRequestDto);
         }
 
         for (int i = 200; i < 300; i++) {
-            ArticleDto articleDto = new ArticleDto("제목" + i, "내용" + i, save2.getId());
-            articleService.save(account.getEmail(), articleDto);
+            ArticleRequestDto articleRequestDto = new ArticleRequestDto("제목" + i, "내용" + i);
+            articleService.save(account3.getEmail(), save2.getId(), articleRequestDto);
         }
 
         for (int i = 300; i < 400; i++) {
-            ArticleDto articleDto = new ArticleDto("제목" + i, "내용" + i, save3.getId());
-            articleService.save(account.getEmail(), articleDto);
+            ArticleRequestDto articleRequestDto = new ArticleRequestDto("제목" + i, "내용" + i);
+            articleService.save(account4.getEmail(), save3.getId(), articleRequestDto);
         }
 
         for (int i = 400; i < 500; i++) {
-            ArticleDto articleDto = new ArticleDto("제목" + i, "내용" + i, save4.getId());
-            articleService.save(account.getEmail(), articleDto);
+            ArticleRequestDto articleRequestDto = new ArticleRequestDto("제목" + i, "내용" + i);
+            articleService.save(account.getEmail(), save4.getId(), articleRequestDto);
         }
     }
 }

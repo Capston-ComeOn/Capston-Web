@@ -2,12 +2,14 @@ package com.spring.capstone.backend.domain.article;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.category.Category;
-import com.spring.capstone.backend.service.dto.ArticleDto;
+import com.spring.capstone.backend.service.dto.ArticleRequestDto;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Objects;
+
+import static javax.persistence.FetchType.*;
 
 @Entity
 public class Article {
@@ -22,34 +24,34 @@ public class Article {
     @Lob
     private String contents;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ACCOUNT_ID")
     private Account author;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
 
-    private Article(Account author, ArticleDto articleDto, Category category) {
-        this.title = articleDto.getTitle();
-        this.contents = articleDto.getContents();
+    private Article(Account author, ArticleRequestDto articleRequestDto, Category category) {
+        this.title = articleRequestDto.getTitle();
+        this.contents = articleRequestDto.getContents();
         this.author = author;
         this.category = category;
     }
 
-    public Article() {
+    protected Article() {
 
     }
 
-    public static Article of(Account author, ArticleDto articleDto, Category category) {
-        return new Article(author, articleDto, category);
+    public static Article of(Account author, ArticleRequestDto articleRequestDto, Category category) {
+        return new Article(author, articleRequestDto, category);
     }
 
-    public void update(ArticleDto articleDto) {
-        this.title = articleDto.getTitle();
-        this.contents = articleDto.getContents();
+    public void update(ArticleRequestDto articleRequestDto) {
+        this.title = articleRequestDto.getTitle();
+        this.contents = articleRequestDto.getContents();
     }
 
     public long getId() {

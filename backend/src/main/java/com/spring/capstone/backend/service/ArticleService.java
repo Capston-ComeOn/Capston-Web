@@ -4,16 +4,20 @@ import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
-import com.spring.capstone.backend.service.dto.ArticleDto;
+import com.spring.capstone.backend.service.dto.ArticleRequestDto;
 import com.spring.capstone.backend.domain.category.Category;
+import com.spring.capstone.backend.service.dto.ArticleResponseDto;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@Transactional(readOnly = true)
 public class ArticleService {
+
     private ArticleRepository articleRepository;
     private AccountRepository accountRepository;
     private CategoryService categoryService;
@@ -25,22 +29,19 @@ public class ArticleService {
     }
 
     @Transactional
-    public long save(String email, ArticleDto articleDto) {
-        Account account = findByEmail(email);
-
-        long categoryId = articleDto.getCategoryId();
+    public long save(String email, long categoryId, ArticleRequestDto articleRequestDto) {
+        Account account = accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);
         Category category = categoryService.getCategory(categoryId);
-
-        Article article = Article.of(account, articleDto, category);
-        return articleRepository.save(article).getId();
+        return articleRepository.save(Article.of(account, articleRequestDto, category));
     }
 
-    public Article getArticle(Long categoryId, Long id) {
-        return articleRepository.findByCategoryIdAndId(categoryId, id).orElseThrow(NotFoundDataException::new);
+    public ArticleResponseDto getArticle(Long categoryId, Long articleId) {
+        Article article = articleRepository.findByCategoryIdAndArticleId(categoryId, articleId);
+        return ArticleResponseDto.withArticle(article);
     }
 
-    public Page<Article> getArticles(Long categoryId, Pageable pageable) {
-        return articleRepository.findByCategoryId(categoryId, pageable);
+    public List<Article> getArticles(Long categoryId, Pageable pageable) {
+        return articleRepository.findByCategoryId(categoryId,pageable);
     }
 
     public long getArticleSize(Long categoryId) {
@@ -48,19 +49,16 @@ public class ArticleService {
     }
 
     @Transactional
-    public long update(Long articleId, ArticleDto articleDto) {
-        Article article = articleRepository.findById(articleId).orElseThrow(NotFoundDataException::new);
-        article.update(articleDto);
+    public long update(Long articleId, ArticleRequestDto articleRequestDto) {
+        Article article = articleRepository.findById(articleId);
+        article.update(articleRequestDto);
         articleRepository.save(article);
         return articleId;
     }
 
     @Transactional
     public void delete(long articleId) {
-        articleRepository.deleteById(articleId);
+//        articleRepository.deleteById(articleId);
     }
 
-    private Account findByEmail(String email) {
-        return accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);
-    }
 }

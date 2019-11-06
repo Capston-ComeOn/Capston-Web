@@ -2,9 +2,12 @@ package com.spring.capstone.backend.domain.accounts;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.capstone.backend.service.dto.AccountRequestDto;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,17 +32,26 @@ public class Account {
 
     private String imgSrc;
 
-    public Account() {
+    protected Account() {
 
     }
 
-    public Account(String name, String email, String studentId, String password, String imgSrc, Set<AccountRoles> roles) {
+    public static Account of(AccountRequestDto accountRequestDto) {
+        return new Account(
+                accountRequestDto.getName(),
+                accountRequestDto.getEmail(),
+                accountRequestDto.getStudentId(),
+                accountRequestDto.getPassword()
+        );
+    }
+
+    private Account(String name, String email, String studentId, String password) {
         this.name = name;
         this.email = email;
         this.studentId = studentId;
         this.password = password;
-        this.roles = roles;
-        this.imgSrc = imgSrc;
+        this.roles = new HashSet<AccountRoles>(Arrays.asList(AccountRoles.USER));
+        this.imgSrc = null;
     }
 
     public Long getId() {

@@ -1,13 +1,13 @@
 package com.spring.capstone.backend.admin.service;
 
-import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
-import com.spring.capstone.backend.service.exception.NotFoundDataException;
-import org.springframework.data.domain.Page;
+import com.spring.capstone.backend.service.dto.ArticleResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class AdminArticleService {
@@ -19,11 +19,11 @@ public class AdminArticleService {
     }
 
     public Article getArticle(Long categoryId, Long id) {
-        return articleRepository.findByCategoryIdAndId(categoryId, id).orElseThrow(NotFoundDataException::new);
+        return articleRepository.findByCategoryIdAndArticleId(categoryId, id);
     }
 
-    public Page<Article> getArticles(Long categoryId, Pageable pageable) {
-        return articleRepository.findByCategoryId(categoryId, pageable);
+    public List<Article> getArticles(Long categoryId, Pageable pageable) {
+        return articleRepository.findByCategoryId(categoryId,pageable);
     }
 
     public long getArticleSize(Long categoryId) {
@@ -32,7 +32,7 @@ public class AdminArticleService {
 
     @Transactional
     public void delete(long articleId) {
-        articleRepository.deleteById(articleId);
+//        articleRepository.deleteById(articleId);
     }
 
 }

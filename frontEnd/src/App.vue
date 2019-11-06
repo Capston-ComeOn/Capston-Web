@@ -1,14 +1,16 @@
 <template>
     <v-app>
         <drawer></drawer>
-<!--        <toolbar></toolbar>-->
+        <!--        <toolbar></toolbar>-->
         <v-content class="ma-3">
             <v-flex @click="onMini">
                 <router-view></router-view>
             </v-flex>
         </v-content>
-        <message-recent-contact v-show="showMessage" style="position:fixed; bottom:60px; right:30px;"></message-recent-contact>
-        <v-btn @click="showMessage=!showMessage" style="position:fixed; bottom:5px; right:30px;" absolute right dark fab
+        <message-recent-contact v-if="isAuthenticated" v-show="showMessage"
+                                style="position:fixed; bottom:60px; right:30px;"></message-recent-contact>
+        <v-btn v-if="isAuthenticated" @click="showMessage=!showMessage" style="position:fixed; bottom:5px; right:30px;"
+               absolute right dark fab
                color="orange">
             <v-badge>
                 <template v-slot:badge>0</template>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-    import {mapMutations} from 'vuex'
+    import {mapMutations, mapGetters} from 'vuex'
 
     export default {
         name: 'App',
@@ -35,6 +37,11 @@
             onMini() {
                 this.SET_MINI(true)
             }
+        },
+        computed: {
+            ...mapGetters([
+                'isAuthenticated'
+            ])
         },
         components: {
             // toolbar: () => import('@/components/ToolBar'),

@@ -3,7 +3,7 @@ package com.spring.capstone.backend.service.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class ArticleDto {
+public class ArticleRequestDto {
 
     @NotEmpty
     private String title;
@@ -11,16 +11,12 @@ public class ArticleDto {
     @NotEmpty
     private String contents;
 
-    @NotNull
-    private Long categoryId;
-
-    public ArticleDto() {
+    protected ArticleRequestDto() {
     }
 
-    public ArticleDto(@NotEmpty String title, @NotEmpty String contents, @NotNull Long categoryId) {
+    public ArticleRequestDto(@NotEmpty String title, @NotEmpty String contents) {
         this.title = title;
         this.contents = contents;
-        this.categoryId = categoryId;
     }
 
     public String getTitle() {
@@ -37,13 +33,5 @@ public class ArticleDto {
 
     public void setContents(String contents) {
         this.contents = contents;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
     }
 }

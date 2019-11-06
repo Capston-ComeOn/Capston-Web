@@ -2,9 +2,11 @@ package com.spring.capstone.backend.web.controller;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
-import com.spring.capstone.backend.service.dto.ArticleDto;
+import com.spring.capstone.backend.domain.article.Article;
+import com.spring.capstone.backend.service.dto.ArticleRequestDto;
 import com.spring.capstone.backend.service.CategoryService;
 import com.spring.capstone.backend.service.ArticleService;
+import com.spring.capstone.backend.service.dto.ArticleResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/article")
@@ -24,13 +27,12 @@ public class ArticleApiController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/{categoryId}/{id}")
-    public ResponseEntity<Object> getArticle(@CurrentAccount Account account, @PathVariable Long categoryId, @PathVariable Long id) {
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    @GetMapping("/{categoryId}/{articleId}")
+    public ResponseEntity<ArticleResponseDto> getArticle(@CurrentAccount Account account, @PathVariable Long categoryId, @PathVariable Long articleId) {
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
         try {
-            return new ResponseEntity<>(articleService.getArticle(categoryId, id), HttpStatus.OK);
+            return new ResponseEntity<>(articleService.getArticle(categoryId, articleId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -39,70 +41,60 @@ public class ArticleApiController {
     @GetMapping("/{categoryId}")
     public ResponseEntity<Object> getArticles(@CurrentAccount Account account, @PathVariable Long categoryId, Pageable pageable) {
 
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         try {
-            return new ResponseEntity<>(articleService.getArticles(categoryId, pageable), HttpStatus.OK);
+            List<Article> articles = articleService.getArticles(categoryId, pageable);
+            return new ResponseEntity<>(articles, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{categoryId}/size")
-    public ResponseEntity<Object> getArticles(@CurrentAccount Account account, @PathVariable Long categoryId) {
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<Object> getArticlesSize(@CurrentAccount Account account, @PathVariable Long categoryId) {
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         try {
-            return new ResponseEntity<>(articleService.getArticleSize(categoryId), HttpStatus.OK);
+            long articleSize = articleService.getArticleSize(categoryId);
+            return new ResponseEntity<>(articleSize, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Object> createArticle(@CurrentAccount Account account, @RequestBody @Valid ArticleDto articleDto, Errors errors) {
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    @PostMapping("/{categoryId}")
+    public ResponseEntity createArticle(@CurrentAccount Account account, @PathVariable Long categoryId, @RequestBody @Valid ArticleRequestDto articleRequestDto, Errors errors) {
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (isConvertError(errors)) return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 
-        if (errors.hasErrors()) {
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        }
         try {
-            articleService.save(account.getEmail(), articleDto);
+            articleService.save(account.getEmail(), categoryId, articleRequestDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateArticle(@CurrentAccount Account account, @PathVariable Long id, @RequestBody @Valid ArticleDto articleDto, Errors errors) {
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        if (errors.hasErrors()) {
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        }
+    @PutMapping("/{articleId}")
+    public ResponseEntity<Object> updateArticle(@CurrentAccount Account account, @PathVariable Long articleId, @RequestBody @Valid ArticleRequestDto articleRequestDto, Errors errors) {
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (isConvertError(errors)) return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         try {
-            long save = articleService.update(id, articleDto);
+            long save = articleService.update(articleId, articleRequestDto);
             return new ResponseEntity<>(save, HttpStatus.CREATED);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteArticle(@CurrentAccount Account account, @PathVariable Long id) {
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    @DeleteMapping("/{articleId}")
+    public ResponseEntity deleteArticle(@CurrentAccount Account account, @PathVariable Long articleId) {
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         try {
-            articleService.delete(id);
+            articleService.delete(articleId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -110,15 +102,28 @@ public class ArticleApiController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity getCategoryList(@CurrentAccount Account account) {
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity getCategories(@CurrentAccount Account account) {
+        if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
         try {
             return new ResponseEntity<>(categoryService.getCategoryList(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private boolean isLogin(@CurrentAccount Account account) {
+        if (account == null) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isConvertError(Errors errors) {
+        if (errors.hasErrors()) {
+            return true;
+        }
+        return false;
     }
 }

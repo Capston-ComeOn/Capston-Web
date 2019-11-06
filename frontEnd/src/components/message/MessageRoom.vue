@@ -37,6 +37,7 @@
                 this.$emit('onClose')
             },
             onSubmit() {
+                console.log(this.from)
                 this.ADD_MESSAGE({from: this.from, content: this.content})
                 this.content = ''
             },

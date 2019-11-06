@@ -17,7 +17,7 @@ public class Category {
         return new Category(name);
     }
 
-    public Category() {
+    protected Category() {
     }
 
     private Category(String name) {

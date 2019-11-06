@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.*;
+
 
 @Entity
 public class Message {
@@ -15,11 +17,11 @@ public class Message {
     @Column(name = "MESSAGE_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "TO_ID")
     private Account to;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "FROM_ID")
     private Account from;
 
@@ -28,7 +30,7 @@ public class Message {
 
     private LocalDateTime created;
 
-    public Message() {
+    protected Message() {
 
     }
 
@@ -36,7 +38,7 @@ public class Message {
         return new Message(to, from, content);
     }
 
-    public Message(Account to, Account from, @NotEmpty String content) {
+    private Message(Account to, Account from, @NotEmpty String content) {
         this.to = to;
         this.from = from;
         this.content = content;

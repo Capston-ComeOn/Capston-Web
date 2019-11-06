@@ -3,6 +3,7 @@ package com.spring.capstone.backend.service;
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountAdapter;
 import com.spring.capstone.backend.domain.accounts.AccountRepository;
+import com.spring.capstone.backend.service.dto.AccountRequestDto;
 import com.spring.capstone.backend.service.dto.AccountResponseDto;
 import com.spring.capstone.backend.service.assembler.AccountAssembler;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
@@ -12,11 +13,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class AccountService implements UserDetailsService {
 
     @Autowired
@@ -25,10 +28,6 @@ public class AccountService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Account saveAccount(Account account) {
-        return accountRepository.save(account);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
@@ -36,17 +35,19 @@ public class AccountService implements UserDetailsService {
     }
 
     @Transactional
-    public long save(AccountResponseDto accountResponseDto) {
-        Account account = AccountAssembler.toEntity(accountResponseDto);
+    public long save(AccountRequestDto accountRequestDto) {
+        Account account = Account.of(accountRequestDto);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account).getId();
     }
 
-    public Account getAccountWithEmail(String email) {
-        return accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);
+    public AccountResponseDto getAccountWithEmail(String email) {
+        return AccountResponseDto.withAccount(accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new));
     }
 
-    public List<Account> searchWithName(String name) {
-        return accountRepository.findByNameContaining(name);
+    public List<AccountResponseDto> searchWithName(String name) {
+        return accountRepository.findByNameContaining(name).stream()
+                .map(o -> AccountResponseDto.withAccount(o))
+                .collect(Collectors.toList());
     }
 }

@@ -6,7 +6,7 @@ const domain = 'http://localhost:8090'
 const Unauthorized = 401
 
 const onUnauthorized = () => {
-    if(localStorage.access_token) {
+    if (localStorage.access_token) {
         delete localStorage.access_token;
     }
     router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
@@ -80,7 +80,7 @@ export const article = {
         return request.get(`/api/article/${data.categoryId}/size`).then(({data}) => data)
     },
     post(data) {
-        return request.post('/api/article', data).then((data) => data)
+        return request.post(`/api/article/${data.categoryId}`, data).then((data) => data)
     },
     update(data) {
         return request.put(`/api/article/${data.id}`, {
@@ -103,12 +103,12 @@ export const category = {
 export const message = {
     fetch(data) {
         if (!data) {
-            return request.get(`/api/message`).then(({data}) =>data)
+            return request.get(`/api/message`).then(({data}) => data)
         }
         return request.get(`/api/message/${data.from}`).then(({data}) => data)
 
     },
     post(data) {
-        return request.post(`/api/message`, data).then((data) => data)
+        return request.post(`/api/message/${data.from}`, data).then((data) => data)
     }
 }

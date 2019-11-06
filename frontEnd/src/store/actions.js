@@ -25,7 +25,9 @@ const actions = {
             })
     },
     FETCH_ARTICLE_SIZE(_, {categoryId}) {
-        return article.fetch({categoryId}).then(data => data)
+        return article.fetch({categoryId}).then(data => {
+            return data;
+        })
     },
     FETCH_ARTICLE_LIST({commit}, {categoryId, size, page}) {
         return article.fetch({categoryId, size, page}).then((data) => {
@@ -60,6 +62,7 @@ const actions = {
     FETCH_RECENT_CONTACT_LIST({commit},) {
         return message.fetch()
             .then(data => {
+                console.log(data)
                 commit('SET_RECENT_MESSAGE_LIST', data)
             })
     },
