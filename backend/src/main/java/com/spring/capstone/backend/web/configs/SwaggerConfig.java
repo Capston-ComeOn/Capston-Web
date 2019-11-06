@@ -1,5 +1,6 @@
 package com.spring.capstone.backend.web.configs;
 
+import com.spring.capstone.backend.domain.accounts.Account;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
 
+
         List<ResponseMessage> list = new java.util.ArrayList<>();
         list.add(new ResponseMessageBuilder().code(500).message("500 message")
                 .responseModel(new ModelRef("Result")).build());
@@ -44,7 +46,9 @@ public class SwaggerConfig {
         list.add(new ResponseMessageBuilder().code(406).message("Not Acceptable")
                 .responseModel(new ModelRef("Result")).build());
 
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+        return new Docket(DocumentationType.SWAGGER_2)
+                .ignoredParameterTypes(Account.class)
+                .select().apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/api/**")).build().securitySchemes(Collections.singletonList(securitySchema()))
                 .securityContexts(Collections.singletonList(securityContext())).pathMapping("/")
                 .useDefaultResponseMessages(false).apiInfo(apiInfo()).globalResponseMessage(RequestMethod.GET, list)
