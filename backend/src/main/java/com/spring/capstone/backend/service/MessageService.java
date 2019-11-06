@@ -52,6 +52,7 @@ public class MessageService {
             Account from = m.getFrom();
 
             Account key = account.getId() == to.getId() ? from : to;
+
             if (!map.containsKey(key.getId())) {
                 map.put(key.getId(), key.getId());
                 list.add(MessageResponseDto.of(m));
