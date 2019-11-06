@@ -39,7 +39,27 @@
             <v-list v-else two-line style="min-height: 500px; max-width: 500px">
                 <h3 class="ml-2">최근 대화상대</h3>
                 <template v-for="(item, index) in this.recentMessageList">
-                    <v-flex :key="index">
+                    <v-flex v-if="account.id===item.from.id" :key="index">
+                        <v-list-item
+                                ripple
+                                @click="onShowMessageRoom(item.to.id)"
+                        >
+                            <v-icon v-if="!item.to.imgSrc" size="50" class="mr-2">mdi-account-circle</v-icon>
+                            <v-avatar v-else size="50" class="mr-2">
+                                <img :src="`http://localhost:8090/api/accounts/download?fileName=${item.to.imgSrc}`"/>
+                            </v-avatar>
+                            <v-list-item-content>
+                                <v-list-item-title v-html="item.to.name"></v-list-item-title>
+                                <v-list-item-subtitle class="mt-3 mb-3 ml-1"
+                                                      v-html="item.content"></v-list-item-subtitle>
+                                <v-list-item-subtitle class="text-right" v-html="item.created"></v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider
+                                inset
+                        ></v-divider>
+                    </v-flex>
+                    <v-flex v-else :key="index">
                         <v-list-item
                                 ripple
                                 @click="onShowMessageRoom(item.from.id)"
@@ -72,6 +92,7 @@
     export default {
         computed: {
             ...mapState([
+                'account',
                 'accountList',
                 'recentMessageList'
             ])
