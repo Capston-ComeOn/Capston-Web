@@ -4,13 +4,15 @@ import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.domain.metoring.Mentoring;
 import com.spring.capstone.backend.domain.metoring.MentoringRepository;
-import com.spring.capstone.backend.service.dto.MentoringDto;
+import com.spring.capstone.backend.service.dto.MentoringRequestDto;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class MentoringService {
 
     private AccountRepository accountRepository;
@@ -29,10 +31,10 @@ public class MentoringService {
         return mentoringRepository.findAll();
     }
 
-    public void save(String email, MentoringDto mentoringDto) {
+    @Transactional
+    public void save(String email, MentoringRequestDto mentoringRequestDto) {
         Account mento = accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);
-        Mentoring mentoring = Mentoring.of(mento, mentoringDto);
+        Mentoring mentoring = Mentoring.of(mento, mentoringRequestDto);
         mentoringRepository.save(mentoring);
     }
-
 }

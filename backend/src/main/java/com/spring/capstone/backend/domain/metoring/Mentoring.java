@@ -1,9 +1,10 @@
 package com.spring.capstone.backend.domain.metoring;
 
 import com.spring.capstone.backend.domain.accounts.Account;
-import com.spring.capstone.backend.service.dto.MentoringDto;
+import com.spring.capstone.backend.service.dto.MentoringRequestDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -21,34 +22,29 @@ public class Mentoring {
     private Boolean use;
 
     @OneToMany
-    private List<Account> mentees;
+    private List<Account> mentees = new ArrayList<>();
 
     @ManyToOne(fetch = LAZY)
     private Account mento;
 
-    public static Mentoring of(Account mento, MentoringDto mentoringDto) {
+    public static Mentoring of(Account mento, MentoringRequestDto mentoringRequestDto) {
         return new Mentoring(
                 mento,
-                mentoringDto.getTitle(),
-                Introduce.of(mentoringDto.getIntroduceDto())
+                mentoringRequestDto.getTitle(),
+                Introduce.of(mentoringRequestDto.getIntroduceRequestDto())
         );
     }
 
-    public Mentoring(Account mento, String title, Introduce introduce) {
+
+    protected Mentoring(Account mento, String title, Introduce introduce) {
         this.title = title;
         this.introduce = introduce;
         this.mento = mento;
-    }
-
-    private Mentoring(String title, Introduce introduce, Boolean use, List<Account> mentees, Account mento) {
-        this.title = title;
-        this.introduce = introduce;
         this.use = true;
-        this.mentees = mentees;
-        this.mento = mento;
     }
 
-    private Mentoring() {
+
+    protected Mentoring() {
 
     }
 

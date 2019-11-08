@@ -1,6 +1,5 @@
 package com.spring.capstone.backend.web.controller;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.security.oauth2.common.util.Jackson2JsonParser;
@@ -11,7 +10,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @AutoConfigureMockMvc
-class ArticleApiControllerTest extends AbstractControllerTest {
+class ArticleApiControllerTest extends A {
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,7 +32,7 @@ class ArticleApiControllerTest extends AbstractControllerTest {
 //                .expectStatus().isOk();
 //    }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void create() throws Exception {
 
 //        ArticleVO articleVO = new ArticleVO("title", "contents");

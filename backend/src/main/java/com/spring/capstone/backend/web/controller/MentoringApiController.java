@@ -4,7 +4,7 @@ import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
 import com.spring.capstone.backend.domain.metoring.Mentoring;
 import com.spring.capstone.backend.service.MentoringService;
-import com.spring.capstone.backend.service.dto.MentoringDto;
+import com.spring.capstone.backend.service.dto.MentoringRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -53,13 +53,13 @@ public class MentoringApiController {
     }
 
     @PostMapping
-    public ResponseEntity createMentoring(@CurrentAccount Account account, @RequestBody MentoringDto mentoringDto) {
+    public ResponseEntity createMentoring(@CurrentAccount Account account, @RequestBody MentoringRequestDto mentoringRequestDto) {
         if (account == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         try {
-            mentoringService.save(account.getEmail(), mentoringDto);
+            mentoringService.save(account.getEmail(), mentoringRequestDto);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
