@@ -1,13 +1,13 @@
 package com.spring.capstone.backend.service.dto;
 
-public class IntroduceDto {
+public class IntroduceRequestDto {
 
     private String mento;
     private String target;
     private String metting;
     private String etc;
 
-    public IntroduceDto(String mento, String target, String metting, String etc) {
+    public IntroduceRequestDto(String mento, String target, String metting, String etc) {
         this.mento = mento;
         this.target = target;
         this.metting = metting;

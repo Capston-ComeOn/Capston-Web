@@ -1,6 +1,6 @@
 package com.spring.capstone.backend.domain.metoring;
 
-import com.spring.capstone.backend.service.dto.IntroduceDto;
+import com.spring.capstone.backend.service.dto.IntroduceRequestDto;
 
 import javax.persistence.Embeddable;
 
@@ -12,12 +12,16 @@ public class Introduce {
     private String metting;
     private String etc;
 
-    public static Introduce of(IntroduceDto introduceDto) {
+    protected Introduce() {
+
+    }
+
+    public static Introduce of(IntroduceRequestDto introduceRequestDto) {
         return new Introduce(
-                introduceDto.getMento(),
-                introduceDto.getTarget(),
-                introduceDto.getMetting(),
-                introduceDto.getEtc()
+                introduceRequestDto.getMento(),
+                introduceRequestDto.getTarget(),
+                introduceRequestDto.getMetting(),
+                introduceRequestDto.getEtc()
         );
     }
 
