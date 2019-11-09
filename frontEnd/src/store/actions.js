@@ -1,4 +1,4 @@
-import {auth, article, category, message, account} from '../api'
+import {auth, article, category, message, account, mentoring} from '../api'
 
 const actions = {
     LOGIN({commit, dispatch}, {username, password, grant_type}) {
@@ -76,6 +76,19 @@ const actions = {
         return account.imageUpload(data)
             .then(() => {
                 commit('CLEAR_ACCOUNT_FILE')
+            })
+    },
+    ADD_MENTORING(_, data) {
+        return mentoring.post(data)
+            .then((data) => {
+                console.log(data)
+            })
+    },
+    FETCH_MENTORING_LIST({commit}) {
+        return mentoring.fetch()
+            .then(data => {
+                commit('SET_MENTORING_LIST',data)
+                return data;
             })
     }
 }

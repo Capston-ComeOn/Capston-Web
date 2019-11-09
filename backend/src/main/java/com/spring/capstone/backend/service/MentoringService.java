@@ -5,6 +5,7 @@ import com.spring.capstone.backend.domain.accounts.AccountRepository;
 import com.spring.capstone.backend.domain.metoring.Mentoring;
 import com.spring.capstone.backend.domain.metoring.MentoringRepository;
 import com.spring.capstone.backend.service.dto.MentoringRequestDto;
+import com.spring.capstone.backend.service.dto.MentoringResponseDto;
 import com.spring.capstone.backend.service.exception.NotFoundDataException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,18 +24,19 @@ public class MentoringService {
         this.mentoringRepository = mentoringRepository;
     }
 
-    public Mentoring getMentoring(Long id) {
-        return mentoringRepository.findById(id).orElseThrow(NotFoundDataException::new);
-    }
+//    public Mentoring getMentoring(Long id) {
+//        return mentoringRepository.findById(id).orElseThrow(NotFoundDataException::new);
+//    }
 
-    public List<Mentoring> getMentoringList() {
-        return mentoringRepository.findAll();
+    public List<MentoringResponseDto> getMentoringList() {
+        return mentoringRepository.getMentorings();
     }
 
     @Transactional
-    public void save(String email, MentoringRequestDto mentoringRequestDto) {
+    public Long save(String email, MentoringRequestDto mentoringRequestDto) {
         Account mento = accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);
         Mentoring mentoring = Mentoring.of(mento, mentoringRequestDto);
         mentoringRepository.save(mentoring);
+        return mentoring.getId();
     }
 }

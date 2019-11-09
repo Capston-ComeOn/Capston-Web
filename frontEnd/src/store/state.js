@@ -3,7 +3,8 @@ const state = {
     access_token: null,
     article: null,
     accountList: [],
-    recentMessageList:[],
+    mentoringList: [],
+    recentMessageList: [],
     messageList: [],
     articleList: [],
     categoryId: 2,   // 자유 게시판 defalut

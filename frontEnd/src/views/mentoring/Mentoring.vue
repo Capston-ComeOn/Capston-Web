@@ -13,7 +13,7 @@
                     </v-row>
                     <h1 class="mb-5 text-center"> 현재 진행중인 멘토링 </h1>
                     <v-row class="justify-center mb-5">
-                        <card :item="item" class="ma-4" v-for="(item,i) in items" :key="i"/>
+                        <card :item="item" class="ma-4" v-for="(item,i) in this.mentoringList" :key="i"/>
                     </v-row>
                 </v-card>
             </v-row>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+    import {mapActions,mapState} from 'vuex'
+
     export default {
         data() {
             return {
@@ -31,9 +33,21 @@
                 ]
             }
         },
-        methods: {},
+        methods: {
+            ...mapActions([
+                'FETCH_MENTORING_LIST'
+            ])
+        },
         components: {
             card: () => import('@/components/Card')
+        },
+        computed:{
+          ...mapState([
+              'mentoringList'
+          ])
+        },
+        mounted() {
+            this.FETCH_MENTORING_LIST()
         }
     }
 </script>
