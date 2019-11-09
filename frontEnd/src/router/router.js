@@ -53,7 +53,7 @@ export default new Router({
             beforeEnter: requireAuth()
         },
         {
-            path: '/mentoring/detail',
+            path: '/mentoring/detail/:id',
             component: MentoringDetail,
             beforeEnter: requireAuth()
         },

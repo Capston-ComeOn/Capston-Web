@@ -87,7 +87,15 @@ const actions = {
     FETCH_MENTORING_LIST({commit}) {
         return mentoring.fetch()
             .then(data => {
-                commit('SET_MENTORING_LIST',data)
+                commit('SET_MENTORING_LIST', data)
+                return data;
+            })
+    },
+    FETCH_MENTORING({commit}, data) {
+        console.log(data)
+        return mentoring.fetch(data)
+            .then(data => {
+                commit('SET_MENTORING', data)
                 return data;
             })
     }

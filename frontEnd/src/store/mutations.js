@@ -69,5 +69,9 @@ const mutations = {
     CLEAR_ACCOUNT_FILE(state) {
         state.account.accountFile = []
     },
+    SET_MENTORING(state, data) {
+        console.log(data)
+        state.mentoring = data
+    }
 }
 export default mutations

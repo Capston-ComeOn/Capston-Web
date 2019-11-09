@@ -12,6 +12,12 @@
                 label="제목"
         ></v-text-field>
 
+        <v-text-field
+                v-model="content"
+                class="mt-3"
+                label="간단 설명"
+        ></v-text-field>
+
         <v-flex class="pa-3">
             <v-text-field v-model="this.dateRangeText" label="Date range" prepend-icon="mdi-calendar-range"
                           readonly></v-text-field>
@@ -45,6 +51,7 @@
         data() {
             return {
                 title: '',
+                content: '',
                 dates: [new Date().toISOString().substr(0, 10), (new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)).toISOString().substr(0, 10)],
                 tabs: [
                     {name: '멘토 소개', model: ''},
@@ -61,6 +68,7 @@
             onSubmit() {
                 let mentoringRequestDto = {
                     title: this.title,
+                    content: this.content,
                     introduceRequestDto: {
                         mento: this.tabs[0].model,
                         target: this.tabs[1].model,
@@ -69,7 +77,9 @@
                     }
                 }
 
-                this.ADD_MENTORING(mentoringRequestDto);
+                this.ADD_MENTORING(mentoringRequestDto).then((data)=>{
+                    console.log(data)
+                })
 
             }
         },
