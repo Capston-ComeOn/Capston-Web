@@ -59,6 +59,13 @@ const mutations = {
     SET_LOGIN_ACCOUNT(state, {data}) {
         state.account = data
     },
+    SET_MENTORING_LIST(state, {data}) {
+        console.log(data)
+        state.mentoringList = []
+        if (data.length > 0) {
+            state.mentoringList = data
+        }
+    },
     CLEAR_ACCOUNT_FILE(state) {
         state.account.accountFile = []
     },

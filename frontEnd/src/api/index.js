@@ -114,6 +114,9 @@ export const message = {
 }
 
 export const mentoring = {
+    fetch() {
+        return request.get(`/api/mentoring`).then((data) => data)
+    },
     post(data) {
         return request.post(`/api/mentoring`, data).then((data) => data)
     }

@@ -2,13 +2,16 @@ package com.spring.capstone.backend.web.controller;
 
 import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.accounts.CurrentAccount;
-import com.spring.capstone.backend.domain.metoring.Mentoring;
 import com.spring.capstone.backend.service.MentoringService;
 import com.spring.capstone.backend.service.dto.MentoringRequestDto;
+import com.spring.capstone.backend.service.dto.MentoringResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -22,27 +25,27 @@ public class MentoringApiController {
         this.mentoringService = mentoringService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getMentoring(@CurrentAccount Account account, @PathVariable Long id) {
-        if (account == null) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-        Mentoring mentoring;
-        try {
-            mentoring = mentoringService.getMentoring(id);
-        } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity(mentoring, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity getMentoring(@CurrentAccount Account account, @PathVariable Long id) {
+//        if (account == null) {
+//            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+//        }
+//        Mentoring mentoring;
+//        try {
+//            mentoring = mentoringService.getMentoring(id);
+//        } catch (Exception e) {
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        return new ResponseEntity(mentoring, HttpStatus.OK);
+//    }
 
     @GetMapping
     public ResponseEntity getMentoringList(@CurrentAccount Account account) {
         if (account == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-        List<Mentoring> mentoringList;
+        List<MentoringResponseDto> mentoringList;
         try {
             mentoringList = mentoringService.getMentoringList();
         } catch (Exception e) {

@@ -9,7 +9,7 @@
                 </v-avatar>
                 <v-list-item-content>
                     <v-list-item-title class="headline">{{item.title}}</v-list-item-title>
-                    <v-list-item-subtitle>by {{item.author}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>by {{item.mento.name}}({{item.mento.studentId}})</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
 

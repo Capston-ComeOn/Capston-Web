@@ -79,10 +79,16 @@ const actions = {
             })
     },
     ADD_MENTORING(_, data) {
-        console.log(data)
         return mentoring.post(data)
             .then((data) => {
                 console.log(data)
+            })
+    },
+    FETCH_MENTORING_LIST({commit}) {
+        return mentoring.fetch()
+            .then(data => {
+                commit('SET_MENTORING_LIST',data)
+                return data;
             })
     }
 }
