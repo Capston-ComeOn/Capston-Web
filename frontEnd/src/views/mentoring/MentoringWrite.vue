@@ -7,12 +7,14 @@
         </v-toolbar>
 
         <v-text-field
+                v-model="title"
                 class="mt-3"
                 label="제목"
         ></v-text-field>
 
         <v-flex class="pa-3">
-            <v-text-field v-model="this.dateRangeText" label="Date range" prepend-icon="mdi-calendar-range"  readonly></v-text-field>
+            <v-text-field v-model="this.dateRangeText" label="Date range" prepend-icon="mdi-calendar-range"
+                          readonly></v-text-field>
             <v-date-picker v-model="dates" range locale="ko-kr" full-width no-title></v-date-picker>
         </v-flex>
 
@@ -25,7 +27,7 @@
             </v-flex>
         </v-flex>
         <div class="text-right mt-5">
-            <v-btn class="mr-2" to="/mentoring/write" color="orange lighten-2" dark>작성</v-btn>
+            <v-btn class="mr-2" to="/mentoring/write" color="orange lighten-2" @click="onSubmit" dark>작성</v-btn>
             <v-btn to="/mentoring/write" color="orange lighten-2" dark>취소</v-btn>
         </div>
 
@@ -37,11 +39,13 @@
     import 'tui-editor/dist/tui-editor-contents.css'
     import 'codemirror/lib/codemirror.css'
     import {Editor, Viewer} from '@toast-ui/vue-editor'
+    import {mapActions} from 'vuex'
 
     export default {
         data() {
             return {
-                dates: [new Date().toISOString().substr(0, 10), (new Date(Date.now() + 7*24*60*60*1000)).toISOString().substr(0, 10)],
+                title: '',
+                dates: [new Date().toISOString().substr(0, 10), (new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)).toISOString().substr(0, 10)],
                 tabs: [
                     {name: '멘토 소개', model: ''},
                     {name: '모임 소개', model: ''},
@@ -50,8 +54,27 @@
                 ]
             }
         },
+        methods: {
+            ...mapActions([
+                'ADD_MENTORING'
+            ]),
+            onSubmit() {
+                let mentoringRequestDto = {
+                    title: this.title,
+                    introduceRequestDto: {
+                        mento: this.tabs[0].model,
+                        target: this.tabs[1].model,
+                        metting: this.tabs[2].model,
+                        etc: this.tabs[3].model,
+                    }
+                }
+
+                this.ADD_MENTORING(mentoringRequestDto);
+
+            }
+        },
         computed: {
-            dateRangeText () {
+            dateRangeText() {
                 return this.dates.join(' ~ ')
             },
         },

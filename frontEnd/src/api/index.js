@@ -112,3 +112,10 @@ export const message = {
         return request.post(`/api/message/${data.from}`, data).then((data) => data)
     }
 }
+
+export const mentoring = {
+    post(data) {
+        return request.post(`/api/mentoring`, data).then((data) => data)
+    }
+
+}
