@@ -13,7 +13,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <router-link to="/mentoring/detail">
+            <router-link :to="`/mentoring/detail/${item.id}`">
                 <v-img style="cursor:pointer"
                        src="https://kimnoin.github.io/images/bio-photo.jpg"
                        height="194"

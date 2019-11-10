@@ -3,6 +3,7 @@ const state = {
     access_token: null,
     article: null,
     accountList: [],
+    mentoring: null,
     mentoringList: [],
     recentMessageList: [],
     messageList: [],

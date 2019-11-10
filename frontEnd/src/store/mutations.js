@@ -14,6 +14,9 @@ const mutations = {
         setAuthInHeader(null)
         window.location.replace("/")
     },
+    CLEAR_ACCESS_TOKEN(state){
+      state.access_token=null;
+    },
     SET_ARTICLE(state, data) {
         state.article = data
     },
@@ -60,7 +63,6 @@ const mutations = {
         state.account = data
     },
     SET_MENTORING_LIST(state, {data}) {
-        console.log(data)
         state.mentoringList = []
         if (data.length > 0) {
             state.mentoringList = data
@@ -69,5 +71,8 @@ const mutations = {
     CLEAR_ACCOUNT_FILE(state) {
         state.account.accountFile = []
     },
+    SET_MENTORING(state, data) {
+        state.mentoring = data
+    }
 }
 export default mutations

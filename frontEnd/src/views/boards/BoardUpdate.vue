@@ -49,7 +49,6 @@
                 const {id} = this.$route.params
                 this.UPDATE_ARTICLE({id, title, contents})
                     .then((data) => {
-                        console.log(data)
                         if (data.status >= 200 && data.status <= 300) {
                             alert('글이 수정되었습니다.')
                             this.$router.push("/board")

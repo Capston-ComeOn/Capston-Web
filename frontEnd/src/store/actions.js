@@ -62,7 +62,6 @@ const actions = {
     FETCH_RECENT_CONTACT_LIST({commit},) {
         return message.fetch()
             .then(data => {
-                console.log(data)
                 commit('SET_RECENT_MESSAGE_LIST', data)
             })
     },
@@ -81,14 +80,27 @@ const actions = {
     ADD_MENTORING(_, data) {
         return mentoring.post(data)
             .then((data) => {
-                console.log(data)
+                return data
             })
     },
     FETCH_MENTORING_LIST({commit}) {
         return mentoring.fetch()
             .then(data => {
-                commit('SET_MENTORING_LIST',data)
+                commit('SET_MENTORING_LIST', data)
                 return data;
+            })
+    },
+    FETCH_MENTORING({commit}, data) {
+        return mentoring.fetch(data)
+            .then(data => {
+                commit('SET_MENTORING', data)
+                return data;
+            })
+    },
+    ADD_MENTEE(_, data) {
+        return mentoring.post(data)
+            .then((data) => {
+                return data
             })
     }
 }

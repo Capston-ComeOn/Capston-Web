@@ -7,6 +7,7 @@ import Join from '../views/Join'
 import Board from '../views/boards/Board'
 import MentoringDetail from '../views/mentoring/MentoringDetail'
 import MentoringWrite from '../views/mentoring/MentoringWrite'
+import MentoringStatus from '../views/mentoring/MentoringStatus'
 import Read from '../views/boards/ReadBoard'
 import Write from '../views/boards/BoardWrite'
 import Update from '../views/boards/BoardUpdate'
@@ -53,8 +54,13 @@ export default new Router({
             beforeEnter: requireAuth()
         },
         {
-            path: '/mentoring/detail',
+            path: '/mentoring/detail/:id',
             component: MentoringDetail,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/mentoring/status/:id',
+            component: MentoringStatus,
             beforeEnter: requireAuth()
         },
         {

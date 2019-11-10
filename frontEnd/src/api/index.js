@@ -7,6 +7,7 @@ const Unauthorized = 401
 
 const onUnauthorized = () => {
     if (localStorage.access_token) {
+        this.$store.commit('CLEAR_ACCESS_TOKEN')
         delete localStorage.access_token;
     }
     router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
@@ -16,7 +17,6 @@ const request = {
     get(path) {
         return axios.get(`${domain + path}`).catch(({response}) => {
             const {status} = response
-            console.log(status)
             if (status === Unauthorized) return onUnauthorized()
             throw Error(response)
         })
@@ -114,10 +114,16 @@ export const message = {
 }
 
 export const mentoring = {
-    fetch() {
-        return request.get(`/api/mentoring`).then((data) => data)
+    fetch(data) {
+        if (!data) {
+            return request.get(`/api/mentoring`).then((data) => data)
+        }
+        return request.get(`/api/mentoring/${data.id}`).then(({data}) => data)
     },
     post(data) {
+        if (data.id) {
+            return request.post(`/api/mentoring/${data.id}`).then((data) => data)
+        }
         return request.post(`/api/mentoring`, data).then((data) => data)
     }
 

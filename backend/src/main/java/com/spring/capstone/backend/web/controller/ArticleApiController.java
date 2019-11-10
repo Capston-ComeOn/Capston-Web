@@ -32,7 +32,8 @@ public class ArticleApiController {
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         try {
-            return new ResponseEntity<>(articleService.getArticle(categoryId, articleId), HttpStatus.OK);
+            ArticleResponseDto article = articleService.getArticle(categoryId, articleId);
+            return new ResponseEntity<>(article, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

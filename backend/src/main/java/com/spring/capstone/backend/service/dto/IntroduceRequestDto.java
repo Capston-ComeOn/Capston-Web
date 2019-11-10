@@ -1,10 +1,16 @@
 package com.spring.capstone.backend.service.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class IntroduceRequestDto {
 
+    @NotEmpty
     private String mento;
+    @NotEmpty
     private String target;
+    @NotEmpty
     private String metting;
+    @NotEmpty
     private String etc;
 
     public IntroduceRequestDto(String mento, String target, String metting, String etc) {
