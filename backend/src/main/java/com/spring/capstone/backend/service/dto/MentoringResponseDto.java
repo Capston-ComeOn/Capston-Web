@@ -2,30 +2,51 @@ package com.spring.capstone.backend.service.dto;
 
 import com.spring.capstone.backend.domain.metoring.Mentoring;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class MentoringResponseDto {
 
     private Long id;
     private String title;
+    private String content;
+    private LocalDateTime startTime;
+    private LocalDateTime endTIme;
     private IntroduceResponseDto introduce;
-    private Boolean use;
     private AccountResponseDto mento;
 
-    protected MentoringResponseDto(Long id, String title, IntroduceResponseDto introduce, Boolean use, AccountResponseDto mento) {
+    public MentoringResponseDto(Long id, String title, String content, LocalDateTime startTime, LocalDateTime endTIme, IntroduceResponseDto introduce, AccountResponseDto mento) {
         this.id = id;
         this.title = title;
+        this.content = content;
+        this.startTime = startTime;
+        this.endTIme = endTIme;
         this.introduce = introduce;
-        this.use = use;
         this.mento = mento;
     }
 
-    public static MentoringResponseDto withMentoring(Mentoring mentoring){
+    public static MentoringResponseDto withMentoring(Mentoring mentoring) {
         return new MentoringResponseDto(
                 mentoring.getId(),
                 mentoring.getTitle(),
+                mentoring.getContent(),
+                mentoring.getStartTime(),
+                mentoring.getEndTime(),
                 IntroduceResponseDto.of(mentoring.getIntroduce()),
-                mentoring.getUse(),
-                AccountResponseDto.withAccount(mentoring.getAccount())
+                AccountResponseDto.withAccount(mentoring.getMento())
         );
+    }
+
+    public String getStartTime() {
+        return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public String getEndTime() {
+        return endTIme.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public Long getId() {
@@ -41,7 +62,10 @@ public class MentoringResponseDto {
     }
 
     public Boolean getUse() {
-        return use;
+        if (LocalDateTime.now().isBefore(this.endTIme)) {
+            return false;
+        }
+        return true;
     }
 
     public AccountResponseDto getMento() {

@@ -20,6 +20,7 @@ const actions = {
     FETCH_ARTICLE({commit}, {id, categoryId}) {
         return article.fetch({id, categoryId})
             .then(data => {
+                console.log(data)
                 commit('SET_ARTICLE', data)
                 return data;
             })
@@ -81,7 +82,7 @@ const actions = {
     ADD_MENTORING(_, data) {
         return mentoring.post(data)
             .then((data) => {
-                console.log(data)
+                return data
             })
     },
     FETCH_MENTORING_LIST({commit}) {

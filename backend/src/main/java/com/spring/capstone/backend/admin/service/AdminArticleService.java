@@ -2,7 +2,6 @@ package com.spring.capstone.backend.admin.service;
 
 import com.spring.capstone.backend.domain.article.Article;
 import com.spring.capstone.backend.domain.article.ArticleRepository;
-import com.spring.capstone.backend.service.dto.ArticleResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

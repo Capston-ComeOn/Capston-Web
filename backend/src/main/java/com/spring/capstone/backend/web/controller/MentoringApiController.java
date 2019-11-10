@@ -5,14 +5,14 @@ import com.spring.capstone.backend.domain.accounts.CurrentAccount;
 import com.spring.capstone.backend.service.MentoringService;
 import com.spring.capstone.backend.service.dto.MentoringRequestDto;
 import com.spring.capstone.backend.service.dto.MentoringResponseDto;
+import com.spring.capstone.backend.service.validator.DateValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,25 +20,27 @@ import java.util.List;
 public class MentoringApiController {
 
     private MentoringService mentoringService;
+    private DateValidator dateValidator;
 
-    public MentoringApiController(MentoringService mentoringService) {
+    public MentoringApiController(MentoringService mentoringService, DateValidator dateValidator) {
         this.mentoringService = mentoringService;
+        this.dateValidator = dateValidator;
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity getMentoring(@CurrentAccount Account account, @PathVariable Long id) {
-//        if (account == null) {
-//            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-//        }
-//        Mentoring mentoring;
-//        try {
-//            mentoring = mentoringService.getMentoring(id);
-//        } catch (Exception e) {
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity(mentoring, HttpStatus.OK);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity getMentoring(@CurrentAccount Account account, @PathVariable Long id) {
+        if (account == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        MentoringResponseDto mentoring;
+        try {
+            mentoring = mentoringService.getMentoring(id);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(mentoring, HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity getMentoringList(@CurrentAccount Account account) {
@@ -56,9 +58,15 @@ public class MentoringApiController {
     }
 
     @PostMapping
-    public ResponseEntity createMentoring(@CurrentAccount Account account, @RequestBody MentoringRequestDto mentoringRequestDto) {
+    public ResponseEntity createMentoring(@CurrentAccount Account account, @RequestBody @Valid MentoringRequestDto mentoringRequestDto, Errors errors) {
         if (account == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        dateValidator.validator(mentoringRequestDto, errors);
+
+        if (errors.hasErrors()) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         try {

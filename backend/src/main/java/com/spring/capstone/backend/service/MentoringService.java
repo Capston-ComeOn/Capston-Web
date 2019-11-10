@@ -24,9 +24,9 @@ public class MentoringService {
         this.mentoringRepository = mentoringRepository;
     }
 
-//    public Mentoring getMentoring(Long id) {
-//        return mentoringRepository.findById(id).orElseThrow(NotFoundDataException::new);
-//    }
+    public MentoringResponseDto getMentoring(Long id) {
+        return mentoringRepository.getMentoring(id);
+    }
 
     public List<MentoringResponseDto> getMentoringList() {
         return mentoringRepository.getMentorings();

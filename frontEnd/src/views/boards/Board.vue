@@ -17,11 +17,12 @@
                             class="elevation-1 pt-4"
                             v-on:item-selected="onClick"
                     >
-                        <!--                        <template v-slot:item.title="props">-->
-                        <!--                            <router-link style="text-decoration: none" :to="`/board/${props.item.category.id}/${props.item.id}`">-->
-                        <!--                                {{props.item.title}}-->
-                        <!--                            </router-link>-->
-                        <!--                        </template>-->
+                        <template v-slot:item.title="props">
+                            <router-link style="text-decoration: none"
+                                         :to="`/board/${props.item.category.id}/${props.item.id}`">
+                                {{props.item.title}}
+                            </router-link>
+                        </template>
 
                     </v-data-table>
                 </v-card>

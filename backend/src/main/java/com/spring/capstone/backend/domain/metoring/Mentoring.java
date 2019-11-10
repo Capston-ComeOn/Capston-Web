@@ -4,6 +4,7 @@ import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.service.dto.MentoringRequestDto;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +17,13 @@ public class Mentoring {
     @GeneratedValue
     private Long id;
     private String title;
+    private String content;
+
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @Embedded
     private Introduce introduce;
-    private Boolean use;
 
     @OneToMany
     private List<Account> mentees = new ArrayList<>();
@@ -31,16 +35,21 @@ public class Mentoring {
         return new Mentoring(
                 mento,
                 mentoringRequestDto.getTitle(),
+                mentoringRequestDto.getContent(),
+                mentoringRequestDto.getStartTime(),
+                mentoringRequestDto.getEndTime(),
                 Introduce.of(mentoringRequestDto.getIntroduceRequestDto())
         );
     }
 
 
-    protected Mentoring(Account mento, String title, Introduce introduce) {
+    protected Mentoring(Account mento, String title, String content, LocalDateTime startTime, LocalDateTime endTime, Introduce introduce) {
         this.title = title;
+        this.content = content;
+        this.startTime = startTime;
+        this.endTime = endTime.plusDays(1).minusMinutes(1);
         this.introduce = introduce;
         this.mento = mento;
-        this.use = true;
     }
 
 
@@ -60,15 +69,23 @@ public class Mentoring {
         return introduce;
     }
 
-    public Boolean getUse() {
-        return use;
-    }
-
     public List<Account> getMentees() {
         return mentees;
     }
 
-    public Account getAccount() {
+    public String getContent() {
+        return content;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public Account getMento() {
         return mento;
     }
 }

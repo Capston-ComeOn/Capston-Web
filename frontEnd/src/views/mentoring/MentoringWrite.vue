@@ -69,6 +69,8 @@
                 let mentoringRequestDto = {
                     title: this.title,
                     content: this.content,
+                    startTime: new Date(this.dates[0]),
+                    endTime: new Date(this.dates[1]),
                     introduceRequestDto: {
                         mento: this.tabs[0].model,
                         target: this.tabs[1].model,
@@ -77,8 +79,13 @@
                     }
                 }
 
-                this.ADD_MENTORING(mentoringRequestDto).then((data)=>{
-                    console.log(data)
+                this.ADD_MENTORING(mentoringRequestDto).then((data) => {
+                    const {status} = data
+                    if (status >= 200 && status <= 300) {
+                        alert('글 작성이 완료되었습니다.')
+                    }
+                }).catch(() => {
+                    alert('글 작성이 실패하였습니다.')
                 })
 
             }

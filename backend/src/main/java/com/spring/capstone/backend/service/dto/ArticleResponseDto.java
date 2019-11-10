@@ -1,32 +1,31 @@
 package com.spring.capstone.backend.service.dto;
 
+import com.spring.capstone.backend.domain.accounts.Account;
 import com.spring.capstone.backend.domain.article.Article;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.spring.capstone.backend.domain.category.Category;
 
 public class ArticleResponseDto {
 
-    @NotEmpty
     private String title;
 
-    @NotEmpty
     private String contents;
 
-    @NotNull
-    private Long categoryId;
+    private AccountResponseDto author;
+
+    private CategoryResponse category;
 
     protected ArticleResponseDto() {
     }
 
-    public static ArticleResponseDto withArticle(Article article){
-        return new ArticleResponseDto(article.getTitle(),article.getContents(),article.getCategory().getId());
+    public static ArticleResponseDto withArticle(Article article) {
+        return new ArticleResponseDto(article.getTitle(), article.getContents(), article.getAuthor(), article.getCategory());
     }
 
-    private ArticleResponseDto(@NotEmpty String title, @NotEmpty String contents, @NotNull Long categoryId) {
+    private ArticleResponseDto(String title, String contents, Account account, Category category) {
         this.title = title;
         this.contents = contents;
-        this.categoryId = categoryId;
+        this.author = AccountResponseDto.withAccount(account);
+        this.category = CategoryResponse.withCategory(category);
     }
 
     public String getTitle() {
@@ -45,11 +44,11 @@ public class ArticleResponseDto {
         this.contents = contents;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public AccountResponseDto getAuthor() {
+        return author;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public CategoryResponse getCategory() {
+        return category;
     }
 }
