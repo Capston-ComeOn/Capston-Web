@@ -39,4 +39,10 @@ public class MentoringService {
         mentoringRepository.save(mentoring);
         return mentoring.getId();
     }
+
+    @Transactional
+    public void addMentee(String email, Long id) {
+        mentoringRepository.addMentee(id, email);
+    }
+
 }

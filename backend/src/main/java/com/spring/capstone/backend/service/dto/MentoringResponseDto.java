@@ -4,6 +4,8 @@ import com.spring.capstone.backend.domain.metoring.Mentoring;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MentoringResponseDto {
 
@@ -11,18 +13,20 @@ public class MentoringResponseDto {
     private String title;
     private String content;
     private LocalDateTime startTime;
-    private LocalDateTime endTIme;
+    private LocalDateTime endTime;
     private IntroduceResponseDto introduce;
     private AccountResponseDto mento;
+    private List<AccountResponseDto> mentees;
 
-    public MentoringResponseDto(Long id, String title, String content, LocalDateTime startTime, LocalDateTime endTIme, IntroduceResponseDto introduce, AccountResponseDto mento) {
+    public MentoringResponseDto(Long id, String title, String content, LocalDateTime startTime, LocalDateTime endTime, IntroduceResponseDto introduce, AccountResponseDto mento, List<AccountResponseDto> mentees) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.startTime = startTime;
-        this.endTIme = endTIme;
+        this.endTime = endTime;
         this.introduce = introduce;
         this.mento = mento;
+        this.mentees = mentees;
     }
 
     public static MentoringResponseDto withMentoring(Mentoring mentoring) {
@@ -33,7 +37,8 @@ public class MentoringResponseDto {
                 mentoring.getStartTime(),
                 mentoring.getEndTime(),
                 IntroduceResponseDto.of(mentoring.getIntroduce()),
-                AccountResponseDto.withAccount(mentoring.getMento())
+                AccountResponseDto.withAccount(mentoring.getMento()),
+                mentoring.getMentees().stream().map(a -> AccountResponseDto.withAccount(a)).collect(Collectors.toList())
         );
     }
 
@@ -42,7 +47,7 @@ public class MentoringResponseDto {
     }
 
     public String getEndTime() {
-        return endTIme.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     public String getContent() {
@@ -62,7 +67,7 @@ public class MentoringResponseDto {
     }
 
     public Boolean getUse() {
-        if (LocalDateTime.now().isBefore(this.endTIme)) {
+        if (LocalDateTime.now().isBefore(this.endTime)) {
             return false;
         }
         return true;
@@ -70,5 +75,10 @@ public class MentoringResponseDto {
 
     public AccountResponseDto getMento() {
         return mento;
+    }
+
+
+    public List<AccountResponseDto> getMentees() {
+        return mentees;
     }
 }

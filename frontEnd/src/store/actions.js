@@ -20,7 +20,6 @@ const actions = {
     FETCH_ARTICLE({commit}, {id, categoryId}) {
         return article.fetch({id, categoryId})
             .then(data => {
-                console.log(data)
                 commit('SET_ARTICLE', data)
                 return data;
             })
@@ -63,7 +62,6 @@ const actions = {
     FETCH_RECENT_CONTACT_LIST({commit},) {
         return message.fetch()
             .then(data => {
-                console.log(data)
                 commit('SET_RECENT_MESSAGE_LIST', data)
             })
     },
@@ -93,11 +91,16 @@ const actions = {
             })
     },
     FETCH_MENTORING({commit}, data) {
-        console.log(data)
         return mentoring.fetch(data)
             .then(data => {
                 commit('SET_MENTORING', data)
                 return data;
+            })
+    },
+    ADD_MENTEE(_, data) {
+        return mentoring.post(data)
+            .then((data) => {
+                return data
             })
     }
 }

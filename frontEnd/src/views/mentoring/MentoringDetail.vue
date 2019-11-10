@@ -78,8 +78,12 @@
             <v-layout style="height: 100px"></v-layout>
 
 
-            <v-layout class="justify-center mt-5 mb-5">
-                <v-btn color="error" dark large>신청하기</v-btn>
+            <v-layout v-if="account && mentoring" class="justify-center mt-5 mb-5">
+                <v-btn @click="onSubmit" color="error" dark large>신청 하기</v-btn>
+                <v-btn v-if="account.id===mentoring.mento.id" :to="`/mentoring/status/${this.$route.params.id}`"
+                       class="ml-2" color="orange" dark large>신청 현황
+                </v-btn>
+                <v-btn v-if="account.id===mentoring.mento.id" class="ml-2" color="green" dark large>멘토링 종료</v-btn>
             </v-layout>
 
             <v-layout style="height: 100px"></v-layout>
@@ -106,12 +110,20 @@
         },
         computed: {
             ...mapState([
-                'mentoring'
+                'mentoring',
+                'account'
             ])
         },
         methods: {
+            onSubmit() {
+                this.ADD_MENTEE({id: this.$route.params.id})
+                    .then((data) => {
+                        return data
+                    })
+            },
             ...mapActions([
-                'FETCH_MENTORING'
+                'FETCH_MENTORING',
+                'ADD_MENTEE'
             ])
         },
         mounted() {

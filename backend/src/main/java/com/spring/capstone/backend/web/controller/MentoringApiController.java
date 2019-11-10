@@ -35,6 +35,7 @@ public class MentoringApiController {
         MentoringResponseDto mentoring;
         try {
             mentoring = mentoringService.getMentoring(id);
+
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -55,6 +56,20 @@ public class MentoringApiController {
         }
 
         return new ResponseEntity(mentoringList, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity addMentee(@CurrentAccount Account account, @PathVariable Long id) {
+        if (account == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        try {
+            mentoringService.addMentee(account.getEmail(), id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping
