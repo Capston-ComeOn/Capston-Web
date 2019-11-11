@@ -15,6 +15,7 @@ const mutations = {
         window.location.replace("/")
     },
     CLEAR_ACCESS_TOKEN(state){
+        console.log('aaa')
       state.access_token=null;
     },
     SET_ARTICLE(state, data) {

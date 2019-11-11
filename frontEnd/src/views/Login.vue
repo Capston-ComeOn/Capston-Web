@@ -66,6 +66,10 @@
             this.returnPath = this.$route.query.returnPath || '/'
         },
         mounted() {
+            if (this.$store.state.access_token){
+                alert('로그인한 상태로는 다시 로그인 할 수 없습니다.')
+                this.$router.push("/")
+            }
         },
         methods: {
             onSubmit() {
