@@ -1,24 +1,30 @@
 import axios from 'axios'
-import router from '../router/router'
 import qs from 'qs'
 
 const domain = 'http://localhost:8090'
 const Unauthorized = 401
 
 const onUnauthorized = () => {
-    if (localStorage.access_token) {
-        this.$store.commit('CLEAR_ACCESS_TOKEN')
-        delete localStorage.access_token;
+
+    const {accessToken} = localStorage;
+    if (accessToken) {
+        return;
     }
-    router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
+    delete localStorage.access_token;
+
+    window.location.href = '/login'
 }
 
 const request = {
     get(path) {
         return axios.get(`${domain + path}`).catch(({response}) => {
+            if (!response) {
+                return onUnauthorized()
+            }
             const {status} = response
-            if (status === Unauthorized) return onUnauthorized()
-            throw Error(response)
+            if (status === Unauthorized) {
+                return onUnauthorized()
+            }
         })
     },
     post(path, data) {

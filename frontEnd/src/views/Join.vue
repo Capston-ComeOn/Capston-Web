@@ -39,6 +39,12 @@
             onTest(){
                 alert('회원가입')
             }
+        },
+        mounted() {
+            if (this.$store.state.access_token){
+                alert('로그인한 상태로는 회원 가입을 할 수 없습니다.')
+                this.$router.push("/")
+            }
         }
     }
 </script>
