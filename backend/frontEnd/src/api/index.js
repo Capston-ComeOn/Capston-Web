@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const domain = 'http://localhost:8090'
+const domain = 'http://localhost'
 const Unauthorized = 401
 
 const onUnauthorized = () => {
@@ -69,6 +69,10 @@ export const account = {
             return request.post(`/api/accounts/search/name`, data).then((data) => data)
         }
         return request.get(`/api/accounts/login`).then((data) => data)
+    },
+    post(data) {
+        return request.post('/api/accounts/join', data).then((response) => response)
+
     },
     imageUpload(data) {
         return request.fileUpload(`/api/accounts/files`, data.formData)

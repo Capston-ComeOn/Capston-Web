@@ -9,6 +9,10 @@ const actions = {
                 dispatch('FETCH_LOGIN_ACCOUNT')
             })
     },
+    ADD_ACCOUNT(_, data) {
+        return account.post(data)
+            .then((response) => response)
+    },
     ADD_ARTICLE(_, {title, contents, categoryId}) {
         return article.post({title, contents, categoryId})
             .then((response) => (response))

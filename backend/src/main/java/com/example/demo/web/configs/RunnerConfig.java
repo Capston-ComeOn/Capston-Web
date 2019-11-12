@@ -8,9 +8,11 @@ import com.example.demo.service.dto.AccountRequestDto;
 import com.example.demo.service.dto.ArticleRequestDto;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile(value="local")
 public class RunnerConfig implements ApplicationRunner {
     private AccountService accountService;
     private ArticleService articleService;
