@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const domain = 'http://localhost'
+const domain = 'http://localhost:8090'
 const Unauthorized = 401
 
 const onUnauthorized = () => {
