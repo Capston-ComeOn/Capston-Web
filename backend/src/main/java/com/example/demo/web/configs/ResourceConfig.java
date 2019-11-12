@@ -26,16 +26,18 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
                 .anonymous()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/css/**", "/js/**","/img/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/**").authenticated()
                 .mvcMatchers(HttpMethod.POST, "/api/accounts/join").permitAll()
-                .antMatchers("/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/api/public-key").permitAll() // Swagger Support
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+
+//                .antMatchers("/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/api/public-key").permitAll() // Swagger Support
+//                .antMatchers("/","/css/**", "/js/**","/img/**","/login","/favicon.ico").permitAll()
+//                .antMatchers("/h2-console/**").permitAll()
+
         // h2-console
         http
                 .csrf()
