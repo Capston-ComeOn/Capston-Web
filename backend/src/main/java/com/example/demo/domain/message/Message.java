@@ -10,6 +10,7 @@ import static javax.persistence.FetchType.LAZY;
 
 
 @Entity
+@Table(name = "message")
 public class Message {
 
     @Id

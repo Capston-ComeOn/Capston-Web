@@ -12,6 +12,7 @@ import java.util.Objects;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
+@Table(name = "article")
 public class Article {
 
     @Id

@@ -11,10 +11,11 @@ import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
+@Table(name = "mentoring")
 public class Mentoring {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;

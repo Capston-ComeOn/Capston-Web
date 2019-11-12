@@ -3,6 +3,7 @@ package com.example.demo.domain.category;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "category")
 public class Category {
 
     @Id
