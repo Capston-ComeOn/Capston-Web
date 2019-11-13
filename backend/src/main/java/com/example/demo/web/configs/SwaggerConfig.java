@@ -4,6 +4,7 @@ import com.example.demo.domain.accounts.Account;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -25,6 +26,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @Configuration
 @EnableSwagger2
+@Profile(value = "local")
 public class SwaggerConfig {
 
     @Value("${app.client.id}")
@@ -36,7 +38,6 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-
 
         List<ResponseMessage> list = new java.util.ArrayList<>();
         list.add(new ResponseMessageBuilder().code(500).message("500 message")

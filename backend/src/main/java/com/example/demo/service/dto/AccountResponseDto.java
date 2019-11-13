@@ -29,22 +29,6 @@ public class AccountResponseDto {
         this.studentId = studentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
     public Long getId() {
         return id;
     }

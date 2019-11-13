@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile(value="local")
-public class RunnerConfig implements ApplicationRunner {
+public class LocalRunnerConfig implements ApplicationRunner {
     private AccountService accountService;
     private ArticleService articleService;
     private CategoryRepository categoryRepository;
 
-    public RunnerConfig(AccountService accountService, ArticleService articleService, CategoryRepository categoryRepository) {
+    public LocalRunnerConfig(AccountService accountService, ArticleService articleService, CategoryRepository categoryRepository) {
         this.accountService = accountService;
         this.articleService = articleService;
         this.categoryRepository = categoryRepository;

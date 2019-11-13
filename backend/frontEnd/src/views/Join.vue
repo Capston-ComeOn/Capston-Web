@@ -4,6 +4,7 @@
             <v-flex xs12>
                 <h3 class="title mb-3"> 회원가입 </h3>
                 <v-divider class="mb-5" light></v-divider>
+
                 <form>
                     <v-text-field
                             label="E-mail"
@@ -62,7 +63,7 @@
                         if (data.status >= 200 && data.status < 400) {
                             alert('회원 가입 성공')
                         }
-                    }).catch((e) => {
+                    }).catch(() => {
                     alert('회원 가입 실패')
                 })
             },

@@ -1,7 +1,14 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const domain = 'http://localhost:8090'
+let domain;
+
+if (process.env.NODE_ENV === 'development') {
+    domain = 'http://localhost:8090'
+} else {
+    domain = 'https://computer-comeon.ga'
+}
+
 const Unauthorized = 401
 
 const onUnauthorized = () => {
