@@ -6,11 +6,12 @@
                 <v-row/>
                 <v-list>
                     <v-list-item>
-<!--                        <v-list-item-avatar v-if="article.author.imgSrc" color="grey" size="64">-->
-<!--                            <v-img @click="dialog=true" style="cursor:pointer"-->
-<!--                                   :src="`http://localhost:8090/api/accounts/download?fileName=${article.author.imgSrc}`"/>-->
-<!--                        </v-list-item-avatar>-->
-                        <v-icon size="64" class="mr-2">mdi-account-circle</v-icon>
+                        <v-list-item-avatar v-if="article && article.author && article.author.imgSrc!==null"
+                                            color="grey" size="64">
+                            <v-img @click="dialog=true" style="cursor:pointer"
+                                   :src="article.author.imgSrc"/>
+                        </v-list-item-avatar>
+                        <v-icon v-else size="64" class="mr-2">mdi-account-circle</v-icon>
                         <v-list-item-content>
                             <v-list-item-title v-text="article.author.name"/>
                         </v-list-item-content>

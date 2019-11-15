@@ -7,14 +7,14 @@
             <v-toolbar-items class="hidden-xs-and-down">
 
                 <v-menu class="ml-2" offset-y>
-                    <template v-if="this.account.imgSrc" v-slot:activator="{ on }">
-                        <v-avatar v-on="on" class="mt-3" size="45" style=" border: 2px solid;">
-                            <img :src="`http://localhost:8090/api/accounts/download?fileName=${account.imgSrc}`"/>
-                        </v-avatar>
-                    </template>
-                    <template v-else v-slot:activator="{ on }">
-                        <v-avatar v-on="on" class="mt-2 pl-5">
-                            <v-icon size="45">mdi-account-circle</v-icon>
+                    <template v-slot:activator="{ on }">
+<!--                        <v-avatar  v-on="on" class="mt-3" size="45"-->
+<!--                                  style=" border: 2px solid;">-->
+<!--                            -->
+<!--                        </v-avatar>-->
+                        <v-avatar v-on="on" >
+                            <img v-if="account.length>=1 && account.imgSrc!==null" :src="account.imgSrc"/>
+                            <v-icon v-else class="mt-2 pl-5" size="45">mdi-account-circle</v-icon>
                         </v-avatar>
                     </template>
 

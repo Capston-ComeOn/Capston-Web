@@ -21,10 +21,11 @@
                                 ripple
                                 @click="onShowMessageRoom(item.id)"
                         >
-                            <v-icon v-if="!item.imgSrc" size="50" class="mr-2">mdi-account-circle</v-icon>
-                            <v-avatar v-else size="50" class="mr-2">
-                                <img :src="`http://localhost:8090/api/accounts/download?fileName=${item.imgSrc}`"/>
+                            <v-avatar v-if="item && item.imgSrc!==null" size="50" class="mr-2">
+                                <img :src="item.imgSrc"/>
                             </v-avatar>
+                            <v-icon v-else size="50" class="mr-2">mdi-account-circle</v-icon>
+
                             <v-list-item-content>
                                 <v-list-item-title v-html="item.name"></v-list-item-title>
                                 <!--                            <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>-->

@@ -8,25 +8,30 @@ import javax.validation.constraints.NotEmpty;
 public class AccountResponseDto {
 
     private Long id;
-    @NotEmpty
     private String name;
-    @NotBlank
     private String email;
-    @NotEmpty
     private String studentId;
+    private String imgSrc;
 
     protected AccountResponseDto() {
     }
 
     public static AccountResponseDto withAccount(Account account) {
-        return new AccountResponseDto(account.getId(), account.getName(), account.getEmail(), account.getStudentId());
+        return new AccountResponseDto(
+                account.getId(),
+                account.getName(),
+                account.getEmail(),
+                account.getStudentId(),
+                account.getImgSrc()
+        );
     }
 
-    public AccountResponseDto(Long id, @NotEmpty String name, @NotBlank String email, @NotEmpty String studentId) {
+    public AccountResponseDto(Long id, String name, String email, String studentId, String imgSrc) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.studentId = studentId;
+        this.imgSrc = imgSrc;
     }
 
     public Long getId() {
@@ -43,5 +48,9 @@ public class AccountResponseDto {
 
     public String getStudentId() {
         return studentId;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
     }
 }

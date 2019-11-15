@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -40,8 +41,11 @@ public class ArticleService {
         return ArticleResponseDto.withArticle(article);
     }
 
-    public List<Article> getArticles(Long categoryId, Pageable pageable) {
-        return articleRepository.findByCategoryId(categoryId,pageable);
+    public List<ArticleResponseDto> getArticles(Long categoryId, Pageable pageable) {
+        return articleRepository.findByCategoryId(categoryId, pageable)
+                .stream()
+                .map(a -> ArticleResponseDto.withArticle(a))
+                .collect(Collectors.toList());
     }
 
     public long getArticleSize(Long categoryId) {

@@ -7,12 +7,13 @@
     >
         <v-list subheader>
             <v-list-item>
-                <v-list-item-avatar v-if="!message.to.imgSrc">
+                <v-avatar v-if="message && message.to && message.to.imgSrc!==null" size="60" class="mr-2">
+                    <img :src="message.to.imgSrc"/>
+                </v-avatar>
+                <v-list-item-avatar v-else>
                     <v-icon size="60">mdi-account-circle</v-icon>
                 </v-list-item-avatar>
-                <v-avatar v-else size="60" class="mr-2">
-                    <img :src="`http://localhost:8090/api/accounts/download?fileName=${message.to.imgSrc}`"/>
-                </v-avatar>
+
 
                 <v-list-item-content>
                     <v-list-item-subtitle v-html="`${message.to.name} (나) ${message.created}`"></v-list-item-subtitle>

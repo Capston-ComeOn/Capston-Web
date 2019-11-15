@@ -7,11 +7,12 @@
             <v-flex v-for="(mentee,index) in mentoring.mentees" :key="index" xs12>
                 <v-list>
                     <v-list-item>
-                        <!--                        <v-list-item-avatar v-if="article.author.imgSrc" color="grey" size="64">-->
-                        <!--                            <v-img @click="dialog=true" style="cursor:pointer"-->
-                        <!--                                   :src="`http://localhost:8090/api/accounts/download?fileName=${article.author.imgSrc}`"/>-->
-                        <!--                        </v-list-item-avatar>-->
-                        <v-icon size="64" class="mr-2">mdi-account-circle</v-icon>
+                        <v-list-item-avatar v-if="mentee && mentee.imgSrc" color="grey"
+                                            size="64">
+                            <v-img @click="dialog=true" style="cursor:pointer"
+                                   :src="mentee.imgSrc"/>
+                        </v-list-item-avatar>
+                        <v-icon v-else size="64" class="mr-2">mdi-account-circle</v-icon>
                         <v-list-item-content>
                             <v-list-item-title v-text="`이름: ${mentee.name}`"/>
                             <v-list-item-title v-text="`이메일: ${mentee.email}`"/>

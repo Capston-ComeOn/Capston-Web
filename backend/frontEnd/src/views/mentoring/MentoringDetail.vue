@@ -14,12 +14,15 @@
             </v-layout>
             <v-layout>
                 <v-flex>
-                    <v-avatar color="orange" size="200px" class="mb-3 mt-3">
-                        <img
-                                aspect-ratio="1"
-                                src="https://kimnoin.github.io/images/bio-photo.jpg"
+                    <v-avatar v-if="account && account.imgSrc!==null" size="200px" class="mb-3 mt-3">
+                        <img v-if="account.imgSrc!==null"
+                             :src="account.imgSrc"
                         >
                     </v-avatar>
+                    <v-icon v-else size="200px">
+                        mdi-account-circle
+                    </v-icon>
+
                 </v-flex>
                 <v-flex v-if="mentoring" class="mt-5">
                     <h1>{{mentoring.title}}</h1>
@@ -78,8 +81,8 @@
             <v-layout style="height: 100px"></v-layout>
 
 
-            <v-layout v-if="account && mentoring" class="justify-center mt-5 mb-5">
-                <v-btn @click="onSubmit" color="error" dark large>신청 하기</v-btn>
+            <v-layout v-if="account && mentoring " class="justify-center mt-5 mb-5">
+                <v-btn v-if="account.id!==mentoring.mento.id" @click="onSubmit" color="error" dark large>신청 하기</v-btn>
                 <v-btn v-if="account.id===mentoring.mento.id" :to="`/mentoring/status/${this.$route.params.id}`"
                        class="ml-2" color="orange" dark large>신청 현황
                 </v-btn>

@@ -2,7 +2,7 @@ package com.example.demo.web.controller;
 
 import com.example.demo.domain.accounts.Account;
 import com.example.demo.domain.accounts.CurrentAccount;
-import com.example.demo.domain.article.Article;
+import com.example.demo.domain.category.Category;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.dto.ArticleRequestDto;
@@ -40,20 +40,19 @@ public class ArticleApiController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<Object> getArticles(@CurrentAccount Account account, @PathVariable Long categoryId, Pageable pageable) {
+    public ResponseEntity<List<ArticleResponseDto>> getArticles(@CurrentAccount Account account, @PathVariable Long categoryId, Pageable pageable) {
 
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         try {
-            List<Article> articles = articleService.getArticles(categoryId, pageable);
-            return new ResponseEntity<>(articles, HttpStatus.OK);
+            return new ResponseEntity<>(articleService.getArticles(categoryId, pageable),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/{categoryId}/size")
-    public ResponseEntity<Object> getArticlesSize(@CurrentAccount Account account, @PathVariable Long categoryId) {
+    public ResponseEntity<Long> getArticlesSize(@CurrentAccount Account account, @PathVariable Long categoryId) {
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         try {
             long articleSize = articleService.getArticleSize(categoryId);
@@ -67,7 +66,7 @@ public class ArticleApiController {
     @PostMapping("/{categoryId}")
     public ResponseEntity createArticle(@CurrentAccount Account account, @PathVariable Long categoryId, @RequestBody @Valid ArticleRequestDto articleRequestDto, Errors errors) {
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        if (isConvertError(errors)) return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        if (isConvertError(errors)) return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
 
         try {
             articleService.save(account.getEmail(), categoryId, articleRequestDto);
@@ -79,19 +78,18 @@ public class ArticleApiController {
     }
 
     @PutMapping("/{articleId}")
-    public ResponseEntity<Object> updateArticle(@CurrentAccount Account account, @PathVariable Long articleId, @RequestBody @Valid ArticleRequestDto articleRequestDto, Errors errors) {
+    public ResponseEntity updateArticle(@CurrentAccount Account account, @PathVariable Long articleId, @RequestBody @Valid ArticleRequestDto articleRequestDto, Errors errors) {
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (isConvertError(errors)) return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         try {
-            long save = articleService.update(articleId, articleRequestDto);
-            return new ResponseEntity<>(save, HttpStatus.CREATED);
+            return new ResponseEntity<>(articleService.update(articleId, articleRequestDto), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/{articleId}")
-    public ResponseEntity deleteArticle(@CurrentAccount Account account, @PathVariable Long articleId) {
+    public ResponseEntity<HttpStatus> deleteArticle(@CurrentAccount Account account, @PathVariable Long articleId) {
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         try {
@@ -103,7 +101,7 @@ public class ArticleApiController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity getCategories(@CurrentAccount Account account) {
+    public ResponseEntity<List<Category>> getCategories(@CurrentAccount Account account) {
         if (isLogin(account)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         try {

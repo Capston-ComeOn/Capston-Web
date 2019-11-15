@@ -12,8 +12,11 @@
                         <v-btn to="/mentoring/write" color="orange lighten-2" dark>작성하기</v-btn>
                     </v-row>
                     <h1 class="mb-5 text-center"> 현재 진행중인 멘토링 </h1>
-                    <v-row class="justify-center mb-5">
-                        <card :item="item" class="ma-4" v-for="(item,i) in this.mentoringList" :key="i"/>
+                    <v-row v-if="this.mentoringList.length>=1" class="justify-center mb-5">
+                        <mentoring-card :item="item" class="ma-4" v-for="(item,i) in this.mentoringList" :key="i"/>
+                    </v-row>
+                    <v-row v-else class="justify-center">
+                        진행중인 멘토링이 없습니다.
                     </v-row>
                 </v-card>
             </v-row>
@@ -22,7 +25,7 @@
 </template>
 
 <script>
-    import {mapActions,mapState} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
 
     export default {
         data() {
@@ -39,12 +42,12 @@
             ])
         },
         components: {
-            card: () => import('@/components/Card')
+            'mentoring-card': () => import('@/components/MentoringCard')
         },
-        computed:{
-          ...mapState([
-              'mentoringList'
-          ])
+        computed: {
+            ...mapState([
+                'mentoringList'
+            ])
         },
         mounted() {
             this.FETCH_MENTORING_LIST()

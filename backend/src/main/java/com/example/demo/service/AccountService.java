@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +39,17 @@ public class AccountService implements UserDetailsService {
         Account account = Account.of(accountRequestDto);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account).getId();
+    }
+
+    @Transactional
+    public void changeImgSrc(String email, String imgSrc) {
+        Account account = accountRepository.findByEmail(email).orElseThrow(NotFoundDataException::new);
+        if (Objects.nonNull(account.getImgSrc())) {
+            // 버킷에서 기존 이미지 삭제
+            return;
+        }
+
+        account.setImgSrc(imgSrc);
     }
 
     public AccountResponseDto getAccountWithEmail(String email) {

@@ -5,10 +5,10 @@
     >
         <v-list-item class="pa-3">
 
-            <v-icon v-if="!account.imgSrc" size="100">mdi-account-circle</v-icon>
-            <v-avatar v-else size="120" class="mr-2">
-                <img :src="`http://localhost:8090/api/accounts/download?fileName=${account.imgSrc}`"/>
+            <v-avatar v-if="account && account.imgSrc!==null" size="120" class="mr-2">
+                <img :src="account.imgSrc"/>
             </v-avatar>
+            <v-icon v-else size="100">mdi-account-circle</v-icon>
             <v-list-item-content>
                 <v-btn @click="isShowImgChangeModal=true">Change Avatar</v-btn>
             </v-list-item-content>
@@ -69,8 +69,8 @@
                 </ul>
             </div>
             <div class="text-rightMentoring.vue" slot="footer">
-                 <v-btn @click="onAddItem" class="mr-2">수정</v-btn>
-                 <v-btn @click="onFileList">취소</v-btn>
+                <v-btn @click="onAddItem" class="mr-2">수정</v-btn>
+                <v-btn @click="onFileList">취소</v-btn>
             </div>
         </modal>
 

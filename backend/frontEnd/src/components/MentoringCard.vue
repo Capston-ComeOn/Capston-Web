@@ -1,0 +1,42 @@
+<template>
+    <v-hover v-slot:default="{ hover }">
+        <v-card
+                :elevation="hover ? 24 : 2"
+                max-width="300">
+            <v-list-item>
+                <v-avatar v-if="item && item.mento && item.mento.imgSrc!==null" class="mr-2">
+                    <img src="https://kimnoin.github.io/images/bio-photo.jpg">
+                </v-avatar>
+                <v-icon size="64">
+                    mdi-account-circle
+                </v-icon>
+                <v-list-item-content>
+                    <v-list-item-title class="headline">{{item.title}}</v-list-item-title>
+                    <v-list-item-subtitle>by {{item.mento.name}}({{item.mento.studentId}})</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+
+            <router-link :to="`/mentoring/detail/${item.id}`">
+                <v-img style="cursor:pointer"
+                       src="https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198_1280.jpg"
+                       height="194"
+                ></v-img>
+            </router-link>
+            <v-card-text class="ma-5">
+                {{item.content}}
+            </v-card-text>
+        </v-card>
+    </v-hover>
+</template>
+
+<script>
+
+    export default {
+        props: ['item'],
+        name: "Card"
+    }
+</script>
+
+<style scoped>
+
+</style>

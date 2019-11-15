@@ -3,30 +3,7 @@
         <tab class="mb-3"></tab>
         <v-layout>
             <v-flex>
-                <v-card class="pa-3 mt-5 mb-5">
-                    <v-toolbar color="blue" elevation="10">
-                        <v-toolbar-title v-if="this.categoryList[this.categoryId-1]" class="text-center pt-2">
-                            {{categoryList[categoryId-1].name}}
-                        </v-toolbar-title>
-                    </v-toolbar>
-                    <v-data-table
-                            :headers="headers"
-                            :items="this.articleList"
-                            :server-items-length.sync="pagination.totalSize"
-                            @pagination="onPagination"
-                            class="elevation-1 pt-4"
-                            v-on:item-selected="onClick"
-                    >
-                        <template v-slot:item.title="props">
-                            <router-link style="text-decoration: none"
-                                         :to="`/board/${props.item.category.id}/${props.item.id}`">
-                                {{props.item.title}}
-                            </router-link>
-                        </template>
-
-                    </v-data-table>
-                </v-card>
-
+                <data-table/>
                 <div class="text-right mt-2">
                     <v-btn large dark color="blue lighten-2" to="/board/write">작성하기</v-btn>
                 </div>
@@ -41,7 +18,8 @@
 
     export default {
         components: {
-            tab
+            tab,
+            'data-table': () => import('@/components/DataTable')
         },
         data() {
             return {
@@ -50,7 +28,7 @@
                     {text: '제목', value: 'title'},
                     {text: '작성자', value: 'author.name'},
                     {text: '조회수', value: 'viewer'},
-                    {text: '날짜', value: 'time'},
+                    {text: '날짜', value: 'created'},
                     {text: '추천수', value: 'recommend'},
                 ],
 
