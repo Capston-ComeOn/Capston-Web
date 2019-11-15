@@ -36,7 +36,7 @@
                     <v-icon size="60">mdi-account-circle</v-icon>
                 </v-list-item-avatar>
                 <v-avatar v-else size="60" class="mr-2">
-                    <img :src="`http://localhost:8090/api/accounts/download?fileName=${message.to.imgSrc}`"/>
+                    <img :src="`${message.to.imgSrc}`"/>
                 </v-avatar>
                 <v-list-item-content>
                     <v-list-item-subtitle v-html="`${message.to.name} (상대방) ${message.created}`"></v-list-item-subtitle>

@@ -38,12 +38,12 @@ public class Article {
     private LocalDateTime created;
 
 
-    private Article(Account author, ArticleRequestDto articleRequestDto, Category category) {
+    private Article(Account author, ArticleRequestDto articleRequestDto, Category category, LocalDateTime created) {
         this.title = articleRequestDto.getTitle();
         this.contents = articleRequestDto.getContents();
         this.author = author;
         this.category = category;
-        this.created=LocalDateTime.now();
+        this.created = created;
     }
 
     public LocalDateTime getCreated() {
@@ -55,7 +55,7 @@ public class Article {
     }
 
     public static Article of(Account author, ArticleRequestDto articleRequestDto, Category category) {
-        return new Article(author, articleRequestDto, category);
+        return new Article(author, articleRequestDto, category, LocalDateTime.now());
     }
 
     public void update(ArticleRequestDto articleRequestDto) {

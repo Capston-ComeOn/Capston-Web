@@ -4,17 +4,12 @@
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>컴정 온라인 게시판, 컴온!</v-toolbar-title>
             <div class="flex-grow-1"></div>
-            <v-toolbar-items class="hidden-xs-and-down">
 
+            <v-toolbar-items class="hidden-xs-and-down" v-if="account">
                 <v-menu class="ml-2" offset-y>
                     <template v-slot:activator="{ on }">
-<!--                        <v-avatar  v-on="on" class="mt-3" size="45"-->
-<!--                                  style=" border: 2px solid;">-->
-<!--                            -->
-<!--                        </v-avatar>-->
-                        <v-avatar v-on="on" >
-                            <img v-if="account.length>=1 && account.imgSrc!==null" :src="account.imgSrc"/>
-                            <v-icon v-else class="mt-2 pl-5" size="45">mdi-account-circle</v-icon>
+                        <v-avatar v-on="on">
+                            <img :src="account.imgSrc" class="mt-2"/>
                         </v-avatar>
                     </template>
 
@@ -27,8 +22,6 @@
                         </v-list-item>
                     </v-list>
                 </v-menu>
-
-
             </v-toolbar-items>
 
         </v-app-bar>
@@ -74,7 +67,7 @@
 </template>
 
 <script>
-    import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+    import {mapActions, mapGetters, mapMutations, mapState} from 'vuex'
 
     export default {
         data() {

@@ -83,6 +83,7 @@
                     const {status} = data
                     if (status >= 200 && status <= 300) {
                         alert('글 작성이 완료되었습니다.')
+                        this.$router.push("/mentoring")
                     }
                 }).catch(() => {
                     alert('글 작성이 실패하였습니다.')

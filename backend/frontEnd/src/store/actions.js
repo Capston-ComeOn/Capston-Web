@@ -1,4 +1,4 @@
-import {auth, article, category, message, account, mentoring} from '../api'
+import {account, article, auth, category, mentoring, message} from '../api'
 
 const actions = {
     LOGIN({commit, dispatch}, {username, password, grant_type}) {
@@ -28,6 +28,9 @@ const actions = {
                 return data;
             })
     },
+    FETCH_ARTICLE_LIST_RETURN({commit}, {categoryId, size, page}) {
+        return article.fetch({categoryId, size, page}).then((data) => data)
+    },
     FETCH_ARTICLE_SIZE(_, {categoryId}) {
         return article.fetch({categoryId}).then(data => {
             return data;
@@ -41,6 +44,7 @@ const actions = {
     FETCH_CATEGORY_LIST({commit}) {
         return category.fetch().then((data) => {
             commit('SET_CATEGORY_LIST', data)
+            return data;
         })
     },
     DESTROY_ARTICLE(_, {id}) {

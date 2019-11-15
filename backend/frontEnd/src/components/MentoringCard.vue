@@ -7,7 +7,7 @@
                 <v-avatar v-if="item && item.mento && item.mento.imgSrc!==null" class="mr-2">
                     <img src="https://kimnoin.github.io/images/bio-photo.jpg">
                 </v-avatar>
-                <v-icon size="64">
+                <v-icon size="64" v-else>
                     mdi-account-circle
                 </v-icon>
                 <v-list-item-content>
@@ -23,8 +23,13 @@
                 ></v-img>
             </router-link>
             <v-card-text class="ma-5">
-                {{item.content}}
+                시작 시간: {{item.startTime}}
+                <br/>
+                종료 시간: {{item.endTime}}
             </v-card-text>
+            <div class="text-center mb-5">
+                {{item.content}}
+            </div>
         </v-card>
     </v-hover>
 </template>
