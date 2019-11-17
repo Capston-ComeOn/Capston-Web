@@ -6,8 +6,8 @@
             </v-toolbar-title>
         </v-toolbar>
         <v-list>
-            <v-list-item-group v-model="model">
-                <v-list-item :key="i" v-for="(item, i) in table">
+            <v-list-item-group :key="i" v-for="(item, i) in table">
+                <v-list-item :to="`/board/${item.category.id}/${item.id}`">
                     <v-list-item-content>
                         <v-list-item-title v-text="item.title"></v-list-item-title>
                     </v-list-item-content>
