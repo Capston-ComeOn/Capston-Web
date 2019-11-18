@@ -1,7 +1,8 @@
-package com.example.demo.domain.metoring;
+package com.example.demo.domain.project;
 
 import com.example.demo.domain.accounts.Account;
-import com.example.demo.service.dto.MentoringRequestDto;
+import com.example.demo.domain.metoring.Introduce;
+import com.example.demo.service.dto.ProjectRequestDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,12 +12,12 @@ import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@Table(name = "mentoring")
-public class Mentoring {
+@Table(name = "project")
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MENTORING_ID")
+    @Column(name = "PROJECT_ID")
     private Long id;
     private String title;
     private String content;
@@ -28,35 +29,34 @@ public class Mentoring {
     private Introduce introduce;
 
     @OneToMany
-    private List<Account> mentees = new ArrayList<>();
+    private List<Account> applicant = new ArrayList<>();
 
     @ManyToOne(fetch = LAZY)
-    private Account mento;
+    private Account account;
 
-    public static Mentoring of(Account mento, MentoringRequestDto mentoringRequestDto) {
-        return new Mentoring(
-                mento,
-                mentoringRequestDto.getTitle(),
-                mentoringRequestDto.getContent(),
-                mentoringRequestDto.getStartTime(),
-                mentoringRequestDto.getEndTime(),
-                Introduce.of(mentoringRequestDto.getIntroduceRequestDto())
-        );
-    }
-
-
-    protected Mentoring(Account mento, String title, String content, LocalDateTime startTime, LocalDateTime endTime, Introduce introduce) {
+    protected Project(Account account, String title, String content, LocalDateTime startTime, LocalDateTime endTime, Introduce introduce) {
         this.title = title;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime.plusDays(1).minusMinutes(1);
         this.introduce = introduce;
-        this.mento = mento;
+        this.account = account;
     }
 
 
-    protected Mentoring() {
+    protected Project() {
 
+    }
+
+    public static Project of(Account account, ProjectRequestDto projectRequestDto) {
+        return new Project(
+                account,
+                projectRequestDto.getTitle(),
+                projectRequestDto.getContent(),
+                projectRequestDto.getStartTime(),
+                projectRequestDto.getEndTime(),
+                Introduce.of(projectRequestDto.getIntroduceRequestDto())
+        );
     }
 
     public Long getId() {
@@ -71,8 +71,12 @@ public class Mentoring {
         return introduce;
     }
 
-    public List<Account> getMentees() {
-        return mentees;
+    public List<Account> getApplicant() {
+        return applicant;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     public String getContent() {
@@ -85,9 +89,5 @@ public class Mentoring {
 
     public LocalDateTime getEndTime() {
         return endTime;
-    }
-
-    public Account getMento() {
-        return mento;
     }
 }

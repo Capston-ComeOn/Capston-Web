@@ -41,7 +41,7 @@ public class MentoringRepository {
 
         // 작성자가 아닐경우 멘토링 신청현황을 보여주지 않는다.
         if (!mentoringResponseDto.getMento().getId().equals(id)) {
-            mentoring.getMentees().clear();
+            mentoringResponseDto.getMentees().clear();
         }
         return mentoringResponseDto;
     }

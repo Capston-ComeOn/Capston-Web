@@ -79,6 +79,7 @@
                     {title: '내 정보', icon: 'mdi-account-card-details', link: "/profile"},
                     {title: '게시판', icon: 'mdi-book-open-variant', link: "/Board"},
                     {title: '멘토링 ', icon: 'mdi-account-group', link: "/mentoring"},
+                    {title: '프로젝트&공모전', icon: 'mdi-folder-open-outline', link: "/project"},
                     {title: '로그아웃', icon: 'mdi-lock-open-variant-outline', link: "/logout"}
                 ],
                 logoutItems: [

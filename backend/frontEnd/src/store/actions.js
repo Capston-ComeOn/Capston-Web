@@ -1,4 +1,4 @@
-import {account, article, auth, category, mentoring, message} from '../api'
+import {account, article, auth, category, mentoring, message, project} from '../api'
 
 const actions = {
     LOGIN({commit, dispatch}, {username, password, grant_type}) {
@@ -110,7 +110,34 @@ const actions = {
             .then((data) => {
                 return data
             })
-    }
+    },
+    ADD_PROJECT(_, data) {
+        return project.post(data)
+            .then((data) => {
+                return data
+            })
+    },
+    FETCH_PROJECT_LIST({commit}) {
+        return project.fetch()
+            .then(data => {
+                commit('SET_PROJECT_LIST', data)
+                return data;
+            })
+    },
+    FETCH_PROJECT({commit}, data) {
+        return project.fetch(data)
+            .then(data => {
+                commit('SET_PROJECT', data)
+                return data;
+            })
+    },
+    ADD_APPLY(_, data) {
+        console.log(data)
+        return project.post(data)
+            .then((data) => {
+                return data
+            })
+    },
 }
 
 export default actions

@@ -14,9 +14,9 @@ const mutations = {
         setAuthInHeader(null)
         window.location.replace("/")
     },
-    CLEAR_ACCESS_TOKEN(state){
+    CLEAR_ACCESS_TOKEN(state) {
         console.log('aaa')
-      state.access_token=null;
+        state.access_token = null;
     },
     SET_ARTICLE(state, data) {
         state.article = data
@@ -74,6 +74,15 @@ const mutations = {
     },
     SET_MENTORING(state, data) {
         state.mentoring = data
+    },
+    SET_PROJECT_LIST(state, {data}) {
+        state.projectList = []
+        if (data.length > 0) {
+            state.projectList = data
+        }
+    },
+    SET_PROJECT(state, data) {
+        state.project = data
     }
 }
 export default mutations

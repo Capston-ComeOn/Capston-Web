@@ -5,7 +5,7 @@
                 max-width="300">
             <v-list-item>
                 <v-avatar v-if="item && item.mento && item.mento.imgSrc!==null" class="mr-2">
-                    <img src="https://kimnoin.github.io/images/bio-photo.jpg">
+                    <img :src="item.mento.imgSrc">
                 </v-avatar>
                 <v-icon size="64" v-else>
                     mdi-account-circle

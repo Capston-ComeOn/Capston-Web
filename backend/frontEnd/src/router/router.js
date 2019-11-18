@@ -12,11 +12,13 @@ import Read from '../views/boards/ReadBoard'
 import Write from '../views/boards/BoardWrite'
 import Update from '../views/boards/BoardUpdate'
 import Mentoring from '../views/mentoring/Mentoring'
-// import MentoringView from '../views/MentoringView'
+import Project from '../views/projects/Project'
 import Timeline from '../views/Timeline'
 import Profile from '../views/Profile'
+import ProjectDetail from "../views/projects/ProjectDetail";
+import ProjectStatus from "../views/projects/ProjectStatus";
+import ProjectWrite from "../views/projects/ProjectWrite";
 import store from '../store'
-
 
 Vue.use(Router)
 
@@ -43,6 +45,26 @@ export default new Router({
         {
             path: '/join',
             component: Join
+        },
+        {
+            path: '/project',
+            component: Project,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/project/detail/:id',
+            component: ProjectDetail,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/project/status/:id',
+            component: ProjectStatus,
+            beforeEnter: requireAuth()
+        },
+        {
+            path: '/project/write',
+            component: ProjectWrite,
+            beforeEnter: requireAuth()
         },
         {
             path: "/timeline",

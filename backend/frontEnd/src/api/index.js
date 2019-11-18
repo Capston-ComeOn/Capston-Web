@@ -142,5 +142,20 @@ export const mentoring = {
         }
         return request.post(`/api/mentoring`, data).then((data) => data)
     }
+}
+
+export const project = {
+    fetch(data) {
+        if (!data) {
+            return request.get(`/api/project`).then((data) => data)
+        }
+        return request.get(`/api/project/${data.id}`).then(({data}) => data)
+    },
+    post(data) {
+        if (data.id) {
+            return request.post(`/api/project /${data.id}`).then((data) => data)
+        }
+        return request.post(`/api/project`, data).then((data) => data)
+    }
 
 }
