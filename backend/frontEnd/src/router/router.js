@@ -15,9 +15,9 @@ import Mentoring from '../views/mentoring/Mentoring'
 import Project from '../views/projects/Project'
 import Timeline from '../views/Timeline'
 import Profile from '../views/Profile'
-import ProjectDetail from "../views/projects/ProjectDetail";
-import ProjectStatus from "../views/projects/ProjectStatus";
-import ProjectWrite from "../views/projects/ProjectWrite";
+import ProjectDetail from '../views/projects/ProjectDetail'
+import ProjectStatus from '../views/projects/ProjectStatus'
+import ProjectWrite from '../views/projects/ProjectWrite'
 import store from '../store'
 
 Vue.use(Router)
