@@ -17,21 +17,23 @@
 </template>
 
 <script>
-    import {mapState, mapActions, mapMutations} from 'vuex'
+    import {mapActions, mapMutations, mapState} from 'vuex'
 
     export default {
         computed: {
-            ...mapState([
+            ...mapState('category', [
                 'categoryList'
             ])
         },
         methods: {
-            ...mapMutations([
+            ...mapMutations('category', [
                 'SET_CATEGORY_ID'
             ]),
-            ...mapActions([
-                'FETCH_CATEGORY_LIST',
+            ...mapActions('article', [
                 'FETCH_ARTICLE_LIST'
+            ]),
+            ...mapActions('category', [
+                'FETCH_CATEGORY_LIST'
             ]),
             onSetCategoryId({id}) {
                 this.SET_CATEGORY_ID(id)

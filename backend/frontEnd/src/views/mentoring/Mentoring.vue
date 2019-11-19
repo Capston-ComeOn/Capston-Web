@@ -36,17 +36,17 @@
                 ]
             }
         },
-        methods: {
-            ...mapActions([
-                'FETCH_MENTORING_LIST'
-            ])
-        },
         components: {
             'mentoring-card': () => import('@/components/MentoringCard')
         },
         computed: {
-            ...mapState([
+            ...mapState('mentoring', [
                 'mentoringList'
+            ])
+        },
+        methods: {
+            ...mapActions('mentoring', [
+                'FETCH_MENTORING_LIST'
             ])
         },
         mounted() {

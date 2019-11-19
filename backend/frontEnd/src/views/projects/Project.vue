@@ -34,7 +34,7 @@
             }
         },
         methods: {
-            ...mapActions([
+            ...mapActions('project', [
                 'FETCH_PROJECT_LIST'
             ])
         },
@@ -42,7 +42,7 @@
             'project-card': () => import('@/components/ProjectCard')
         },
         computed: {
-            ...mapState([
+            ...mapState('project', [
                 'projectList'
             ])
         },

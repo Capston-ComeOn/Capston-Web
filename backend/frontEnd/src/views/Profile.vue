@@ -101,12 +101,12 @@
             }
         },
         computed: {
-            ...mapState([
+            ...mapState('account', [
                 'account'
             ])
         },
         methods: {
-            ...mapActions([
+            ...mapActions('account', [
                 'ADD_ACCOUNT_FILE',
                 'FETCH_LOGIN_ACCOUNT'
             ]),

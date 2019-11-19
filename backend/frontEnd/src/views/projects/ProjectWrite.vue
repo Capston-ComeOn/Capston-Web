@@ -62,7 +62,7 @@
             }
         },
         methods: {
-            ...mapActions([
+            ...mapActions('project', [
                 'ADD_PROJECT'
             ]),
             onSubmit() {

@@ -25,10 +25,9 @@
 </template>
 
 <script>
-    import {mapState, mapMutations, mapActions} from 'vuex'
+    import {mapActions, mapMutations, mapState} from 'vuex'
 
     export default {
-        name: "DataTable",
         data() {
             return {
                 headers: [
@@ -39,24 +38,27 @@
                     {text: '날짜', value: 'created'},
                     {text: '추천수', value: 'recommend'},
                 ],
-
                 pagination: {
                     totalSize: 0
                 }
             }
         },
         computed: {
-            ...mapState([
+            ...mapState('article', [
                 'articleList',
                 'categoryId',
                 'categoryList'
             ]),
+            ...mapState('category', [
+                'categoryId',
+                'categoryList'
+            ])
         },
         methods: {
-            ...mapMutations([
+            ...mapMutations('article', [
                 'SET_PAGE'
             ]),
-            ...mapActions([
+            ...mapActions('article', [
                 'FETCH_ARTICLE_LIST',
                 'FETCH_ARTICLE_SIZE',
             ]),

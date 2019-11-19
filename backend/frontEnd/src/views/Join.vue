@@ -67,7 +67,7 @@
                     alert('회원 가입 실패')
                 })
             },
-            ...mapActions([
+            ...mapActions('account', [
                 'ADD_ACCOUNT'
             ])
         },

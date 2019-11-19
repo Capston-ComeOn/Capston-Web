@@ -8,7 +8,7 @@
                             dark
                             flat
                     >
-                    <v-toolbar-title>Login</v-toolbar-title>
+                        <v-toolbar-title>Login</v-toolbar-title>
                     </v-toolbar>
                     <v-list>
                         <v-flex pt-3 pl-3 pb-3 pr-3>
@@ -27,14 +27,14 @@
                                     data-vv-name="name"
                                     required
                             ></v-text-field>
-<!--                            <v-checkbox-->
-<!--                                    v-validate="'required'"-->
-<!--                                    value="1"-->
-<!--                                    label="저장하기"-->
-<!--                                    data-vv-name="checkbox"-->
-<!--                                    type="checkbox"-->
-<!--                                    required-->
-<!--                            ></v-checkbox>-->
+                            <!--                            <v-checkbox-->
+                            <!--                                    v-validate="'required'"-->
+                            <!--                                    value="1"-->
+                            <!--                                    label="저장하기"-->
+                            <!--                                    data-vv-name="checkbox"-->
+                            <!--                                    type="checkbox"-->
+                            <!--                                    required-->
+                            <!--                            ></v-checkbox>-->
                             <v-layout justify-end>
                                 <v-btn class="mr-2" color="blue lighten-3" @click="onSubmit">로그인</v-btn>
                             </v-layout>
@@ -48,6 +48,8 @@
 
 <script>
 
+    import {mapActions, mapGetters} from 'vuex'
+
     export default {
         data() {
             return {
@@ -58,23 +60,26 @@
             }
         },
         computed: {
-            invalidForm() {
-                return !this.username || !this.password
-            }
+            ...mapGetters('account', [
+                'isAuthenticated'
+            ])
         },
         created() {
             this.returnPath = this.$route.query.returnPath || '/'
         },
         mounted() {
-            if (this.$store.state.access_token){
+            if (this.isAuthenticated) {
                 alert('로그인한 상태로는 다시 로그인 할 수 없습니다.')
                 this.$router.push("/")
             }
         },
         methods: {
+            ...mapActions('account', [
+                'LOGIN'
+            ]),
             onSubmit() {
                 const {username, password, grant_type} = this
-                this.$store.dispatch('LOGIN', {username, password, grant_type})
+                this.LOGIN({username, password, grant_type})
                     .then(() => {
                         this.$router.push(this.returnPath)
                     })

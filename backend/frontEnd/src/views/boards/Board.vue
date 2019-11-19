@@ -14,7 +14,7 @@
 
 <script>
     import tab from '../../components/Tab'
-    import {mapState, mapMutations, mapActions} from 'vuex'
+    import {mapActions, mapMutations, mapState} from 'vuex'
 
     export default {
         components: {
@@ -38,17 +38,21 @@
             }
         },
         computed: {
-            ...mapState([
+            ...mapState('article', [
                 'articleList',
+                'categoryId',
+                'categoryList'
+            ]),
+            ...mapState('category', [
                 'categoryId',
                 'categoryList'
             ]),
         },
         methods: {
-            ...mapMutations([
+            ...mapMutations('article', [
                 'SET_PAGE'
             ]),
-            ...mapActions([
+            ...mapActions('article', [
                 'FETCH_ARTICLE_LIST',
                 'FETCH_ARTICLE_SIZE',
             ]),

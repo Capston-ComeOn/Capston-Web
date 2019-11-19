@@ -41,8 +41,9 @@
             }
         },
         methods: {
-            ...mapActions([
-                'UPDATE_ARTICLE', 'FETCH_ARTICLE'
+            ...mapActions('article', [
+                'UPDATE_ARTICLE',
+                'FETCH_ARTICLE'
             ]),
             onSubmit() {
                 const {title, contents} = this

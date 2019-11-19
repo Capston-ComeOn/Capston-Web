@@ -21,13 +21,12 @@
 </template>
 
 <script>
-    import {mapMutations, mapState, mapActions} from 'vuex'
+    import {mapActions, mapMutations, mapState} from 'vuex'
 
     export default {
         props: ['from'],
-        name: "MessageRoom",
         computed: {
-            ...mapState([
+            ...mapState('message', [
                 'messageList'
             ])
         },
@@ -40,23 +39,20 @@
                 this.ADD_MESSAGE({from: this.from, content: this.content})
                 this.content = ''
             },
-            ...mapMutations([
+            ...mapMutations('message', [
                 'CLEAR_MESSAGE_LIST'
             ]),
-            ...mapActions([
+            ...mapActions('account', [
+                'FETCH_LOGIN_ACCOUNT'
+            ]),
+            ...mapActions('message', [
                 'ADD_MESSAGE',
                 'FETCH_MESSAGE_LIST',
-                'FETCH_LOGIN_ACCOUNT'
             ])
         },
         data() {
             return {
                 content: '',
-                myself: {
-                    title: '타이틀타이틀타이틀타이틀타이틀타이틀타이틀',
-                    content: '내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용'
-                },
-                others: {title: '타이틀', content: '내용내용내용내용내용내용'}
             }
         },
         components: {

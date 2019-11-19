@@ -22,7 +22,7 @@
             }
         },
         computed: {
-            ...mapState([
+            ...mapState('category', [
                 'categoryList'
             ])
         },
@@ -30,8 +30,10 @@
             'home-data-table': () => import('@/components/HomeDataTable')
         },
         methods: {
-            ...mapActions([
+            ...mapActions('category', [
                 'FETCH_CATEGORY_LIST',
+            ]),
+            ...mapActions('article', [
                 'FETCH_ARTICLE_LIST_RETURN'
             ]),
         },

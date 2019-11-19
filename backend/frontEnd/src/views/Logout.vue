@@ -7,9 +7,8 @@
     import {mapMutations} from 'vuex'
 
     export default {
-        name: "Logout",
         methods: {
-            ...mapMutations([
+            ...mapMutations('account', [
                 'LOGOUT'
             ])
         },

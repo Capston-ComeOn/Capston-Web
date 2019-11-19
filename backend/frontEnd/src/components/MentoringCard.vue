@@ -38,7 +38,6 @@
 
     export default {
         props: ['item'],
-        name: "Card"
     }
 </script>
 

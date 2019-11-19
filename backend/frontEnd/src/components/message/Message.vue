@@ -54,7 +54,7 @@
         props: ['message'],
         name: "Message",
         computed: {
-            ...mapState([
+            ...mapState('account', [
                 'account'
             ])
         },

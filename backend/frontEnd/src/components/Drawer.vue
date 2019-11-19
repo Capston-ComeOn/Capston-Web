@@ -95,20 +95,22 @@
             }
         },
         methods: {
-            ...mapActions([
-                'FETCH_ARTICLE_LIST',
+            ...mapActions('account', [
                 'FETCH_LOGIN_ACCOUNT'
             ]),
-            ...mapMutations([
+            ...mapActions('article', [
+                'FETCH_ARTICLE_LIST',
+            ]),
+            ...mapMutations('category', [
                 'SET_CATEGORY_ID'
             ])
         },
 
         computed: {
-            ...mapGetters([
+            ...mapGetters('account', [
                 'isAuthenticated'
             ]),
-            ...mapState([
+            ...mapState('account', [
                 'account'
             ])
         },

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import {mapMutations, mapGetters} from 'vuex'
+    import {mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: 'App',
@@ -32,7 +32,7 @@
             }
         },
         methods: {
-            ...mapMutations([
+            ...mapMutations('article', [
                 'SET_MINI'
             ]),
             onMini() {
@@ -40,7 +40,7 @@
             }
         },
         computed: {
-            ...mapGetters([
+            ...mapGetters('account', [
                 'isAuthenticated'
             ])
         },

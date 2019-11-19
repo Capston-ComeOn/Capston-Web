@@ -96,7 +96,7 @@
 
 <script>
     import {Viewer} from '@toast-ui/vue-editor'
-    import {mapState, mapActions} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
 
     export default {
         data() {
@@ -112,9 +112,11 @@
             carousel: () => import('@/components/Carousel')
         },
         computed: {
-            ...mapState([
-                'mentoring',
+            ...mapState('account', [
                 'account'
+            ]),
+            ...mapState('mentoring', [
+                'mentoring'
             ])
         },
         methods: {
@@ -124,7 +126,7 @@
                         return data
                     })
             },
-            ...mapActions([
+            ...mapActions('mentoring', [
                 'FETCH_MENTORING',
                 'ADD_MENTEE'
             ])

@@ -88,20 +88,26 @@
     </v-flex>
 </template>
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
 
     export default {
         computed: {
-            ...mapState([
+            ...mapState('account', [
                 'account',
-                'accountList',
+                'accountList'
+            ]),
+            ...mapState('message', [
                 'recentMessageList'
             ])
+
         },
         methods: {
-            ...mapActions([
+            ...mapActions('account', [
                 'FETCH_ACCOUNT_LIST',
+            ]),
+            ...mapActions('message', [
                 'FETCH_RECENT_CONTACT_LIST'
+
             ]),
             onShowMessageRoom(id) {
                 this.from = id

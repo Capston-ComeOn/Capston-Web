@@ -30,12 +30,12 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
 
     export default {
 
         computed: {
-            ...mapState([
+            ...mapState('mentoring', [
                 'mentoring'
             ])
         },
@@ -43,7 +43,7 @@
             back() {
                 this.$router.go(-1)
             },
-            ...mapActions([
+            ...mapActions('mentoring', [
                 'FETCH_MENTORING',
                 'ADD_MENTEE'
             ])

@@ -50,7 +50,7 @@
 <script>
     import ProfileCard from "../../components/ProfileCard";
     import {Viewer} from '@toast-ui/vue-editor'
-    import {mapState, mapActions} from "vuex"
+    import {mapActions, mapState} from "vuex"
 
     export default {
 
@@ -61,7 +61,7 @@
             }
         },
         computed: {
-            ...mapState([
+            ...mapState('article', [
                 'article'
             ])
         },
@@ -70,8 +70,9 @@
             'viewer': Viewer
         },
         methods: {
-            ...mapActions([
-                'FETCH_ARTICLE', 'DESTROY_ARTICLE'
+            ...mapActions('article', [
+                'FETCH_ARTICLE',
+                'DESTROY_ARTICLE'
             ]),
             onFalseDialog() {
                 this.dialog = false

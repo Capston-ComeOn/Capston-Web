@@ -112,9 +112,11 @@
             carousel: () => import('@/components/Carousel')
         },
         computed: {
-            ...mapState([
-                'project',
+            ...mapState('account', [
                 'account'
+            ]),
+            ...mapState('project', [
+                'project'
             ])
         },
         methods: {
@@ -124,7 +126,7 @@
                         return data
                     })
             },
-            ...mapActions([
+            ...mapActions('project', [
                 'FETCH_PROJECT',
                 'ADD_APPLY'
             ])

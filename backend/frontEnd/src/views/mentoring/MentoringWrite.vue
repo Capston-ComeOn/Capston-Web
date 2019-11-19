@@ -62,7 +62,7 @@
             }
         },
         methods: {
-            ...mapActions([
+            ...mapActions('mentoring', [
                 'ADD_MENTORING'
             ]),
             onSubmit() {

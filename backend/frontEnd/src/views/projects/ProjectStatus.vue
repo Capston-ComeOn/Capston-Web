@@ -35,7 +35,7 @@
     export default {
 
         computed: {
-            ...mapState([
+            ...mapState('project', [
                 'project'
             ])
         },
@@ -43,7 +43,7 @@
             back() {
                 this.$router.go(-1)
             },
-            ...mapActions([
+            ...mapActions('project', [
                 'FETCH_PROJECT',
             ])
         },

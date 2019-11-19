@@ -23,7 +23,7 @@ import store from '../store'
 Vue.use(Router)
 
 const requireAuth = () => (from, to, next) => {
-    store.state.access_token ?
+    store.state.account.access_token ?
         next() :
         next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
